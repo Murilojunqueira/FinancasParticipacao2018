@@ -50,20 +50,44 @@ ScriptFolder <- "C:/Users/mjunqueira/Dropbox/Acadêmico e Educação/Publicações/20
 
 
 FullPath <- paste0(InputFolder, "PopulacaoMunic_1992-2017.xls")
+FullPath.Censo <- paste0(InputFolder, "PopulacaoMunic_Censo1991-2010.csv")
 PopMunic <- read_excel(FullPath, sheet = "Séries")
 
+PopMunic.Censo <- fread(FullPath.Censo, skip = 1, header = TRUE,
+                        sep = ";", dec = ",", stringsAsFactors = FALSE)
+
+names(PopMunic.Censo)
+names(PopMunic)
+
+PopMunic.Censo <- PopMunic.Censo %>% 
+  select(-Sigla, -Município) %>% 
+  rename(Codigo = Código)
+
 firstCol <- names(PopMunic)[4]
-lasteCol <- names(PopMunic)[ncol(PopMunic)]
+lasteCol <- names(PopMunic.Censo)[ncol(PopMunic.Censo)]
+
+PopMunic$Codigo <- as.character(PopMunic$Codigo)
+PopMunic.Censo$Codigo <- as.character(PopMunic.Censo$Codigo)
 
 PopMunic.tidy <- PopMunic %>%
   select(-Sigla, -matches("Município")) %>%
+  left_join(PopMunic.Censo, by = "Codigo") %>% 
   rename(Munic_Id = Codigo) %>% 
+  select(-matches(".y")) %>% 
+  rename("2000" = "2000.x") %>% 
   gather(SocioMunic_Ano, SocioMunic_Populacao, firstCol:lasteCol) %>% 
   mutate(SocioMunic_Ano = as.integer(SocioMunic_Ano)) %>% 
-  mutate(SocioMunic_Populacao = as.integer(SocioMunic_Populacao))
+  mutate(SocioMunic_Populacao = as.integer(SocioMunic_Populacao)) %>% 
+  filter(!is.na(SocioMunic_Ano))
+
+names(PopMunic.tidy)
+
+table(PopMunic.tidy$SocioMunic_Ano)
+
+View(PopMunic.tidy)
 
 rm(firstCol, lasteCol, FullPath)
-rm(PopMunic)
+rm(PopMunic, PopMunic.Censo)
 
 
 FullPath <- paste0(InputFolder, "PIBMunic_1996-2017.xls")
@@ -99,6 +123,8 @@ Output.pathFile <- paste0(OutputFolder, "SocioDemoEconomia.csv")
 
 names(SocioMunic)
 head(SocioMunic)
+
+table(SocioMunic$SocioMunic_Ano[!is.na(SocioMunic$SocioMunic_PIB)])
 
 # Grava o arquivo  
 write.table(SocioMunic, file = Output.pathFile, 
