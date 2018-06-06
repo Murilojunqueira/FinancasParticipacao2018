@@ -6,7 +6,7 @@
 # Criado por Murilo Junqueira.
 
 # Data criação: 2018-02-22.
-# Ultima modificação: 2018-03-01.
+# Ultima modificação: 2018-05-28
 
 
 ################## Prepara área de trabalho ##################
@@ -17,9 +17,9 @@ gc()
 
 # Os diretórios de inserção dos dados Brutos (InputFolder), destino dos 
 # dados (OutputFolder) e localização dos scripts (ScriptFolder). Atualize se necessário!
-InputFolder <- "C:/Users/mjunqueira/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Brutos/FinbraExcel/"
-OutputFolder <- "C:/Users/mjunqueira/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/BD csv/"
-ScriptFolder <- "C:/Users/mjunqueira/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
+InputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Brutos/FinbraExcel/"
+OutputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/BD csv/"
+ScriptFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
 
 # Checa se os diretórios existem.
 dir.exists(c(InputFolder, OutputFolder, ScriptFolder))
@@ -54,6 +54,16 @@ ContasPublicas <- fread(paste0(OutputFolder, "ContasPublicas.csv"),
 Municipios <- fread(paste0(OutputFolder, "Municipios.csv"), 
                     sep = ";", dec = ",", stringsAsFactors = FALSE)
 
+
+# Relação dos estados brasileiros, com os respectivos códigos do IBGE.
+UFs <- fread(paste0(OutputFolder, "UFs.csv"), 
+                    sep = ";", dec = ",", stringsAsFactors = FALSE)
+
+
+# De/Para entre código UG (usado no Finbra até 1997) e o Código Municipal IBGE
+DeParaUGCodIBGE <- fread(paste0(OutputFolder, "DeParaUGCodIBGE.csv"), 
+                         sep = ";", dec = ",", stringsAsFactors = FALSE)
+
 ################## Extrai Dados Finbra  ##################
 
 # Essa seção visa extrair os dados brutos do Finbra, que já estão inseridos
@@ -62,6 +72,10 @@ Municipios <- fread(paste0(OutputFolder, "Municipios.csv"),
 
 # Cria um banco de dados vazio para agregar os dados de finanças municipais.
 MunicFinancas <- tibble()
+
+
+AnosDados <- c(2012:1995)
+
 
 # Loop para cada linha da tabela ContasPublicas:
 for(i in seq_len(nrow(ContasPublicas))) {
@@ -80,9 +94,8 @@ for(i in seq_len(nrow(ContasPublicas))) {
     arrange(desc(DeParaFinbra_Ano)) %>% 
     # Garante que o ano são dados inteiros (integer).
     mutate(DeParaFinbra_Ano = as.integer(DeParaFinbra_Ano)) %>% 
-    # Atualmente, somente estamos processando os dados de 1998 em diante,
-    # pois antes disso o código de identificação dos municípios é diferente.
-    filter(DeParaFinbra_Ano >=1998)
+    # Filtra os anos de análise que serão puxados
+    filter(DeParaFinbra_Ano %in% AnosDados)
   
   # Cria um banco de dados vazio para agregar os dados da conta que estã sendo processada.
   MunicFinancas.NewVar <- as_tibble()
@@ -91,7 +104,7 @@ for(i in seq_len(nrow(ContasPublicas))) {
   for(j in seq_len(nrow(DeParaFinbra.Select)) ) {
     
     # Linha de debug.
-    # j <- 3
+    # j <- 16
     
     # Exibe o ano que está sendo processado na tabela DeParaFinbra.
     print(paste0("Encontrando dados do ano ", DeParaFinbra.Select$DeParaFinbra_Ano[j]))
@@ -130,11 +143,14 @@ for(i in seq_len(nrow(ContasPublicas))) {
     # Formata os dados para que eles ficam no formato desejado.
     MunicFinancas.New <- BD.Fetch %>% 
       # Seleciona as colunas correspondentes
-      select(Select.Columns) %>% 
+      select(Select.Columns)  %>% 
       # Formata os dados (atualmente a função FormataFinbra apenas melhora o formato das
       # colunas de identificação dos municípios). Mais informações em "Importa Finbra Funcoes.R".
       FormataFinbra(Ano = BDCamposFinbra.Select$FinbraCampo_Ano,
-                    Aba = BDCamposFinbra.Select$FinbraCampo_AbaXls) %>% 
+                    Aba = BDCamposFinbra.Select$FinbraCampo_AbaXls,
+                    UGtoCodIBGE = DeParaUGCodIBGE, 
+                    BDCamposFinbra = BDCamposFinbra,
+                    InputFolder = InputFolder) %>% 
       # Muda o formato do código IBGE de 6 dígitos (antigo) para 7 dígitos (novo).
       MuncCod6To7("Munic_Id6", "Munic_Id", OutputFolder) %>% 
       # Garante que o ano seja inteiro (integer)
@@ -158,26 +174,37 @@ for(i in seq_len(nrow(ContasPublicas))) {
     rm(BD.Fetch, CampoFinbra.Ref, BDCamposFinbra.Select, Munic.Select)
   }
   
+  # Embilha os dados
+  MunicFinancas.NewVar.Format <- MunicFinancas.NewVar %>% 
+    gather(ContasPublica_Nome, MunicFinancas_ContaValor, 3)
   
-  # Acrescenta dados no banco de dados agregador final. Nesse momento, as
-  # variáveis são empilhadas em colunas, sendo cada linha um município-ano.
-  if(nrow(MunicFinancas) == 0) {
-    MunicFinancas <- MunicFinancas.NewVar
-  } else {
-    MunicFinancas <- MunicFinancas %>% 
-      full_join(MunicFinancas.NewVar, by = c("Munic_Id", "MunicFinancas_Ano"))
-  }
+  MunicFinancas <- rbind(MunicFinancas, MunicFinancas.NewVar.Format)
   
   # Libera memória
   rm(j, DeParaFinbra.Select, MunicFinancas.NewVar)
+  rm(MunicFinancas.NewVar.Format)
   gc()
 }
-rm(i)
+rm(i, AnosDados)
 
 # Verifica os dados extraídos;
-names(MunicFinancas)
-View(MunicFinancas)
+ # names(MunicFinancas)
+ # dim(MunicFinancas)
+ # table(MunicFinancas$MunicFinancas_Ano)
+ # head(MunicFinancas, n = 10)
+ # tail(MunicFinancas, n = 10)
+# View(MunicFinancas)
 
+# Verifica repetições no banco.
+#  x <- table(MunicFinancas$Munic_Id, MunicFinancas$MunicFinancas_Ano) %>% as.data.frame()
+#  x[x$Freq > 8,]
+#  View(x)
+#  table(x$Freq)
+# 
+#  test <-  MunicFinancas[MunicFinancas$Munic_Id %in% x$Var1[x$Freq > 8],] %>% arrange(Munic_Id, MunicFinancas_Ano)
+# View(test)
+# rm(test, x)
+ 
 ## Obtem o código das contas financeiras.
 ContasPublicas.Select <- ContasPublicas %>% 
   mutate(ContasPublica_Id = as.character(ContasPublica_Id)) %>% 
@@ -186,24 +213,18 @@ ContasPublicas.Select <- ContasPublicas %>%
 # Obtem o total de colunas.
 totalColunas <- ncol(MunicFinancas)
 
-# Transforma o painel longo (número indefinido de colunas) em um painel
-# curto (número fixo de colunas).
+# Substitui o nome das contas pelos códigos
 MunicFinancas.Short <- MunicFinancas %>% 
-  # Encurta o painel.
-  gather(ContasPublica_Nome, MunicFinancas_ContaValor, 3:totalColunas) %>% 
   # Acrecenta o código das contas públicas.
   left_join(ContasPublicas.Select, by = "ContasPublica_Nome") %>% 
-  # Cria uma variável de identificação das linhas.
-  mutate(MunicFinancas_Id = paste0(Munic_Id, "_", MunicFinancas_Ano, "_", ContasPublica_Id)) %>% 
   # Seleciona as colunas da base de dados final.
-  select(MunicFinancas_Id, Munic_Id, MunicFinancas_Ano, ContasPublica_Id, 
-         MunicFinancas_ContaValor)
+  select(Munic_Id, MunicFinancas_Ano, ContasPublica_Id, MunicFinancas_ContaValor)
 
 names(MunicFinancas.Short)
 head(MunicFinancas.Short)
 
 # Libera memória
-rm(totalColunas, ContasPublicas.Select)
+rm(ContasPublicas.Select)
 
 # Salvar em arquivo no Banco de Dados
 
@@ -218,64 +239,201 @@ write.table(MunicFinancas.Short, file = pathFile, sep = ";", dec = ",",
 rm(MunicFinancas.Short, MunicFinancas, pathFile)
 
 
-
 ################## Encontra Códigos Municipais pré-1998  ##################
-
-# NÃO FINALIZADO!
 
 # Script para importar dados do FINBRA antes de 1998, quando os municípios não eram
 # identificados pelo código IBGE, mas pelo código UG.
 
-# Consolidar (empilhar e depois retirar repetições) dos anos de 1997 e 1996 (que é igual 94-95).
+# Consolidar (empilhar e depois retirar repetições) dos anos de 1997 e 1996 
+# (em 94-95 nem UG tem, é só nomes dos Municípios).
 
+## Caminho dos arquivos
 FilePath197 <- paste0(InputFolder, "Finbra1997.xlsx")
 FilePath196 <- paste0(InputFolder, "Finbra1996.xlsx")
 
+## Carrega arquivos
 UGs1997 <- read_excel(FilePath197, sheet = "DespesasReceitas")
 UGs1996 <- read_excel(FilePath196, sheet = "Plan6")
 
+# Libera memória
+rm(FilePath196, FilePath197)
 
 UGs1997 <- UGs1997 %>% 
+  # Seleciona variáveis relevantes
   select(UG, NOME, UF) %>% 
-  mutate(UG = as.character(UG))
-
-names(UGs1996) <- names(UGs1997)
+  # Determina que as variáveis UG serão de tipo texto.
+  mutate(UG = as.character(UG)) %>% 
+  mutate(Origem = 1997)
 
 UGs1996 <- UGs1996 %>% 
-  mutate(UG = as.character(UG))
+  # Determina que as variáveis UG serão de tipo texto.
+  mutate(UG = as.character(UG)) %>% 
+  mutate(Origem = 1996)
 
+# Uniformiza os nomes de variáveis entre os dois arquivos
+names(UGs1996) <- names(UGs1997)
 
-head(UGs1996)
-head(UGs1997)
-View(UGs1997)
-
-
+# Cria um arquivo único com as UGs de 1997 e 1997
 ConsolidaUG <- rbind(UGs1996, UGs1997) %>% 
-  distinct(UG, .keep_all = TRUE)
+  arrange(desc(Origem)) %>% 
+  # Remove repetições
+  distinct(UG, .keep_all = TRUE) %>%
+  # Renomeia algumas variáveis, para deixa-las no padrão do banco.
+  rename(Munic_Nome = NOME) %>% 
+  rename(UF_Sigla = UF) %>% 
+  # Retira os casos dos municípios sem nome.
+  ## Como o nome é a ponte entre o código IBGE e o UG, não podemos trabalhar sem ele.
+  filter(!is.na(Munic_Nome)) %>% 
+  # Trata as variáveis de nome, para deixa-las mais uniformes.
+  ## Remove espaços e caracteres especiais.
+  mutate(Munic_Nome = trimws(Munic_Nome)) %>% 
+  ## Remove apostroves (ex: Pau D'Agua -> Pau DAgua)
+  mutate(Munic_Nome = gsub("'", "", Munic_Nome)) %>% 
+  mutate(Munic_Nome = gsub("`", "", Munic_Nome)) %>% 
+  ## Alterações de nomes que, após pesquisa, descobrimos as verdadeiras reverências no IBGE.
+  ## A maioria dos casos se referem a municípios que realmente mudaram de nome no período.
+  mutate(Munic_Nome = sub("ALTO JEQUITIBA (PRESIDENTE SOARES)", "ALTO JEQUITIBA", Munic_Nome, fixed = TRUE)) %>% 
+  mutate(Munic_Nome = sub("CACHOEIRA DO PAJEU (EX-ANDRE FERNANDES)", "CACHOEIRA DO PAJEU", Munic_Nome, fixed = TRUE)) %>% 
+  mutate(Munic_Nome = sub("MATHIAS LOBATO (VILA MATIAS)", "MATHIAS LOBATO", Munic_Nome, fixed = TRUE)) %>% 
+  mutate(Munic_Nome = sub("NOVO HORIZONTE DOESTE (EX-CACAIEIROS)", "NOVO HORIZONTE DOESTE", Munic_Nome, fixed = TRUE)) %>% 
+  mutate(Munic_Nome = sub("SAO GONCALO DO RIO PRETO (EX-FELISB.CALDEIRA)", "SAO GONCALO DO RIO PRETO", Munic_Nome, fixed = TRUE)) %>% 
+  mutate(Munic_Nome = sub("SERRA CAIADA (EX-PRESIDENTE JUSCELINO)", "SERRA CAIADA", Munic_Nome, fixed = TRUE)) %>%
+  mutate(Munic_Nome = ifelse(UF_Sigla == "RN" & Munic_Nome == "PRESIDENTE JUSCELINO", "SERRA CAIADA", Munic_Nome)) %>%
+  mutate(Munic_Nome = sub("SERRA DO NAVIO (EX-AGUA BRANCA DO AMAPARI)", "SERRA DO NAVIO", Munic_Nome, fixed = TRUE)) %>% 
+  mutate(Munic_Nome = sub("MOSQUITO (PALMEIRAS DO TO)", "PALMEIRAS DO TOCANTINS", Munic_Nome, fixed = TRUE)) %>% 
+  mutate(Munic_Nome = sub("VILA NOVA DO MAMORE", "NOVA MAMORE", Munic_Nome)) %>% 
+  mutate(Munic_Nome = sub("VILA ALTA", "ALTO PARAISO", Munic_Nome)) %>% 
+  mutate(Munic_Nome = sub("VARRE E SAI", "VARRE-SAI", Munic_Nome)) %>% 
+  mutate(Munic_Nome = sub("SITIO DOS MOREIRAS", "MOREILANDIA", Munic_Nome)) %>% 
+  mutate(Munic_Nome = sub("SAO MIGUEL DE TOUROS", "SAO MIGUEL DO GOSTOSO", Munic_Nome)) %>% 
+  mutate(Munic_Nome = sub("SAO DOMIMGOS DE POMBAL", "SAO DOMIMGOS", Munic_Nome)) %>% 
+  mutate(Munic_Nome = sub("SAO BENTO DE POMBAL", "SAO BENTO", Munic_Nome)) %>% 
+  mutate(Munic_Nome = sub("MOJI-GUACU", "MOGI-GUACU", Munic_Nome)) %>% 
+  mutate(Munic_Nome = sub("ITABIRINHA DE MANTENA", "ITABIRINHA", Munic_Nome)) %>% 
+  mutate(Munic_Nome = sub("IPAUCU", "IPAUSSU", Munic_Nome)) %>% 
+  mutate(Munic_Nome = sub("BRODOSQUI", "BRODOWSKI", Munic_Nome)) %>% 
+  mutate(Munic_Nome = sub("BROCHIER DO MARATA", "BROCHIER", Munic_Nome)) %>% 
+  mutate(Munic_Nome = sub("COUTO DE MAGALHAES", "COUTO MAGALHAES", Munic_Nome)) %>% 
+  # Evita nomes repetidos (casos onde o UG mudou, mas o Nome manteve, dentro do mesmo Estado)
+  distinct(Munic_Nome, UF_Sigla, .keep_all = TRUE) %>%
+  select(UG, Munic_Nome, UF_Sigla)
 
-head(ConsolidaUG)
-View(ConsolidaUG)
+# Checa se não há repetições de nomes dentro de um mesmo Estado
+# x <- table(ConsolidaUG$Munic_Nome, ConsolidaUG$UF_Sigla) %>% as.data.frame()
+# x[x$Freq > 1,]
+# View(x)
+# ConsolidaUG[ConsolidaUG$Munic_Nome %in% x$Var1[x$Freq > 1],] %>% arrange(Munic_Nome)
 
-nrow(UGs1996)
-nrow(UGs1997)
-nrow(ConsolidaUG)
+# Libera memória
+rm(UGs1996, UGs1997)
+
+# Formata os nomes da lista do IBGE, para deixa-los mais comparáveis.
+ConsolidaMunic <- Municipios %>% 
+  # Determina que os códigos são textos.
+  mutate(Munic_Id = as.character(Munic_Id)) %>% 
+  # Garante que todos serão MAIÚSCULAS.
+  mutate(Munic_Nome = toupper(Munic_Nome)) %>% 
+  # Remove os acentos.
+  mutate(Munic_Nome = iconv(Munic_Nome, to = "ASCII//TRANSLIT")) %>% 
+  ## Remove apostroves (ex: Pau D'Agua -> Pau DAgua)
+  mutate(Munic_Nome = gsub("'", "", Munic_Nome)) %>% 
+  mutate(Munic_Nome = gsub("`", "", Munic_Nome)) %>%
+  # Adiciona o banco dos Estados (necessário para rotinas abaixo)
+  left_join(UFs, by = "UF_Id") %>% 
+  # Remove "D"s isolados (ex: PAU D AGUA - > PAU DAGUA)
+  mutate(Munic_Nome = gsub(" D ", " D", Munic_Nome)) %>% 
+  # Adiciona um coluna com os números das linhas
+  mutate(n = row_number())
+  
+# Join os bancos da lista de UGs com a lista de municípios IBGE, pelo nome dos municípios.
+JoinUG <- ConsolidaUG %>% 
+  left_join(ConsolidaMunic, by = c("Munic_Nome", "UF_Sigla"))
+
+# Verifica o banco resultante
+#View(JoinUG)
+#names(JoinUG)
+
+# Cria um banco onde há apenas os casos onde não há correspondência perfeita 
+# entre os nomes de cidades.
+PartialMatching <- JoinUG %>% 
+  filter(is.na(Munic_Id)) %>% 
+  select(UG, Munic_Nome, UF_Sigla)
+
+# Banco apenas com os municípios onde não tive match exato.
+
+# Uiliza a função MatchCity (acima), para encontrar as cidades sem correspondência perfeita
+# A busca é feita dentro de cada estado.
+PartialMatching$Partial.Ref <- pmap_int(.l = list(CityName = PartialMatching$Munic_Nome, 
+                                                  Region = PartialMatching$UF_Sigla),
+                                        .f = MatchCity,
+                                        CompareData = ConsolidaMunic, 
+                                        CityNameVar = "Munic_Nome", 
+                                        RegionVarName = "UF_Sigla")
+
+# Verifica os casos onde mesmo o matching parcial não encontrou correspondência
+PartialMatching %>% 
+  filter(is.na(Partial.Ref)) %>% 
+  select(Munic_Nome, UF_Sigla)
+
+# São Apenas dois casos.
+
+# Adiciona o código IBGE dos municípios com match parcial.
+PartialMatchingJoin  <-  PartialMatching %>% 
+  left_join(select(ConsolidaMunic, n, Munic_Id, UF_Id), by = c("Partial.Ref" = "n")) %>% 
+  # filter(!is.na(Partial.Ref)) %>% 
+  # Adicina uma variável indicadora de que é correspondência parcial
+  mutate(Origem = "Partial") %>% 
+  select(Munic_Id, UG, Munic_Nome, UF_Sigla, Origem)
+  
+# Cria um banco único com o match exato e o match parcial empilhados
+DeParaUGIBGE <- JoinUG %>% 
+  select(Munic_Id, UG, Munic_Nome, UF_Sigla) %>% 
+  filter(!is.na(Munic_Id)) %>% 
+  # Adicina uma variável indicadora de que é correspondência exata
+  mutate(Origem = "Exact") %>% 
+  rbind(PartialMatchingJoin) %>% 
+  arrange(Munic_Id, Origem) %>% 
+  distinct(Munic_Id, .keep_all = TRUE)
+  
+
+# Checa repetições do banco:
+# Check <- table(DeParaUGIBGE$Munic_Id) %>% as.data.frame()
+# View(Check)
+# Check[Check$Freq > 1,]
+
+# Repeats <- Check$Var1[Check$Freq > 1] %>% as.character()
+# x <- DeParaUGIBGE[which(DeParaUGIBGE$Munic_Id %in% Repeats),] %>% arrange(Munic_Id)
+# View(x)
+# x
+
+DeParaUGIBGE <- DeParaUGIBGE %>% 
+  select(-Origem)
+
+# Checa o banco criado
+#names(DeParaUGIBGE)
+#dim(DeParaUGIBGE)
+#View(DeParaUGIBGE)
+
+# Caminho do arquivo contendo todos os dados de BDCamposFinbra.
+OutputFile <- paste0(OutputFolder, "DeParaUGCodIBGE.csv")
+
+# Grava o arquivo.
+write.table(DeParaUGIBGE, file = OutputFile, sep = ";", dec = ",", 
+            row.names=FALSE, append = FALSE)
 
 
-# Formatar os nomes de ambos os grupo
-## Deixar todas maiúsculas
-## Retirar os acentos
-## Retirar as estrofes (Ex: PAU D'AGUA -> PAU D AGUA)
-## Retira D isolados (Ex: PAU D AGUA -> PAU DAGUA)
-
-# Usar um sistema de match para encontrar referências exatas nos dois grupos
-## left_join.
-
-# Testar alguns métodos de match parcial:
-
-## agrep - http://astrostatistics.psu.edu/su07/R/html/base/html/agrep.html
-## Stringdist - https://cran.r-project.org/web/packages/stringdist/
+# Libera memória
+rm(ConsolidaMunic, ConsolidaUG)
+rm(PartialMatching, PartialMatchingJoin)
+rm(MatchCity, JoinUG)
+rm(DeParaUGIBGE, OutputFile)
 
 
+
+### Problemas para ver no futuro
+
+# Modelar casos onde existem dois UGs para um mesmo município (comparando 1996 e 1997)
+# Como lidar com municípios que mudaram de nome entre 1996 e 1997, tendo o mesmo UG e Cod IBGE?
 
 
 ################## Cria BDCamposFinbra  ##################

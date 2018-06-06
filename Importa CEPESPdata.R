@@ -3,7 +3,7 @@
 # Criado por Murilo Junqueira
 
 # Data criação: 2018-03-01
-# Ultima modificação: 2018-05-12
+# Ultima modificação: 2018-05-30
 
 # Documentação do API: https://github.com/Cepesp-Fgv/cepesp-r 
 
@@ -39,6 +39,24 @@ library(cepespR)
 library(tidyverse)
 library(data.table)
 
+################## CodeBook ##################
+
+# Código da Situação Eleitoral	Descrição da Situação Eleitoral
+#   -7    Voto Nulo
+#   -6    Voto em Branco
+#   -5    Voto na Legenda
+#   -1  	#NULO# (campo inválido por problemas de sistema)
+#   1	    ELEITO
+#   2	    SUPLENTE
+#   3	    RENÚNCIA/FALECIMENTO/CASSAÇÃO ANTES DA ELEIÇÃO
+#   4	    NÃO ELEITO
+#   5	    MÉDIA
+#   6	    2º TURNO
+#   7	    RENÚNCIA/FALECIMENTO/CASSAÇÃO APÓS A ELEIÇÃO
+#   8	    REGISTRO NEGADO ANTES DA ELEIÇÃO
+#   9	    REGISTRO NEGADO APÓS A ELEIÇÃO
+#   10	  SUBSTITUÍDO
+#   11	  INDEFERIDO COM RECURSO
 
 ################## Funções úteis ##################
 
@@ -86,14 +104,14 @@ for(i in seq_along(years)){
   DadosCandidatos.Prefeito.Ano <- DadosRaw.CandPref %>% 
     # Seleciona colunas relevantes.
     select(SIGLA_UE, NUM_TURNO, ANO_ELEICAO, NUMERO_CANDIDATO, NOME_CANDIDATO, 
-           NUMERO_PARTIDO, CODIGO_LEGENDA, COD_SIT_TOT_TURNO) %>% 
+           SIGLA_PARTIDO, CODIGO_LEGENDA, COD_SIT_TOT_TURNO) %>% 
     # Resolve problemas de classe
     mutate(COD_SIT_TOT_TURNO = CharaterToInteger(COD_SIT_TOT_TURNO)) %>% 
     # Retira candidatos sem situação eleitoral devido a impugnação
     filter(!is.na(COD_SIT_TOT_TURNO)) %>% 
     # Retira casos de candidatos repetidos (não sei porque houve isso)
-    arrange(SIGLA_UE, NUMERO_CANDIDATO) %>% 
-    distinct(SIGLA_UE, NUMERO_CANDIDATO, .keep_all = TRUE) %>% 
+    arrange(SIGLA_UE, SIGLA_PARTIDO) %>% 
+    distinct(SIGLA_UE, SIGLA_PARTIDO, NUM_TURNO, .keep_all = TRUE) %>% 
     # Retira candidatos sem situação eleitoral devido a impugnação
     filter(!is.na(COD_SIT_TOT_TURNO)) %>% 
     # Garante que o CODIGO_LEGENDA (identificação da coligação) esteja em um 
@@ -120,12 +138,13 @@ for(i in seq_along(years)){
     left_join(DadosCandidatos.Prefeito.Ano, by = c("SIGLA_UE", "NUM_TURNO", "ANO_ELEICAO",
                                                    "NUMERO_CANDIDATO"))  %>% 
     # Trata Brancos e Nulos
-    mutate(NOME_CANDIDATO = as.character(NOME_CANDIDATO)) %>% 
-    mutate(NOME_CANDIDATO = if_else(NUMERO_CANDIDATO == 95, "BRANCO", NOME_CANDIDATO)) %>% 
-    mutate(NOME_CANDIDATO = if_else(NUMERO_CANDIDATO == 96, "NULO", NOME_CANDIDATO)) %>% 
+    mutate(COD_SIT_TOT_TURNO = as.integer(COD_SIT_TOT_TURNO)) %>% 
+    mutate(COD_SIT_TOT_TURNO = ifelse(NUMERO_CANDIDATO == 95, -6, COD_SIT_TOT_TURNO)) %>% 
+    mutate(COD_SIT_TOT_TURNO = ifelse(NUMERO_CANDIDATO == 96, -7, COD_SIT_TOT_TURNO)) %>% 
     # Ordena as variáveis.
     select(COD_MUN_IBGE, ANO_ELEICAO, DESCRICAO_CARGO, NUM_TURNO, NUMERO_CANDIDATO, 
-           NOME_CANDIDATO, NUMERO_PARTIDO, CODIGO_LEGENDA, QTDE_VOTOS, COD_SIT_TOT_TURNO)
+           NOME_CANDIDATO, SIGLA_PARTIDO, CODIGO_LEGENDA, QTDE_VOTOS, COD_SIT_TOT_TURNO)
+  
   
   # Corrige o nome das variáveis.
   names(DadosEleicao.Prefeito.Ano) <- c("Munic_Id",
@@ -134,7 +153,7 @@ for(i in seq_along(years)){
                                         "CandAno_Turno",
                                         "CandAno_Numero",
                                         "CandAno_Nome",
-                                        "Partido_Id",
+                                        "Partido_Sigla",
                                         "Coligacao_Id",
                                         "CandAno_QtVotos",
                                         "CandAno_SituacaoElec")
@@ -153,14 +172,14 @@ for(i in seq_along(years)){
   DadosCandidatos.Vereador.Ano <- DadosRaw.CandVer %>% 
     # Seleciona colunas relevantes.
     select(SIGLA_UE, NUM_TURNO, ANO_ELEICAO, NUMERO_CANDIDATO, NOME_CANDIDATO, 
-           NUMERO_PARTIDO, CODIGO_LEGENDA, COD_SIT_TOT_TURNO) %>% 
+           NUMERO_PARTIDO, SIGLA_PARTIDO, CODIGO_LEGENDA, COD_SIT_TOT_TURNO) %>% 
     # Resolve problemas de classe
     mutate(COD_SIT_TOT_TURNO = CharaterToInteger(COD_SIT_TOT_TURNO)) %>% 
     # Retira candidatos sem situação eleitoral devido a impugnação
     filter(!is.na(COD_SIT_TOT_TURNO)) %>% 
     # Retira casos de candidatos repetidos (não sei porque houve isso)
     arrange(SIGLA_UE, NUMERO_CANDIDATO) %>% 
-    distinct(SIGLA_UE, NUMERO_CANDIDATO, .keep_all = TRUE) %>% 
+    distinct(SIGLA_UE, NUMERO_CANDIDATO, NUM_TURNO, .keep_all = TRUE) %>% 
     # Retira candidatos sem situação eleitoral devido a impugnação
     filter(!is.na(COD_SIT_TOT_TURNO)) %>% 
     # Garante que o CODIGO_LEGENDA (identificação da coligação) esteja em um 
@@ -187,17 +206,21 @@ for(i in seq_along(years)){
                                                    "NUMERO_CANDIDATO")) %>% 
     # Trata os votos em legenda.
     arrange(COD_MUN_IBGE, ANO_ELEICAO, as.character(NUMERO_CANDIDATO)) %>% 
-    mutate(NOME_CANDIDATO = as.character(NOME_CANDIDATO)) %>% 
-    mutate(NOME_CANDIDATO = if_else(nchar(as.character(NUMERO_CANDIDATO)) == 2, "LEGENDA", NOME_CANDIDATO))  %>% 
-    mutate(NUMERO_PARTIDO = if_else(nchar(as.character(NUMERO_CANDIDATO)) == 2, NUMERO_CANDIDATO, NUMERO_PARTIDO)) %>% 
+    mutate(COD_SIT_TOT_TURNO = as.integer(COD_SIT_TOT_TURNO)) %>% 
+    mutate(COD_SIT_TOT_TURNO = ifelse(nchar(as.character(NUMERO_CANDIDATO)) == 2, -5, COD_SIT_TOT_TURNO))  %>% 
+    mutate(NUMERO_PARTIDO = ifelse(nchar(as.character(NUMERO_CANDIDATO)) == 2, NUMERO_CANDIDATO, NUMERO_PARTIDO)) %>% 
     mutate(CODIGO_LEGENDA = ifelse(nchar(as.character(NUMERO_CANDIDATO)) == 2 & NUMERO_PARTIDO == lead(NUMERO_PARTIDO), 
                                    lead(CODIGO_LEGENDA), CODIGO_LEGENDA)) %>% 
+    # Garante que a Sigla do partido não é factor
+    mutate(SIGLA_PARTIDO = as.character(SIGLA_PARTIDO)) %>% 
+    mutate(SIGLA_PARTIDO = ifelse(nchar(as.character(NUMERO_CANDIDATO)) == 2 & NUMERO_PARTIDO == lead(NUMERO_PARTIDO), 
+                                   lead(SIGLA_PARTIDO), SIGLA_PARTIDO)) %>% 
     # Trata Brancos e Nulos
-    mutate(NOME_CANDIDATO = if_else(NUMERO_CANDIDATO == 95, "BRANCO", NOME_CANDIDATO)) %>% 
-    mutate(NOME_CANDIDATO = if_else(NUMERO_CANDIDATO == 96, "NULO", NOME_CANDIDATO)) %>% 
+    mutate(COD_SIT_TOT_TURNO = ifelse(NUMERO_CANDIDATO == 95, -6, COD_SIT_TOT_TURNO)) %>% 
+    mutate(COD_SIT_TOT_TURNO = ifelse(NUMERO_CANDIDATO == 96, -7, COD_SIT_TOT_TURNO)) %>% 
     # Ordena as variáveis.
     select(COD_MUN_IBGE, ANO_ELEICAO, DESCRICAO_CARGO, NUM_TURNO, NUMERO_CANDIDATO, 
-           NOME_CANDIDATO, NUMERO_PARTIDO, CODIGO_LEGENDA, QTDE_VOTOS, COD_SIT_TOT_TURNO)
+           NOME_CANDIDATO, SIGLA_PARTIDO, CODIGO_LEGENDA, QTDE_VOTOS, COD_SIT_TOT_TURNO)
   
   # Libera a memória.
   rm(DadosCandidatos.Vereador.Ano)
@@ -210,16 +233,28 @@ for(i in seq_along(years)){
                                         "CandAno_Turno",
                                         "CandAno_Numero",
                                         "CandAno_Nome",
-                                        "Partido_Id",
+                                        "Partido_Sigla",
                                         "Coligacao_Id",
                                         "CandAno_QtVotos",
                                         "CandAno_SituacaoElec")
   
   # Empilha os dados sobre os prefeitos e sobre os vereadores.
-  DadosCandidatos.Ano <- rbind(DadosEleicao.Prefeito.Ano, DadosEleicao.Vereador.Ano)
+  DadosCandidatos.Ano <- rbind(DadosEleicao.Prefeito.Ano, DadosEleicao.Vereador.Ano) %>% 
+    # Um pequeno truque para diminuir o tamanho do banco.
+    mutate(CandAno_Cargo = as.character(CandAno_Cargo)) %>% 
+    mutate(CandAno_Cargo = substr(CandAno_Cargo, 1, 1))
   
   # Libera a memória.
   rm(DadosEleicao.Prefeito.Ano, DadosEleicao.Vereador.Ano)
+  
+  # Uniformiza os códigos de situação eleitoral
+  if (years[i] >= 2012) {
+    DadosCandidatos.Ano <- DadosCandidatos.Ano %>% 
+      mutate(CandAno_SituacaoElec = ifelse(CandAno_Cargo == "V" & CandAno_SituacaoElec == 2, 1, CandAno_SituacaoElec)) %>% 
+      mutate(CandAno_SituacaoElec = ifelse(CandAno_Cargo == "V" & CandAno_SituacaoElec == 5, 2, CandAno_SituacaoElec)) %>% 
+      mutate(CandAno_SituacaoElec = ifelse(CandAno_Cargo == "V" & CandAno_SituacaoElec == 3, 5, CandAno_SituacaoElec)) 
+  }
+  
   
   # insere dados na tabela de agregação principai.
   DadosCandidatos <- rbind(DadosCandidatos, DadosCandidatos.Ano)
@@ -241,6 +276,8 @@ write.table(DadosCandidatos, file = pathFile, sep = ";", dec = ",",
 # Libera a memória.
 rm(pathFile, DadosCandidatos)
 gc()
+
+
 
 
 
@@ -270,18 +307,19 @@ class(DadosRaw.CandVer)
 dim(DadosRaw.CandVer)
 names(DadosRaw.CandVer)
 
+
 # Seleciona e formata os dados.
 DadosCandidatos.Vereador.Ano <- DadosRaw.CandVer %>% 
   # Seleciona as colunas relevantes.
   select(SIGLA_UE, NUM_TURNO, ANO_ELEICAO, NUMERO_CANDIDATO, NOME_CANDIDATO, 
-         NUMERO_PARTIDO, CODIGO_LEGENDA, COD_SIT_TOT_TURNO) %>% 
+         SIGLA_PARTIDO, NUMERO_PARTIDO, CODIGO_LEGENDA, COD_SIT_TOT_TURNO) %>% 
   # Resolve problemas de classe
   mutate(COD_SIT_TOT_TURNO = CharaterToInteger(COD_SIT_TOT_TURNO)) %>% 
   # Retira candidatos sem situação eleitoral devido a impugnação
   filter(!is.na(COD_SIT_TOT_TURNO)) %>% 
   # Retira casos de candidatos repetidos (não sei porque houve isso)
   arrange(SIGLA_UE, NUMERO_CANDIDATO) %>% 
-  distinct(SIGLA_UE, NUMERO_CANDIDATO, .keep_all = TRUE) %>% 
+  distinct(SIGLA_UE, NUMERO_CANDIDATO, NUM_TURNO, .keep_all = TRUE) %>% 
   # Garante que o CODIGO_LEGENDA (identificação da coligação) esteja em um 
   # formato amigável, retirando a notação científica.
   mutate(CODIGO_LEGENDA = format(CODIGO_LEGENDA, scientific = FALSE)) %>% 
@@ -291,6 +329,7 @@ DadosCandidatos.Vereador.Ano <- DadosRaw.CandVer %>%
 head(DadosCandidatos.Vereador.Ano)
 names(DadosCandidatos.Vereador.Ano)
 dim(DadosCandidatos.Vereador.Ano)
+# View(DadosCandidatos.Vereador.Ano)
 
 # Retira os dados brutos (libera memória).
 rm(DadosRaw.CandVer)
@@ -314,18 +353,22 @@ DadosEleicao.Vereador.Ano <- DadosRaw.VoteVer %>%
                                                  "NUMERO_CANDIDATO")) %>% 
   # Trata os votos em legenda.
   arrange(COD_MUN_IBGE, ANO_ELEICAO, as.character(NUMERO_CANDIDATO)) %>% 
-  mutate(NOME_CANDIDATO = as.character(NOME_CANDIDATO)) %>% 
-  mutate(NUMERO_PARTIDO = CharaterToInteger(NUMERO_PARTIDO)) %>% 
-  mutate(NOME_CANDIDATO = if_else(nchar(as.character(NUMERO_CANDIDATO)) == 2, "LEGENDA", NOME_CANDIDATO))  %>% 
-  mutate(NUMERO_PARTIDO = if_else(nchar(as.character(NUMERO_CANDIDATO)) == 2, NUMERO_CANDIDATO, NUMERO_PARTIDO)) %>% 
+  mutate(COD_SIT_TOT_TURNO = as.integer(COD_SIT_TOT_TURNO)) %>% 
+  mutate(COD_SIT_TOT_TURNO = ifelse(nchar(as.character(NUMERO_CANDIDATO)) == 2, -5, COD_SIT_TOT_TURNO))  %>% 
+  mutate(NUMERO_PARTIDO = ifelse(nchar(as.character(NUMERO_CANDIDATO)) == 2, NUMERO_CANDIDATO, NUMERO_PARTIDO)) %>% 
   mutate(CODIGO_LEGENDA = ifelse(nchar(as.character(NUMERO_CANDIDATO)) == 2 & NUMERO_PARTIDO == lead(NUMERO_PARTIDO), 
                                  lead(CODIGO_LEGENDA), CODIGO_LEGENDA)) %>% 
+  # Garante que a Sigla do partido não é factor
+  mutate(SIGLA_PARTIDO = as.character(SIGLA_PARTIDO)) %>% 
+  mutate(SIGLA_PARTIDO = ifelse(nchar(as.character(NUMERO_CANDIDATO)) == 2 & NUMERO_PARTIDO == lead(NUMERO_PARTIDO), 
+                                lead(SIGLA_PARTIDO), SIGLA_PARTIDO)) %>% 
   # Trata Brancos e Nulos
-  mutate(NOME_CANDIDATO = if_else(NUMERO_CANDIDATO == 95, "BRANCO", NOME_CANDIDATO)) %>% 
-  mutate(NOME_CANDIDATO = if_else(NUMERO_CANDIDATO == 96, "NULO", NOME_CANDIDATO)) %>% 
+  mutate(COD_SIT_TOT_TURNO = ifelse(NUMERO_CANDIDATO == 95, -6, COD_SIT_TOT_TURNO)) %>% 
+  mutate(COD_SIT_TOT_TURNO = ifelse(NUMERO_CANDIDATO == 96, -7, COD_SIT_TOT_TURNO)) %>% 
   # Ordena as variáveis.
   select(COD_MUN_IBGE, ANO_ELEICAO, DESCRICAO_CARGO, NUM_TURNO, NUMERO_CANDIDATO, 
-         NOME_CANDIDATO, NUMERO_PARTIDO, CODIGO_LEGENDA, QTDE_VOTOS, COD_SIT_TOT_TURNO)
+         NOME_CANDIDATO, SIGLA_PARTIDO, CODIGO_LEGENDA, QTDE_VOTOS, COD_SIT_TOT_TURNO)
+
 
 # Libera Memória.
 rm(DadosCandidatos.Vereador.Ano)
@@ -338,7 +381,7 @@ names(DadosEleicao.Vereador.Ano) <- c("Munic_Id",
                                       "CandAno_Turno",
                                       "CandAno_Numero",
                                       "CandAno_Nome",
-                                      "Partido_Id",
+                                      "Partido_Sigla",
                                       "Coligacao_Id",
                                       "CandAno_QtVotos",
                                       "CandAno_SituacaoElec")
@@ -353,18 +396,19 @@ DadosRaw.CandPref <- candidates(year=2000, position="Mayor", cached=TRUE)
 
 # View(DadosRaw.CandPref)
 
+
 # Formata os dados dos candidatos a prefeito.
 DadosCandidatos.Prefeito.Ano <- DadosRaw.CandPref %>% 
   # Seleciona colunas relevantes.
   select(SIGLA_UE, NUM_TURNO, ANO_ELEICAO, NUMERO_CANDIDATO, NOME_CANDIDATO, 
-         NUMERO_PARTIDO, CODIGO_LEGENDA, COD_SIT_TOT_TURNO) %>% 
+         SIGLA_PARTIDO, CODIGO_LEGENDA, COD_SIT_TOT_TURNO) %>% 
   # Resolve problemas de classe
   mutate(COD_SIT_TOT_TURNO = CharaterToInteger(COD_SIT_TOT_TURNO)) %>% 
   # Retira candidatos sem situação eleitoral devido a impugnação
   filter(!is.na(COD_SIT_TOT_TURNO)) %>% 
   # Retira casos de candidatos repetidos (não sei porque houve isso)
   arrange(SIGLA_UE, NUMERO_CANDIDATO) %>% 
-  distinct(SIGLA_UE, NUMERO_CANDIDATO, .keep_all = TRUE) %>% 
+  distinct(SIGLA_UE, SIGLA_PARTIDO, NUM_TURNO, .keep_all = TRUE) %>% 
   # Garante que o CODIGO_LEGENDA (identificação da coligação) esteja em um 
   # formato amigável, retirando a notação científica.
   mutate(CODIGO_LEGENDA = format(CODIGO_LEGENDA, scientific = FALSE)) %>% 
@@ -381,6 +425,7 @@ DadosRaw.VotePref <- votes(year=2000, position="Mayor",
 # Libera a memória. Essa variável parece ser inútil. Provavel erro de código do API CEPESP.
 rm(filter_index)
 
+
 # Formata dados dos candidatos e das votações
 DadosEleicao.Prefeito.Ano <- DadosRaw.VotePref %>% 
   # Seleciona colinas relevantes.
@@ -390,12 +435,12 @@ DadosEleicao.Prefeito.Ano <- DadosRaw.VotePref %>%
   left_join(DadosCandidatos.Prefeito.Ano, by = c("SIGLA_UE", "NUM_TURNO", "ANO_ELEICAO",
                                                  "NUMERO_CANDIDATO")) %>% 
   # Trata Brancos e Nulos
-  mutate(NOME_CANDIDATO = as.character(NOME_CANDIDATO)) %>% 
-  mutate(NOME_CANDIDATO = if_else(NUMERO_CANDIDATO == 95, "BRANCO", NOME_CANDIDATO)) %>% 
-  mutate(NOME_CANDIDATO = if_else(NUMERO_CANDIDATO == 96, "NULO", NOME_CANDIDATO)) %>% 
+  mutate(COD_SIT_TOT_TURNO = as.integer(COD_SIT_TOT_TURNO)) %>% 
+  mutate(COD_SIT_TOT_TURNO = ifelse(NUMERO_CANDIDATO == 95, -6, COD_SIT_TOT_TURNO)) %>% 
+  mutate(COD_SIT_TOT_TURNO = ifelse(NUMERO_CANDIDATO == 96, -7, COD_SIT_TOT_TURNO)) %>% 
   # Ordena as variáveis.
   select(COD_MUN_IBGE, ANO_ELEICAO, DESCRICAO_CARGO, NUM_TURNO, NUMERO_CANDIDATO, 
-         NOME_CANDIDATO, NUMERO_PARTIDO, CODIGO_LEGENDA, QTDE_VOTOS, COD_SIT_TOT_TURNO)
+         NOME_CANDIDATO, SIGLA_PARTIDO, CODIGO_LEGENDA, QTDE_VOTOS, COD_SIT_TOT_TURNO)
 
 # Corrige o nome das variáveis.
 names(DadosEleicao.Prefeito.Ano) <- c("Munic_Id",
@@ -404,7 +449,7 @@ names(DadosEleicao.Prefeito.Ano) <- c("Munic_Id",
                                       "CandAno_Turno",
                                       "CandAno_Numero",
                                       "CandAno_Nome",
-                                      "Partido_Id",
+                                      "Partido_Sigla",
                                       "Coligacao_Id",
                                       "CandAno_QtVotos",
                                       "CandAno_SituacaoElec")
@@ -416,7 +461,10 @@ rm(DadosCandidatos.Prefeito.Ano)
 # View(DadosEleicao.Vereador.Ano)
 
 # Empilha os dados sobre os prefeitos e sobre os vereadores.
-DadosCandidatos.Ano <- rbind(DadosEleicao.Prefeito.Ano, DadosEleicao.Vereador.Ano)
+DadosCandidatos.Ano <- rbind(DadosEleicao.Prefeito.Ano, DadosEleicao.Vereador.Ano) %>%
+  # Um pequeno truque para diminuir o tamanho do banco.
+  mutate(CandAno_Cargo = as.character(CandAno_Cargo)) %>% 
+  mutate(CandAno_Cargo = substr(CandAno_Cargo, 1, 1))
 
 # Libera Memória.
 rm(DadosEleicao.Prefeito.Ano, DadosEleicao.Vereador.Ano)
@@ -624,8 +672,16 @@ gc()
 # Seleciona os anos que serão buscados.
 years <- c(2012, 2008, 2004, 2000)
 
+# Carrega dados eleitorais
+# Data about candidates
+CandidatoAno <- fread(paste0(OutputFolder, "CandidatoAno.csv"), 
+                      sep = ";", dec = ",",
+                      stringsAsFactors = FALSE)
+
+
 # Cria uma tabela agregadora dos dados dos partidos.
 Partidos <- as_tibble()
+
 
 # Loop para cada ano buscado.
 for(i in seq_along(years)){
@@ -642,8 +698,8 @@ for(i in seq_along(years)){
   rm(filter_index)
 
   # Retira uma enigmática coluna (row.name?)
-  DadosRaw.ColgPref.ano$X <- NULL
-  DadosRaw.ColgVer.ano$X <- NULL
+  DadosRaw.ColgPref.ano <- DadosRaw.ColgPref.ano %>% select(-starts_with("X"))
+  DadosRaw.ColgVer.ano <- DadosRaw.ColgVer.ano %>% select(-starts_with("X"))
   
   # Separa apenas os dados dos partidos.
   DadosEleicao.Partidos.Ano <- rbind(DadosRaw.ColgPref.ano, DadosRaw.ColgVer.ano)  %>% 
@@ -678,8 +734,34 @@ for(i in seq_along(years)){
 # Libera a memória.
 rm(i, years)
 
+
+# Adiciona o ano de 1996
+DadosEleicao.Partidos.1996 <- CandidatoAno  %>% 
+  # filtra o ano de 1996
+  filter(CandAno_Ano == 1996) %>% 
+  # Uniformiza os nomes.
+  rename(ANO_ELEICAO = CandAno_Ano) %>% 
+  # Extrai o número do partido
+  mutate(Partido_Numero = substr(as.character(CandAno_Numero), 1, 2)) %>%
+  # Seleciona colunas relevantes.
+  select(Partido_Sigla, Partido_Numero, ANO_ELEICAO) %>% 
+  # Corrige o caso do PRONA
+  mutate(Partido_Sigla = ifelse(Partido_Numero == 56, "PRONA", Partido_Sigla)) %>% 
+  # Exclui repetições de partidos.
+  distinct(Partido_Numero, Partido_Sigla, .keep_all = TRUE) %>% 
+  # Cria uma coluna identificadora do partido (numero_sigla sem espaço).
+  mutate(Partido_Id = paste0(Partido_Numero, "_",gsub(" ", "", Partido_Sigla))) %>% 
+  # Coloca a coluna identificadora em primeiro lugar
+  select(Partido_Id, everything()) %>% 
+  left_join(Partidos, by = "Partido_Id",  suffix = c("", ".y")) %>% 
+  select(names(Partidos))
+
+
 # Cria o banco final, colocando a primeira e última vez que o partido aparece no banco.
-Partidos.Format <- Partidos %>% 
+Partidos.Format <- rbind(Partidos, DadosEleicao.Partidos.1996) %>%
+  # remove repetições
+  arrange(ANO_ELEICAO) %>% 
+  distinct(Partido_Numero, Partido_Sigla, ANO_ELEICAO, .keep_all = TRUE) %>% 
   # Garante que o ano da eleição é inteiro (integer).
   mutate(ANO_ELEICAO = as.integer(ANO_ELEICAO)) %>% 
   # Agrupa os dados por partido
