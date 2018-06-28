@@ -21,6 +21,13 @@ InputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - 
 OutputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/BD csv/"
 ScriptFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
 
+
+# InputFolder <- "C:/Users/Murilo Junqueira/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Brutos/FinbraExcel/"
+# OutputFolder <- "C:/Users/Murilo Junqueira/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/BD csv/"
+# ScriptFolder <- "C:/Users/Murilo Junqueira/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
+
+
+
 # Checa se os diretórios existem.
 dir.exists(c(InputFolder, OutputFolder, ScriptFolder))
 
@@ -104,7 +111,7 @@ for(i in seq_len(nrow(ContasPublicas))) {
   for(j in seq_len(nrow(DeParaFinbra.Select)) ) {
     
     # Linha de debug.
-    # j <- 16
+    # j <- 1
     
     # Exibe o ano que está sendo processado na tabela DeParaFinbra.
     print(paste0("Encontrando dados do ano ", DeParaFinbra.Select$DeParaFinbra_Ano[j]))
@@ -188,19 +195,20 @@ for(i in seq_len(nrow(ContasPublicas))) {
 rm(i, AnosDados)
 
 # Verifica os dados extraídos;
- # names(MunicFinancas)
- # dim(MunicFinancas)
- # table(MunicFinancas$MunicFinancas_Ano)
- # head(MunicFinancas, n = 10)
- # tail(MunicFinancas, n = 10)
+# names(MunicFinancas)
+# dim(MunicFinancas)
+# table(MunicFinancas$MunicFinancas_Ano)
+# table(MunicFinancas$ContasPublica_Nome)
+# head(MunicFinancas, n = 10)
+# tail(MunicFinancas, n = 10)
 # View(MunicFinancas)
 
 # Verifica repetições no banco.
-#  x <- table(MunicFinancas$Munic_Id, MunicFinancas$MunicFinancas_Ano) %>% as.data.frame()
-#  x[x$Freq > 8,]
-#  View(x)
-#  table(x$Freq)
-# 
+ # x <- table(MunicFinancas$Munic_Id, MunicFinancas$MunicFinancas_Ano) %>% as.data.frame()
+ # x[x$Freq > 12,]
+ # View(x)
+ # table(x$Freq)
+
 #  test <-  MunicFinancas[MunicFinancas$Munic_Id %in% x$Var1[x$Freq > 8],] %>% arrange(Munic_Id, MunicFinancas_Ano)
 # View(test)
 # rm(test, x)
@@ -222,6 +230,7 @@ MunicFinancas.Short <- MunicFinancas %>%
 
 names(MunicFinancas.Short)
 head(MunicFinancas.Short)
+table(MunicFinancas.Short$ContasPublica_Id)
 
 # Libera memória
 rm(ContasPublicas.Select)
@@ -511,3 +520,96 @@ write.csv2(BDCamposFinbra, file = OutputFile,
 
 # Libera memória.
 rm(FileList, BDCamposFinbra)
+
+
+################## Altera De/Para Finbra  ##################
+
+# Busca os campos de receita orçamentária no banco BDCamposFinbra
+
+names(BDCamposFinbra)
+
+table(BDCamposFinbra$FinbraCampo_Ano)
+table(BDCamposFinbra$FinbraCampo_Campo) %>% names()
+
+BuscaCampo <- BDCamposFinbra %>% 
+  # filter(FinbraCampo_Ano == 1993)  %>% 
+  mutate(Busca = substr(FinbraCampo_Campo, 1, 3)) %>% 
+  #filter(Busca == "Des")
+  filter(FinbraCampo_Campo == "DESPESAORÇAMENTÁRIA")
+
+
+"Despesas Orçamentárias" # 2012-1998
+"Rec Orçamentária" # 2012-1998
+"REC_ORCAM" # 1997
+"D_ORCAMENT" # 1997
+"RECORÇAMENTÁRIAS" # 1996
+"RECORÇAMENTÁRIA" # 1995-1989
+"DESPORÇAMENTÁRIA" # 1996 - 1994
+"DESPESAORÇAMENTÁRIA" # 1993 - 1989
+
+Rec <- c("Rec Orçamentária",
+          "REC_ORCAM",
+          "RECORÇAMENTÁRIAS", 
+          "RECORÇAMENTÁRIA")
+
+desp <- c("Despesas Orçamentárias",
+          "D_ORCAMENT",
+          "DESPORÇAMENTÁRIA",
+          "DESPESAORÇAMENTÁRIA")
+
+
+
+NewRows <- BDCamposFinbra %>% 
+  filter(FinbraCampo_Campo == "Despesas Orçamentárias" |
+           FinbraCampo_Campo == "Rec Orçamentária" |
+           FinbraCampo_Campo == "REC_ORCAM" |
+           FinbraCampo_Campo == "D_ORCAMENT" |
+           FinbraCampo_Campo == "RECORÇAMENTÁRIAS" |
+           FinbraCampo_Campo == "RECORÇAMENTÁRIA" |
+           FinbraCampo_Campo == "DESPORÇAMENTÁRIA" |
+           FinbraCampo_Campo == "DESPESAORÇAMENTÁRIA") %>% 
+  mutate(DespRec = ifelse(FinbraCampo_Campo %in% desp, "d", "r")) %>% 
+  arrange(DespRec, desc(FinbraCampo_Ano), FinbraCampo_Campo) %>% 
+  mutate(ContasPublica_Id = ifelse(DespRec == "r", 71200000000, NA)) %>% 
+  mutate(ContasPublica_Id = ifelse(DespRec == "d", 73400000000, ContasPublica_Id)) %>% 
+  rename(DeParaFinbra_Ano = FinbraCampo_Ano) %>% 
+  select(ContasPublica_Id, FinbraCampo_Id, DeParaFinbra_Ano)
+
+
+DeParaFinbra <- DeParaFinbra %>% 
+  # Evita duplicaçãp de linhas
+  filter(!(ContasPublica_Id %in% NewRows$ContasPublica_Id)) %>% 
+  rbind(NewRows)
+
+
+names(ContasPublicas)
+
+# Novas Contas Públicas
+
+NewRowContas <- list(ContasPublica_Id = c(71200000000, 73400000000),
+                     ContasPublica_RD = c("r", "d"),
+                     ContasPublica_Nome = c("RecOrcamentaria", "DespOrcamentaria"),
+                     ContasPublica_Descricao = c("Receita Orcamentaria", "Despesa Orcamentaria"),
+                     ContasPublica_Categoria = c(NA, NA),
+                     ContasPublica_Grupo = c(NA, NA),
+                     ContasPublicas_Modalidade = c(NA, NA),
+                     ContasPublica_AnoRef = c(NA, NA)
+                     ) %>% as.data.frame()
+
+
+ContasPublicas <- ContasPublicas %>% 
+  filter(!(ContasPublica_Id %in% NewRowContas$ContasPublica_Id)) %>% 
+  rbind(NewRowContas)
+
+
+# Grava o arquivo.
+write.table(DeParaFinbra, file = paste0(OutputFolder, "DeParaFinbra.csv"), 
+           sep = ";", dec = ",", row.names=FALSE, append = FALSE)
+
+# Grava o arquivo.
+write.table(ContasPublicas, file = paste0(OutputFolder, "ContasPublicas.csv"), 
+           sep = ";", dec = ",", row.names=FALSE, append = FALSE)
+
+
+
+# End

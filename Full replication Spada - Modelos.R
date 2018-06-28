@@ -16,14 +16,14 @@ gc()
 
 # Os diretórios de inserção dos dados Brutos (InputFolder), destino dos 
 # dados (OutputFolder) e localização dos scripts (ScriptFolder). Atualize se necessário!
- InputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
- OutputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
- ScriptFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
+ # InputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
+ # OutputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
+ # ScriptFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
 
 
-# InputFolder <- "C:/Users/Murilo Junqueira/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
-# OutputFolder <- "C:/Users/Murilo Junqueira/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
-# ScriptFolder <- "C:/Users/Murilo Junqueira/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
+InputFolder <- "C:/Users/Murilo Junqueira/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
+OutputFolder <- "C:/Users/Murilo Junqueira/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
+ScriptFolder <- "C:/Users/Murilo Junqueira/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
 
 
 # instala o pacote de extração dos dados, se necessário
@@ -71,7 +71,7 @@ Data.Analysis <- fread(paste0(InputFolder, "Data.Analysis.csv"),
 ## avoid city duplication
 Data.Analysis <- Data.Analysis %>% 
    # Create lag variable
-   mutate(lag.pb = lag(MunicOP_OP)) %>% 
+   mutate(lag.pb = lag(MunicOP_OP)) %>%
   distinct(Munic_Id, year, .keep_all = TRUE)
 
 names(Data.Analysis )
@@ -92,18 +92,20 @@ Data.Analysis.Complete <- Data.Analysis %>%
   select(-mindist, -GDP, -GDPpp) %>%
   na.omit()
 
-
+# Checa os valores missing
 map_int(Data.Analysis, function(x) sum(is.na(x), na.rm = TRUE))
 
+# Checa os valores missing depois de 1996
 map_int(Data.Analysis[Data.Analysis$year >= 1996,], 
         function(x) sum(is.na(x), na.rm = TRUE))
 
+# checa os valores missing de Data.Analysis.Complete 
 map_int(Data.Analysis.Complete, function(x) sum(is.na(x), na.rm = TRUE))
 
+# Checa as classes das variáveis
 map_chr(Data.Analysis.Complete, class)
 
 # Prevent type data problems
-
 Data.Analysis.Complete <- Data.Analysis.Complete %>% 
   mutate(taxrevenues = as.numeric(sub(",", ".", taxrevenues))) %>% 
   mutate(balsheetrev = as.numeric(sub(",", ".", balsheetrev))) %>% 
@@ -328,6 +330,26 @@ LPM.Abandon <- lm(Abandon.pb ~
 summary(LPM.Abandon)
 
 # With investment variables
+
+LPM.Abandon <- lm(Abandon.pb ~ 
+                    # Lag dependent variable (LDV)
+                    lag.pb + 
+                    # population
+                    log(population) + 
+                    # PT variables
+                    ptwin + VictoryPTAfter2002 +
+                    # Political Variables
+                    continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + 
+                    # Finantial variables
+                    taxrevenues + balsheetrev + InvestPer + log(Investpp) +
+                    # Time Variables
+                    YearDummies2004 + YearDummies2008 + YearDummies2012,  
+                  # Dataset
+                  data = Data.Analysis.Complete)
+
+summary(LPM.Abandon)
+
+
 
 LPM.Abandon <- lm(Abandon.pb ~ 
                     # Lag dependent variable (LDV)

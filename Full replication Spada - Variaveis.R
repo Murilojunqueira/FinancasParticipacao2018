@@ -21,6 +21,15 @@ OutputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 -
 ScriptFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
 SpadaFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Brutos/PBCENSUS Spada/"
 
+# InputFolder <- "C:/Users/Murilo Junqueira/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/BD csv/"
+# OutputFolder <- "C:/Users/Murilo Junqueira/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
+# ScriptFolder <- "C:/Users/Murilo Junqueira/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
+# SpadaFolder <- "C:/Users/Murilo Junqueira/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Brutos/PBCENSUS Spada/"
+
+# Check folders 
+dir.exists(c(InputFolder, OutputFolder, ScriptFolder, SpadaFolder))
+
+# install.packages("readstata13")
 
 # instala o pacote de extração dos dados, se necessário
 library(tidyverse)
@@ -244,40 +253,44 @@ MunicFinancas$GroupTerms <- GroupYears(MunicFinancas$MunicFinancas_Ano)
 
 
 TaxShareRevenues <- MunicFinancas %>% 
+  # filter(Munic_Id == "3550308") %>% 
   # Translade variable
   rename(year = MunicFinancas_Ano) %>% 
   # Filter missing municipality codes.
   filter(!is.na(Munic_Id)) %>% 
   # Prevent character/numeric intepretation problems
-  mutate(ContasPublica_Id = as.integer(ContasPublica_Id)) %>%
+  mutate(ContasPublica_Id = as.numeric(ContasPublica_Id)) %>%
   mutate(MunicFinancas_ContaValor = sub(",", ".", MunicFinancas_ContaValor)) %>% 
   mutate(MunicFinancas_ContaValor = as.numeric(MunicFinancas_ContaValor)) %>% 
   # Select the used accounts (Tax revenue, current revenue, current revenue deductions)
-  filter(ContasPublica_Id == 10000000 | ContasPublica_Id == 11000000 | 
-           ContasPublica_Id == 900000000) %>% 
+  filter(ContasPublica_Id == 71200000000 | ContasPublica_Id == 11000000 | 
+           ContasPublica_Id == 17000000) %>% 
   # Spread account variables
   spread(ContasPublica_Id, MunicFinancas_ContaValor) %>% 
   # Set friendly variable's names.
-  rename(CurrentRevenue = "10000000", 
-         TaxRevenues = "11000000",
-         RevenueDeductions = "900000000") %>% 
+  rename(TotalRevenue = "7.12e+10", 
+         TaxRevenues = "1.1e+07",
+         CurrentTransfers = "1.7e+07") %>% 
   # remove NA from deductions before 2002
-  mutate(RevenueDeductions = ifelse(is.na(RevenueDeductions), 0, RevenueDeductions)) %>% 
+  # mutate(RevenueDeductions = ifelse(is.na(RevenueDeductions), 0, RevenueDeductions)) %>% 
   # Create taxrevenues variables
-  mutate(taxrevenues = TaxRevenues / (CurrentRevenue - RevenueDeductions)) %>% 
-  # Group Variables by municipal term's period
+  mutate(taxrevenues = TaxRevenues / TotalRevenue) %>%
+  # Create taxrevenues variables
+  mutate(TransferDep = CurrentTransfers / TotalRevenue) %>%
+  # Group Variables by municipal term's period  
   group_by(Munic_Id, GroupTerms) %>% 
-  summarise(taxrevenues = mean(taxrevenues, na.rm = TRUE)) %>% 
+  summarise(taxrevenues = mean(taxrevenues, na.rm = TRUE),
+            TransferDep = mean(TransferDep, na.rm = TRUE)) %>% 
   # Return GroupTerms to years
   mutate(year = as.integer(sub("t", "", GroupTerms))) %>% 
   # Select relevant variables
-  select(Munic_Id, year, taxrevenues)
+  select(Munic_Id, year, taxrevenues, TransferDep)
   
 
 # Join data in the main dataset
 Data.Analysis <- Data.Analysis %>% 
   # Avoid duplicated variables
-  select(-starts_with("taxrevenues") ) %>% 
+  select(-starts_with("taxrevenues") , -starts_with("TransferDep") ) %>% 
   # add new variable
   left_join(TaxShareRevenues, by = c("Munic_Id", "year")) 
 
@@ -295,25 +308,18 @@ BalanceBudget <- MunicFinancas %>%
   # Filter missing municipality codes.
   filter(!is.na(Munic_Id)) %>% 
   # Prevent character/numeric intepretation problems
-  mutate(ContasPublica_Id = as.integer(ContasPublica_Id)) %>%
+  mutate(ContasPublica_Id = as.numeric(ContasPublica_Id)) %>%
   mutate(MunicFinancas_ContaValor = sub(",", ".", MunicFinancas_ContaValor)) %>% 
   mutate(MunicFinancas_ContaValor = as.numeric(MunicFinancas_ContaValor)) %>% 
   # Select the used accounts (Current Spending, Capital Spending, Current revenue, current revenue deductions, Capital Revenue)
-  filter(ContasPublica_Id == 10000000 | ContasPublica_Id == 20000000 |
-           ContasPublica_Id == 900000000 | ContasPublica_Id == 30000000 |
-           ContasPublica_Id == 40000000) %>% 
+  filter(ContasPublica_Id == 71200000000 | ContasPublica_Id == 73400000000) %>% 
   # Spread account variables
   spread(ContasPublica_Id, MunicFinancas_ContaValor) %>% 
   # Set friendly variable's names.
-  rename(CurrentRevenue = "10000000", 
-         CapitalRevenue = "20000000",
-         RevenueDeductions = "900000000",
-         CurrentSpending = "30000000", 
-         CapitalSpending = "40000000") %>% 
-  # remove NA from deductions before 2002
-  mutate(RevenueDeductions = ifelse(is.na(RevenueDeductions), 0, RevenueDeductions)) %>% 
+  rename(TotalRevenue = "7.12e+10", 
+         TotalSpending = "7.34e+10") %>% 
   # Create balsheetrev variable
-  mutate(balsheetrev = (CurrentSpending + CapitalSpending) / (CurrentRevenue - RevenueDeductions + CapitalRevenue)) %>% 
+  mutate(balsheetrev = TotalSpending / TotalRevenue) %>% 
   # Group Variables by municipal term's period
   group_by(Munic_Id, GroupTerms) %>% 
   summarise(balsheetrev = mean(balsheetrev, na.rm = TRUE)) %>% 
@@ -334,6 +340,17 @@ rm(BalanceBudget)
 
 
 # continuitypartpref == City government continuity (discrete)
+
+
+
+# Create a second Variable for parties, to deal with fusion and name change
+Data.Analysis <- Data.Analysis %>% 
+  mutate(MayorParty2 = MayorParty) %>%
+  mutate(MayorParty2 = ifelse(MayorParty == "PFL", "DEM", MayorParty2)) %>%
+  mutate(MayorParty2 = ifelse(MayorParty == "PL", "PR", MayorParty2)) %>% 
+  mutate(MayorParty2 = ifelse(MayorParty == "PPB", "PP", MayorParty2)) %>% 
+  mutate(MayorParty2 = ifelse(MayorParty == "PHS", "PSN", MayorParty2))
+
 
 
 ContinuityMayor <- CandidatoAno %>% 
@@ -464,8 +481,6 @@ Data.Analysis <- Data.Analysis %>%
   select(-starts_with("MayorControlCouncil"), -starts_with("legprefpower")) %>% 
   left_join(MajorCouncilParty, by = c("Munic_Id", "year")) 
 
-names(Data.Analysis)
-
 # Free memory
 rm(MajorCouncilParty)
 
@@ -552,29 +567,25 @@ inflacao <- inflacao %>%
   mutate(year = ano) %>% 
   select(year, indicador2015)
 
-
+  
 # Public investment
 Investment <- MunicFinancas %>% 
+  # filter(Munic_Id == 3550308) %>% 
   # Translade variable
   rename(year = MunicFinancas_Ano) %>% 
   # Filter missing municipality codes.
   filter(!is.na(Munic_Id)) %>% 
   # Prevent character/numeric intepretation problems
-  mutate(ContasPublica_Id = as.integer(ContasPublica_Id)) %>%
+  mutate(ContasPublica_Id = as.numeric(ContasPublica_Id)) %>%
   mutate(MunicFinancas_ContaValor = sub(",", ".", MunicFinancas_ContaValor)) %>% 
   mutate(MunicFinancas_ContaValor = as.numeric(MunicFinancas_ContaValor)) %>% 
   # Select the used accounts (Current Spending, Capital Spending, Current revenue, current revenue deductions, Capital Revenue)
-  filter(ContasPublica_Id == 10000000 | ContasPublica_Id == 20000000 |
-           ContasPublica_Id == 30000000 |ContasPublica_Id == 40000000 | 
-           ContasPublica_Id == 44000000) %>% 
+  filter(ContasPublica_Id == 73400000000 | ContasPublica_Id == 44000000) %>% 
   # Spread account variables
   spread(ContasPublica_Id, MunicFinancas_ContaValor) %>% 
   # Set friendly variable's names.
-  rename(CurrentRevenue = "10000000", 
-         CapitalRevenue = "20000000",
-         CurrentSpending = "30000000", 
-         CapitalSpending = "40000000",
-         InvestimentTotal = "44000000") %>% 
+  rename(TotalSpending = "7.34e+10",
+         InvestimentTotal = "4.4e+07") %>% 
   # Join socio economic data
   left_join(SocioDemoEconomia, by = c("Munic_Id" = "Munic_Id", "year" = "SocioMunic_Ano")) %>% 
   # Translate variables
@@ -587,7 +598,7 @@ Investment <- MunicFinancas %>%
   # Deflate finantial data
   mutate(Investpp = Investpp * indicador2015) %>% 
   ## Investiment as share of total spending
-  mutate(InvestPer = InvestimentTotal / (CurrentSpending + CapitalSpending)) %>% 
+  mutate(InvestPer = InvestimentTotal / TotalSpending) %>% 
   # Group Variables by municipal term's period
   group_by(Munic_Id, GroupTerms) %>% 
   summarise(Investpp = mean(Investpp, na.rm = TRUE),
@@ -604,11 +615,131 @@ Data.Analysis <- Data.Analysis %>%
   # add new variable
   left_join(Investment, by = c("Munic_Id", "year"))
 
-names(Data.Analysis)
-
 
 # Free Memory
 rm(Investment, inflacao)
+
+
+
+# Create Budget, BedgetPP (per capita) and total investiment variables
+Data.Analysis <- Data.Analysis %>% 
+  mutate(InvestTotal = Investpp * population) %>% 
+  mutate(Budget = InvestTotal/InvestPer) %>% 
+  mutate(BudgetPP = Budget/population) 
+
+
+table(FiscalSpace$ContasPublica_Id)
+names(FiscalSpace)
+
+map_chr(FiscalSpace, class)
+
+
+# Public investment
+FiscalSpace <- MunicFinancas %>% 
+  # filter(Munic_Id == 3550308) %>% 
+  # Translade variable
+  rename(year = MunicFinancas_Ano) %>% 
+  # Filter missing municipality codes.
+  filter(!is.na(Munic_Id)) %>% 
+  # Avoid duplication
+  distinct(Munic_Id, year, ContasPublica_Id, MunicFinancas_ContaValor, GroupTerms) %>% 
+  # Prevent character/numeric intepretation problems
+  mutate(ContasPublica_Id = as.numeric(ContasPublica_Id)) %>%
+  mutate(ContasPublica_Id = as.character(ContasPublica_Id)) %>%
+  mutate(MunicFinancas_ContaValor = sub(",", ".", MunicFinancas_ContaValor)) %>% 
+  mutate(MunicFinancas_ContaValor = as.numeric(MunicFinancas_ContaValor)) %>% 
+  # Select the used accounts (Current Spending, Capital Spending, Current revenue, current revenue deductions, Capital Revenue)
+  filter(ContasPublica_Id == 32000000 | ContasPublica_Id == 46000000 | ContasPublica_Id == 31000000 |
+           ContasPublica_Id == 73400000000) %>% 
+  # Spread account variables
+  spread(ContasPublica_Id, MunicFinancas_ContaValor) %>% 
+  # Set friendly variable's names.
+  rename(Emploees = "3.1e+07",
+         CurrentDebt = "3.2e+07",
+         CapitalDebt = "4.6e+07",
+         Budget = "7.34e+10") %>% 
+  # Create main variables
+  ## Set education and health mandatory expenditures
+  dplyr::mutate(EduSpend = Budget * 0.25) %>% 
+  mutate(HealthSpend = Budget * 0.15) %>% 
+  # Calculate Fiscal Space
+  mutate(FiscalSpace = Budget - EduSpend - HealthSpend - 
+           Emploees - CurrentDebt - CapitalDebt) %>% 
+  # Fiscal Space as percent of total Budget
+  mutate(FiscalSpacePer = FiscalSpace / Budget) %>% 
+  ## Total Debt expenditures over total budget
+  mutate(DebtPer = CurrentDebt + CapitalDebt / Budget) %>% 
+  # Filter NA values
+  filter(!is.na(FiscalSpace)) %>% 
+  # Group Variables by municipal term's period
+  group_by(Munic_Id, GroupTerms) %>% 
+  summarise(FiscalSpace = mean(FiscalSpace, na.rm = TRUE),
+            FiscalSpacePer = mean(FiscalSpacePer, na.rm = TRUE),
+            DebtPer = mean(DebtPer, na.rm = TRUE)) %>% 
+  # Return GroupTerms to years
+  mutate(year = as.integer(sub("t", "", GroupTerms))) %>% 
+  select(Munic_Id, year, FiscalSpace, FiscalSpacePer, DebtPer)
+
+nrow(distinct(FiscalSpace, Munic_Id, year)) == nrow(FiscalSpace)
+
+# Join data in the main dataset
+Data.Analysis <- Data.Analysis %>% 
+  # Avoid duplicated variables
+  select(-starts_with("FiscalSpace"), -starts_with("FiscalSpacePer"), -starts_with("DebtPer")) %>% 
+  # add new variable
+  left_join(FiscalSpace, by = c("Munic_Id", "year"))
+
+# names(Data.Analysis)
+
+# Free Memory
+rm(FiscalSpace)
+
+# Dummy for left parties
+Data.Analysis <- Data.Analysis %>% 
+  mutate(LeftParty = ifelse(MayorParty2 == "PT" | MayorParty2 == "PDT" | MayorParty2 == "PC do B" |
+                              MayorParty2 == "PSB", 1, 0))
+
+
+## avoid city duplication
+Data.Analysis <- Data.Analysis %>% 
+  distinct(Munic_Id, year, .keep_all = TRUE)
+
+
+
+# Lag PB and lag accumulated years
+Data.Analysis <- Data.Analysis %>% 
+  # Create lag variable
+  group_by(Munic_Id) %>% 
+  mutate(lag.pb = lag(MunicOP_OP)) %>% 
+  mutate(lag.pb = ifelse(year == 1992, 0, lag.pb)) %>% 
+  mutate(MunicOP_OP.Acum = ifelse(lag.pb == 1, 1, 0)) %>%
+  mutate(MunicOP_OP.Acum = ifelse(lag(MunicOP_OP.Acum) == 1 & lag.pb == 1, MunicOP_OP.Acum + 1, MunicOP_OP.Acum)) %>% 
+  mutate(MunicOP_OP.Acum = ifelse(lag(MunicOP_OP.Acum) == 2 & lag.pb == 1, MunicOP_OP.Acum + 1, MunicOP_OP.Acum)) %>% 
+  mutate(MunicOP_OP.Acum = ifelse(lag(MunicOP_OP.Acum) == 3 & lag.pb == 1, MunicOP_OP.Acum + 1, MunicOP_OP.Acum)) %>% 
+  mutate(MunicOP_OP.Acum = ifelse(lag(MunicOP_OP.Acum) == 4 & lag.pb == 1, MunicOP_OP.Acum + 1, MunicOP_OP.Acum)) %>% 
+  ungroup
+
+
+# Dummy para capitais de Estado
+Capitais <- Data.Analysis %>% 
+  filter(year == 2012) %>% 
+  group_by(UF_Sigla) %>% 
+  arrange(desc(population)) %>% 
+  slice(1) %>% 
+  ungroup %>% 
+  mutate(Munic_Id = ifelse(UF_Sigla == "SC", 4205407, Munic_Id)) %>% 
+  mutate(Munic_Nome = ifelse(UF_Sigla == "SC", "FLORIANÓPOLIS", Munic_Nome)) %>% 
+  mutate(Capital = 1) %>% 
+  select(UF_Sigla, Munic_Id, Munic_Nome, Capital)
+
+
+Data.Analysis <- Data.Analysis %>% 
+  left_join(Capitais, by = c("UF_Sigla", "Munic_Id", "Munic_Nome")) %>% 
+  mutate(Capital = ifelse(is.na(Capital), 0, Capital))
+
+names(Data.Analysis)
+
+rm(Capitais)
 
 
 ################## Save File ##################
