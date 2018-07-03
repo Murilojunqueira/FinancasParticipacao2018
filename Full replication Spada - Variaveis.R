@@ -668,7 +668,7 @@ FiscalSpace <- MunicFinancas %>%
   # Fiscal Space as percent of total Budget
   mutate(FiscalSpacePer = FiscalSpace / Budget) %>% 
   ## Total Debt expenditures over total budget
-  mutate(DebtPer = CurrentDebt + CapitalDebt / Budget) %>% 
+  mutate(DebtPer = (CurrentDebt + CapitalDebt) / Budget) %>% 
   # Filter NA values
   filter(!is.na(FiscalSpace)) %>% 
   # Group Variables by municipal term's period

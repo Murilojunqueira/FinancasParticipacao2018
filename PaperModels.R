@@ -37,6 +37,9 @@ library(scales)
 library(tidyverse)
 
 
+# Script with functions
+source(paste0(ScriptFolder, "PaperFunctions.R"))
+
 
 ################## Load Data ##################
 
@@ -120,6 +123,14 @@ map_chr(Data.Analysis.Complete, class)
 table(Data.Analysis.Complete$year)
 
 
+
+DebtData <- Data.Analysis.Complete %>% 
+  select(year, InvestPer,DebtPer, FiscalSpacePer) %>% 
+  group_by(year) %>% 
+  summarise(InvestPer = mean(InvestPer, na.rm = TRUE),
+            DebtPer = mean(DebtPer, na.rm = TRUE),
+            FiscalSpacePer = mean(FiscalSpacePer, na.rm = TRUE))
+
 ################## Alternative Samples ##################
 
 # Only PT mayors
@@ -160,74 +171,25 @@ Data.Analysis.abandon.Left <- Data.Analysis.Complete %>%
   filter(LeftParty == 1)
 
 
-################## Functions ##################
-
-# model <- s
-
-checkModel <- function(model, predict.level = 0.5) {
-  
-  # AIC 
-  AIC <- AIC(model)
-  BIC <- BIC(model)
-  
-  # Accuracy 
-  predict <- predict(model, type = 'response')
-  predict <- ifelse(predict > predict.level, 1, 0)
-  
-  
-  dependent.var <- model[["model"]][1][[1]]
-  
-  misClasificError <- mean(predict != dependent.var)
-  
-  Accuracy <- paste('The Accuracy level is:', format(1-misClasificError, digits = 6))
-  
-  #confusion matrix
-  predict <- predict(model, type = 'response')
-  
-  confusion.matrix <- table(dependent.var, predict > predict.level)
-  
-  # False Positive rate
-  
-  False.Positive.Rate <- as.numeric(confusion.matrix[1,2]) / rowSums(confusion.matrix)[[1]] %>% 
-    as.numeric() 
-  False.Positive.Rate <- scales::percent(False.Positive.Rate)
-  
-  # False Negative rate
-  
-  False.Negative.Rate <- as.numeric(confusion.matrix[2,1]) / rowSums(confusion.matrix)[[2]] %>% 
-    as.numeric() 
-  False.Negative.Rate <- scales::percent(False.Negative.Rate)
-  
-  
-  # Print Results:
-  print(summary(model))
-  cat(paste("AIC:", AIC, "\n"))
-  cat(paste("BIC:", BIC, "\n"))
-  cat(paste(Accuracy, "\n"))
-  print(confusion.matrix)
-  cat(paste("\n", "The false positive rate is", False.Positive.Rate, "\n"))
-  cat(paste0("The false negative rate is ", False.Negative.Rate))
-
-}
-
-
 ################## Existence of pb ##################
 
 # Linear predicted model
 LPM.pb <- lm(MunicOP_OP ~ 
                # Lag dependent variable (LDV)
-               lag.pb + MunicOP_OP.Acum +
+               lag.pb + MunicOP_OP.Acum + 
                # population
-               log(population) + Capital +
+               log(population) + Capital + log(population):LeftParty  + log(population):ptwin +
                # PT variables
-               ptwin + VictoryPTAfter2002 + LeftParty +
+               ptwin + VictoryPTAfter2002 + LeftParty + ptwin:ContinuityMayor + lag.pb:LeftParty +
                # Political Variables
                continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + 
-               ContinuityMayor + ContinuityMayor * lag.pb +
+               ContinuityMayor + ContinuityMayor:lag.pb + lag.pb:continuitypartpref +
                # Finantial variables
-               log(BudgetPP) + taxrevenues + balsheetrev + InvestPer + log(Investpp) + DebtPer + FiscalSpacePer +
+               log(BudgetPP) + taxrevenues + balsheetrev + InvestPer + log(Investpp) + DebtPer + 
+               lag.pb:InvestPer + FiscalSpacePer + lag.pb:FiscalSpacePer + taxrevenues:ptwin + 
                # Time Variables
-               YearDummies2004 + YearDummies2008 + YearDummies2012,  
+               YearDummies2004 + YearDummies2008 + YearDummies2012 + YearDummies2004:LeftParty
+             ,  
              # Dataset
              data = Data.Analysis.Complete)
 
@@ -240,21 +202,27 @@ s <- step(LPM.pb, trace = FALSE, direction = "both")
 checkModel(s)
 
 
+# Anova test
+anova(LPM.pb, test="Chisq")
+
+
 # Logit model
 Logit.pb <- glm(MunicOP_OP ~ 
-                # Lag dependent variable (LDV)
-                lag.pb + MunicOP_OP.Acum +
-                # population
-                log(population) + Capital +
-                # PT variables
-                ptwin + VictoryPTAfter2002 + LeftParty +
-                # Political Variables
-                continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + 
-                ContinuityMayor + ContinuityMayor * lag.pb +
-                # Finantial variables
-                log(BudgetPP) + taxrevenues + balsheetrev + + InvestPer + log(Investpp) + DebtPer + FiscalSpacePer +
-                # Time Variables
-                YearDummies2004 + YearDummies2008 + YearDummies2012,  
+                  # Lag dependent variable (LDV)
+                  lag.pb + MunicOP_OP.Acum + 
+                  # population
+                  log(population) + Capital + log(population):LeftParty  + log(population):ptwin +
+                  # PT variables
+                  ptwin + VictoryPTAfter2002 + LeftParty + ptwin:ContinuityMayor + lag.pb:LeftParty +
+                  # Political Variables
+                  continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + 
+                  ContinuityMayor + ContinuityMayor:lag.pb + lag.pb:continuitypartpref +
+                  # Finantial variables
+                  log(BudgetPP) + taxrevenues + balsheetrev + InvestPer + log(Investpp) + DebtPer + 
+                  lag.pb:InvestPer + FiscalSpacePer + lag.pb:FiscalSpacePer + taxrevenues:ptwin + 
+                  # Time Variables
+                  YearDummies2004 + YearDummies2008 + YearDummies2012 + YearDummies2004:LeftParty
+                ,
               # Dataset
               data = Data.Analysis.Complete,
               # Model
@@ -268,6 +236,78 @@ s <- step(Logit.pb, trace = FALSE, direction = "both",
                                           YearDummies2004 + YearDummies2008 + YearDummies2012)))
 checkModel(s)
 
+# Anova test
+anova(Logit.pb, test="Chisq")
+
+
+hist(log(Data.Analysis.Complete$population))
+
+LPM.pb.Min <- lm(MunicOP_OP ~ 
+                   # Lag dependent variable (LDV)
+                   lag.pb + MunicOP_OP.Acum + 
+                   # population
+                   log(population) + log(population):LeftParty  + log(population):ptwin +
+                   # PT variables
+                   ptwin + VictoryPTAfter2002 + LeftParty + # ptwin:ContinuityMayor +
+                   VictoryPTAfter2002:log(population) + 
+                   # Political Variables
+                   continuitypartpref + MayorsVulnerability + legprefpower + 
+                   ContinuityMayor + ContinuityMayor:lag.pb + lag.pb:continuitypartpref +
+                   # Finantial variables
+                   log(BudgetPP) + InvestPer + lag.pb:InvestPer + log(BudgetPP):InvestPer + 
+                   # Time Variables
+                   YearDummies2004 + YearDummies2008 + YearDummies2012
+             ,  
+             # Dataset
+             data = Data.Analysis.Complete)
+
+
+# Check model results
+checkModel(LPM.pb.Min)
+
+# Anova test
+anova(LPM.pb.Min, test="Chisq")
+
+# Compare to stepwise
+s <- step(LPM.pb.Min, trace = FALSE, direction = "both")
+checkModel(s)
+
+
+# Logit model
+Logit.pb.Min <- glm(MunicOP_OP ~ 
+                      # Lag dependent variable (LDV)
+                      lag.pb + MunicOP_OP.Acum + 
+                      # population
+                      log(population) + log(population):LeftParty  + log(population):ptwin +
+                      # PT variables
+                      ptwin + VictoryPTAfter2002 + LeftParty + ptwin:ContinuityMayor +
+                      # Political Variables
+                      continuitypartpref + MayorsVulnerability + legprefpower + 
+                      ContinuityMayor + ContinuityMayor:lag.pb + lag.pb:continuitypartpref +
+                      # Finantial variables
+                      log(BudgetPP) + InvestPer + lag.pb:InvestPer + log(BudgetPP):InvestPer + 
+                      # Time Variables
+                      YearDummies2004 + YearDummies2008 + YearDummies2012
+                    ,
+                    # Dataset
+                    data = Data.Analysis.Complete,
+                    # Model
+                    family=binomial(link='logit')
+                    )
+
+
+
+checkModel(Logit.pb.Min)
+
+
+# Anova test
+anova(Logit.pb.Min, test="Chisq")
+
+# Compare to stepwise
+s <- step(Logit.pb.Min, trace = FALSE, direction = "both")
+checkModel(s)
+
+
 
 # Only PT mayors
 
@@ -276,12 +316,13 @@ LPM.pb.PT <- lm(MunicOP_OP ~
                # Lag dependent variable (LDV)
                lag.pb + MunicOP_OP.Acum +
                # population
-               log(population) + Capital +
+               log(population) + 
                # Political Variables
                continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + 
-               ContinuityMayor + ContinuityMayor * lag.pb +
+                 ContinuityMayor + ContinuityMayor:lag.pb + 
                # Finantial variables
-               log(BudgetPP) + taxrevenues + balsheetrev + + InvestPer + log(Investpp) + DebtPer + FiscalSpacePer +
+               log(BudgetPP) + taxrevenues + balsheetrev + + InvestPer + log(Investpp) + DebtPer +
+               lag.pb:InvestPer + log(BudgetPP):InvestPer + 
                # Time Variables
                YearDummies2004 + YearDummies2008 + YearDummies2012,  
              # Dataset
@@ -298,6 +339,38 @@ s <- step(LPM.pb.PT, trace = FALSE, direction = "both",
 checkModel(s)
 
 
+
+# Linear predicted model
+LPM.pb.PT.min <- lm(MunicOP_OP ~ 
+                  # Lag dependent variable (LDV)
+                  lag.pb + MunicOP_OP.Acum +
+                  # population
+                  log(population) + 
+                  # Political Variables
+                  continuitypartpref + MayorsVulnerability + legprefpower + 
+                  ContinuityMayor + ContinuityMayor:lag.pb + continuitypartpref:lag.pb + 
+                  # Finantial variables
+                  log(BudgetPP) + taxrevenues + + InvestPer + 
+                  lag.pb:InvestPer + 
+                  # Time Variables
+                  YearDummies2004 + YearDummies2008 + YearDummies2012,  
+                # Dataset
+                data = Data.Analysis.Complete.PT)
+
+
+# Check model results
+checkModel(LPM.pb.PT.min)
+
+# Anova test
+anova(LPM.pb.PT.min, test="Chisq")
+
+# Compare to stepwise
+s <- step(LPM.pb.PT.min, trace = FALSE, direction = "both", 
+          scope = list(lower=as.formula(Adopt.pb ~ log(population) + log(BudgetPP) + 
+                                          YearDummies2004 + YearDummies2008 + YearDummies2012)))
+checkModel(s)
+
+
 # Logit model
 Logit.pb.PT <- glm(MunicOP_OP ~ 
                   # Lag dependent variable (LDV)
@@ -308,7 +381,8 @@ Logit.pb.PT <- glm(MunicOP_OP ~
                   continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + 
                   ContinuityMayor + ContinuityMayor * lag.pb +
                   # Finantial variables
-                  log(BudgetPP) + taxrevenues + balsheetrev + + InvestPer + log(Investpp) + DebtPer + FiscalSpacePer +
+                  log(BudgetPP) + taxrevenues + balsheetrev + + InvestPer + log(Investpp) + DebtPer + 
+                    lag.pb:InvestPer + FiscalSpacePer + lag.pb:FiscalSpacePer + log(BudgetPP):InvestPer + 
                   # Time Variables
                   YearDummies2004 + YearDummies2008 + YearDummies2012,  
                 # Dataset
@@ -318,6 +392,9 @@ Logit.pb.PT <- glm(MunicOP_OP ~
 
 
 checkModel(Logit.pb.PT)
+
+# Anova test
+anova(Logit.pb.Min, test="Chisq")
 
 s <- step(LPM.pb.PT, trace = FALSE, direction = "both", 
           scope = list(lower=as.formula(Adopt.pb ~ log(population) + log(BudgetPP) + 
@@ -341,6 +418,7 @@ LPM.pb.Left <- lm(MunicOP_OP ~
                     ContinuityMayor + ContinuityMayor * lag.pb +
                     # Finantial variables
                     log(BudgetPP) + taxrevenues + balsheetrev + + InvestPer + log(Investpp) + DebtPer + FiscalSpacePer +
+                    lag.pb:InvestPer + FiscalSpacePer + lag.pb:FiscalSpacePer +
                     # Time Variables
                     YearDummies2004 + YearDummies2008 + YearDummies2012,  
                 # Dataset
@@ -370,7 +448,8 @@ Logit.pb.Left <- glm(MunicOP_OP ~
                        continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + 
                        ContinuityMayor + ContinuityMayor * lag.pb +
                        # Finantial variables
-                       log(BudgetPP) + taxrevenues + balsheetrev + + InvestPer + log(Investpp) + DebtPer + FiscalSpacePer +
+                       log(BudgetPP) + taxrevenues + balsheetrev + + InvestPer + log(Investpp) + DebtPer + 
+                       lag.pb:InvestPer + FiscalSpacePer + lag.pb:FiscalSpacePer +
                        # Time Variables
                        YearDummies2004 + YearDummies2008 + YearDummies2012,  
                    # Dataset
@@ -410,6 +489,8 @@ View(Data.Analysis.Complete[Data.Analysis.Complete$False.Positive == 1,])
 ################## Adoption of pb ##################
 
 
+
+
 LPM.Adopt <- lm(Adopt.pb ~ 
                   # population
                   log(population) + Capital +
@@ -419,7 +500,8 @@ LPM.Adopt <- lm(Adopt.pb ~
                   continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + 
                   ContinuityMayor + 
                   # Finantial variables
-                  log(BudgetPP) + taxrevenues + balsheetrev + + InvestPer + log(Investpp) + DebtPer + FiscalSpacePer +
+                  log(BudgetPP) + taxrevenues + balsheetrev + + InvestPer + log(Investpp) + DebtPer + 
+                  FiscalSpacePer + 
                   # Time Variables
                   YearDummies2004 + YearDummies2008 + YearDummies2012,  
              # Dataset
@@ -445,7 +527,8 @@ Logit.Adopt <- glm(MunicOP_OP ~
                      continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + 
                      ContinuityMayor + 
                      # Finantial variables
-                     log(BudgetPP) + taxrevenues + balsheetrev + + InvestPer + log(Investpp) + DebtPer + FiscalSpacePer +
+                     log(BudgetPP) + taxrevenues + balsheetrev + InvestPer + log(Investpp) + DebtPer + 
+                     FiscalSpacePer + 
                      # Time Variables
                      YearDummies2004 + YearDummies2008 + YearDummies2012,  
                      # Dataset
@@ -493,7 +576,8 @@ Logit.Adopt.PT <- glm(MunicOP_OP ~
                         continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + 
                         ContinuityMayor + 
                         # Finantial variables
-                        log(BudgetPP) + taxrevenues + balsheetrev + + InvestPer + log(Investpp) + DebtPer + FiscalSpacePer +
+                        log(BudgetPP) + taxrevenues + balsheetrev + + InvestPer + log(Investpp) + DebtPer + 
+                        FiscalSpacePer +
                         # Time Variables
                         YearDummies2004 + YearDummies2008 + YearDummies2012,  
                    # Dataset
@@ -545,7 +629,8 @@ LPM.Abandon <- lm(Abandon.pb ~
                          continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + 
                          ContinuityMayor + 
                          # Finantial variables
-                         taxrevenues + balsheetrev + log(BudgetPP) + InvestPer + log(Investpp) + DebtPer + FiscalSpacePer +
+                         taxrevenues + balsheetrev + log(BudgetPP) + InvestPer + log(Investpp) + DebtPer + 
+                         lag.pb:InvestPer + FiscalSpacePer + lag.pb:FiscalSpacePer +
                          # Time Variables
                          YearDummies2004 + YearDummies2008 + YearDummies2012,  
                        # Dataset
@@ -612,13 +697,16 @@ Logit.Abandon.pb <- glm(MunicOP_OP ~
 checkModel(Logit.Abandon.pb)
 
 s <- step(Logit.Abandon.pb, trace = FALSE, direction = "both", 
-          scope = list(lower=as.formula(Adopt.pb ~ log(BudgetPP) + log(population) + 
+          scope = list(lower=as.formula(Adopt.pb ~ log(BudgetPP) + log(population) +  InvestPer +
                                           YearDummies2004 + YearDummies2008 + YearDummies2012)))
 
 checkModel(s)
 
 
 # Only PT mayors
+
+table(Data.Analysis.abandon.PT$MunicOP_OP)
+
 
 LPM.Abandon.pb.PT <- lm(MunicOP_OP ~ 
                        # Lag dependent variable (LDV)
