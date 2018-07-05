@@ -1,0 +1,20 @@
+# Variables Codebook:
+
+## Adopt.pb = Adoption of pb,  Dependent Variable of models 1 and 2
+## Abandon.pb = Adandon of pb, Dependent Variable of models 3 and 4
+## VictoryPTAfter2002 = Victory of the PT after 2002 (discrete)
+## ptwin = Victory of the PT (discrete)
+## taxrevenues = Tax share of revenues
+## balsheetrev = Financial viability index
+## continuitypartpref = City government continuity (discrete)
+## MayorsVulnerability = Mayor's vulnerability
+## MayorControlCouncil = Mayor controls the council (discrete)
+## legprefpower = Mayor's share of council seats
+## InvestPer = ???
+## Investpp = ???
+## lag.pb = ?
+## log (population) = ?
+## YearDummies2000 = Period 3 (1996-2000)
+## YearDummies2004 = Period 4 (2001-2004)
+## YearDummies2008 = Period 5 (2005-2008)
+## YearDummies2012 = Period 6 (2009-2012)
