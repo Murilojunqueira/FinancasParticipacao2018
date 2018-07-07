@@ -1,24 +1,12 @@
 
-<<<<<<< HEAD
-# Script para extrair dados do BD para a análise das finanças municipais
-# e do probabilidade de sobrevivência do Orçamento Participativo.
-
-# Criado por Murilo Junqueira
-
-# Data criação: 2018-05-09
-# Ultima modificação: 2018-06-06
-=======
 ## Working paper "Why has the Participatory Budgeting declined in Brazil?"
 
 # LPM and Logit models for the analysis. File 1 of 3
 
-# By Murilo Junqueira
+# By Murilo Junqueira e Carla Bezerra
 
 # Created: 2018-05-09
-# Last Modified: 2018-02-07
-
-#CarlaBezerra fork: 2018-03-07
->>>>>>> CarlaChanges/master
+# Last Modified: 2018-07-07
 
 ################## Setup Working Space ##################
 
@@ -29,20 +17,14 @@ gc()
 
 # Os diretórios de inserção dos dados Brutos (InputFolder), destino dos 
 # dados (OutputFolder) e localização dos scripts (ScriptFolder). Atualize se necessário!
-<<<<<<< HEAD
 InputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
 OutputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
 ScriptFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
-=======
-InputFolder <- "C:/Users/Carla/FinancasParticipacao2018/data/" 
-OutputFolder <- "C:/Users/Carla/FinancasParticipacao2018/data/"
-ScriptFolder <- "C:/Users/Carla/FinancasParticipacao2018/"
->>>>>>> CarlaChanges/master
 
+# InputFolder <- "C:/Users/Carla/FinancasParticipacao2018/data/" 
+# OutputFolder <- "C:/Users/Carla/FinancasParticipacao2018/data/"
+# ScriptFolder <- "C:/Users/Carla/FinancasParticipacao2018/"
 
-# InputFolder <- "C:/Users/Murilo Junqueira/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
-# OutputFolder <- "C:/Users/Murilo Junqueira/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
-# ScriptFolder <- "C:/Users/Murilo Junqueira/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
 
 
 # Check folders
@@ -51,19 +33,13 @@ dir.exists(c(InputFolder, OutputFolder, ScriptFolder))
 
 # instala o pacote de extração dos dados, se necessário
 library(data.table)
-<<<<<<< HEAD
 #library(zeligverse)
 library(scales)
 library(tidyverse)
-
-=======
 #install.packages ("zeligverse")
-library(zeligverse)
-library(scales)
-library(tidyverse)
 #install.packages("sjPlot")
 library (sjPlot)
->>>>>>> CarlaChanges/master
+
 
 # Script with functions
 source(paste0(ScriptFolder, "PaperFunctions.R"))
@@ -79,18 +55,24 @@ Data.Analysis <- fread(paste0(InputFolder, "Data.Analysis.csv"),
 
 ################## Codebook ##################
 
-
 # Codebook for papers variables:
 
+## MunicOP_OP = If the municipality have or not participatory budget in one year
 ## Adopt.pb = Adoption of pb,  Dependent Variable of models 1 and 2
 ## Abandon.pb = Adandon of pb, Dependent Variable of models 3 and 4
-<<<<<<< HEAD
+## lag.pb = lag of MunicOP_OP
+## log (population) = Log of population
+## MunicOP_OP.Acum = accumulated years number of continuous adoption of pb
+## LeftParty = victory of left parties (PT, PDT, PSB and PCdoB)
+## ptwin = Victory of the PT (discrete)
 ## VictoryPTAfter202 = Victory of the PT before 2002 (discrete) * -1
 ## ChangeEffect2002 = Change in effect after 2002 (discrete)
-## mindist == Minimum Distance
-## ptwin = Change in effect after 2002 (?)
+## BudgetPP.log = Anual budget per capita.
+## InvestPer = Percentual of investiments of anual budget
 ## taxrevenues == Tax share of revenues
 ## balsheetrev == Financial viability index
+## InvestPer = Percentual of investiments (investiments/total Budget)
+## Investpp = Investiment per capita
 ## continuitypartpref == City government continuity (discrete)
 ## MayorsVulnerability = Mayor's vulnerability
 ## MayorControlCouncil = Mayor controls the council (discrete)
@@ -100,26 +82,6 @@ Data.Analysis <- fread(paste0(InputFolder, "Data.Analysis.csv"),
 ## YearDummies2004 = Period5 (2005-2008)
 ## YearDummies2008 = Period 6 (2009-2012)
 
-=======
-## VictoryPTAfter2002 = Victory of the PT after 2002 (discrete)
-## ptwin = Victory of the PT (discrete)
-## taxrevenues = Tax share of revenues
-## balsheetrev = Financial viability index
-## continuitypartpref = City government continuity (discrete)
-## MayorsVulnerability = Mayor's vulnerability
-## MayorControlCouncil = Mayor controls the council (discrete)
-## legprefpower = Mayor's share of council seats
-## InvestPer = ???
-## Investpp = ???
-## lag.pb = ?
-## log (population) = ?
-## YearDummies2000 = Period 3 (1996-2000)
-## YearDummies2004 = Period 4 (2001-2004)
-## YearDummies2008 = Period 5 (2005-2008)
-## YearDummies2012 = Period 6 (2009-2012)
-
-## CARLA: Updated codebook variables. Some definitions missing.
->>>>>>> CarlaChanges/master
 
 
 ################## Select and check data ##################
@@ -202,20 +164,14 @@ Data.Analysis.Adoption.PT <- Data.Analysis.Complete %>%
   filter(ptwin == 1)
 
 
-<<<<<<< HEAD
 # Delete municipalities that doens't previously adopted pb
-=======
 # Continuity of PB adoption
->>>>>>> CarlaChanges/master
 Data.Analysis.abandon <- Data.Analysis.Complete %>% 
   filter(lag.pb == 1)
 
 
-<<<<<<< HEAD
 # Delete municipalities that doens't previously adopted pb
-=======
 # Continuity of PB adoption
->>>>>>> CarlaChanges/master
 # Only PT mayors
 Data.Analysis.abandon.PT <- Data.Analysis.Complete %>% 
   filter(lag.pb == 1) %>% 
@@ -230,42 +186,30 @@ Data.Analysis.abandon.Left <- Data.Analysis.Complete %>%
 
 ################## Existence of pb ##################
 
-<<<<<<< HEAD
-# Linear predicted model
-=======
 # Linear predicted model (1)
->>>>>>> CarlaChanges/master
 LPM.pb <- lm(MunicOP_OP ~ 
                # Lag dependent variable (LDV)
                lag.pb + MunicOP_OP.Acum + 
                # population
                log(population) + Capital + log(population):LeftParty  + log(population):ptwin +
                # PT variables
-<<<<<<< HEAD
                ptwin + VictoryPTAfter2002 + LeftParty + ptwin:ContinuityMayor + lag.pb:LeftParty +
                # Political Variables
                continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + 
                ContinuityMayor + ContinuityMayor:lag.pb + lag.pb:continuitypartpref +
-=======
-               ptwin + VictoryPTAfter2002 + #LeftParty + lag.pb:LeftParty + #ptwin:ContinuityMayor +
+               ptwin + VictoryPTAfter2002 + LeftParty + lag.pb:LeftParty + #ptwin:ContinuityMayor +
                # Political Variables
                continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + ContinuityMayor +
                lag.pb:continuitypartpref + ContinuityMayor:lag.pb +
->>>>>>> CarlaChanges/master
                # Finantial variables
                log(BudgetPP) + taxrevenues + balsheetrev + InvestPer + log(Investpp) + DebtPer + 
                lag.pb:InvestPer + FiscalSpacePer + lag.pb:FiscalSpacePer + taxrevenues:ptwin + 
                # Time Variables
-<<<<<<< HEAD
                YearDummies2004 + YearDummies2008 + YearDummies2012 + YearDummies2004:LeftParty
              ,  
              # Dataset
              data = Data.Analysis.Complete)
-=======
-               YearDummies2004 + YearDummies2008 + YearDummies2012 + YearDummies2004:LeftParty,  
-               # Dataset
-               data = Data.Analysis.Complete)
->>>>>>> CarlaChanges/master
+
 
 
 # Check model results
@@ -280,22 +224,14 @@ checkModel(s)
 anova(LPM.pb, test="Chisq")
 
 
-<<<<<<< HEAD
-# Logit model
-=======
 # Logit model (2)
->>>>>>> CarlaChanges/master
 Logit.pb <- glm(MunicOP_OP ~ 
                   # Lag dependent variable (LDV)
                   lag.pb + MunicOP_OP.Acum + 
                   # population
                   log(population) + Capital + log(population):LeftParty  + log(population):ptwin +
                   # PT variables
-<<<<<<< HEAD
                   ptwin + VictoryPTAfter2002 + LeftParty + ptwin:ContinuityMayor + lag.pb:LeftParty +
-=======
-                  ptwin + VictoryPTAfter2002 + #LeftParty + lag.pb:LeftParty + #ptwin:ContinuityMayor +
->>>>>>> CarlaChanges/master
                   # Political Variables
                   continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + 
                   ContinuityMayor + ContinuityMayor:lag.pb + lag.pb:continuitypartpref +
@@ -310,13 +246,6 @@ Logit.pb <- glm(MunicOP_OP ~
               data = Data.Analysis.Complete,
               # Model
               family=binomial(link='logit'))
-=======
-                  YearDummies2004 + YearDummies2008 + YearDummies2012 + YearDummies2004:LeftParty,
-                  # Dataset
-                  data = Data.Analysis.Complete,
-                  # Model
-                  family=binomial(link='logit'))
->>>>>>> CarlaChanges/master
 
 
 checkModel(Logit.pb)
@@ -332,16 +261,11 @@ anova(Logit.pb, test="Chisq")
 
 hist(log(Data.Analysis.Complete$population))
 
-<<<<<<< HEAD
-=======
-
 # Minimal LPM (3)
->>>>>>> CarlaChanges/master
 LPM.pb.Min <- lm(MunicOP_OP ~ 
                    # Lag dependent variable (LDV)
                    lag.pb + MunicOP_OP.Acum + 
                    # population
-<<<<<<< HEAD
                    log(population) + log(population):LeftParty  + log(population):ptwin +
                    # PT variables
                    ptwin + VictoryPTAfter2002 + LeftParty + # ptwin:ContinuityMayor +
@@ -356,22 +280,6 @@ LPM.pb.Min <- lm(MunicOP_OP ~
              ,  
              # Dataset
              data = Data.Analysis.Complete)
-=======
-                   log(population) + #log(population):ptwin + #log(population):LeftParty + 
-                   # PT variables
-                   ptwin + VictoryPTAfter2002 + #LeftParty + # ptwin:ContinuityMayor +
-                   #VictoryPTAfter2002:log(population) +
-                   # Political Variables
-                   continuitypartpref + MayorsVulnerability + legprefpower + ContinuityMayor +
-                   ContinuityMayor:lag.pb + lag.pb:continuitypartpref +
-                   # Finantial variables
-                   log(BudgetPP) + InvestPer + lag.pb:InvestPer + lag.pb:log(BudgetPP) +#log(BudgetPP):InvestPer + 
-                   # Time Variables
-                   YearDummies2004 + YearDummies2008 + YearDummies2012,  
-                   # Dataset
-                   data = Data.Analysis.Complete)
->>>>>>> CarlaChanges/master
-
 
 # Check model results
 checkModel(LPM.pb.Min)
@@ -384,30 +292,22 @@ s <- step(LPM.pb.Min, trace = FALSE, direction = "both")
 checkModel(s)
 
 
-<<<<<<< HEAD
-# Logit model
-=======
 # Minimal model logit (4)
->>>>>>> CarlaChanges/master
 Logit.pb.Min <- glm(MunicOP_OP ~ 
                       # Lag dependent variable (LDV)
                       lag.pb + MunicOP_OP.Acum + 
                       # population
-<<<<<<< HEAD
                       log(population) + log(population):LeftParty  + log(population):ptwin +
                       # PT variables
                       ptwin + VictoryPTAfter2002 + LeftParty + ptwin:ContinuityMayor +
-=======
-                      log(population) + #log(population):ptwin + #log(population):LeftParty  +
+                      log(population) + log(population):ptwin + log(population):LeftParty  +
                       # PT variables
-                      ptwin + VictoryPTAfter2002 + #LeftParty + #ptwin:ContinuityMayor +
-                      #VictoryPTAfter2002:log(population) +
->>>>>>> CarlaChanges/master
+                      ptwin + VictoryPTAfter2002 + LeftParty + #ptwin:ContinuityMayor +
+                      VictoryPTAfter2002:log(population) +
                       # Political Variables
                       continuitypartpref + MayorsVulnerability + legprefpower + 
                       ContinuityMayor + ContinuityMayor:lag.pb + lag.pb:continuitypartpref +
                       # Finantial variables
-<<<<<<< HEAD
                       log(BudgetPP) + InvestPer + lag.pb:InvestPer + log(BudgetPP):InvestPer + 
                       # Time Variables
                       YearDummies2004 + YearDummies2008 + YearDummies2012
@@ -419,18 +319,7 @@ Logit.pb.Min <- glm(MunicOP_OP ~
                     )
 
 
-=======
-                      log(BudgetPP) + InvestPer + lag.pb:InvestPer + lag.pb:log(BudgetPP) + 
-                      # Time Variables
-                      YearDummies2004 + YearDummies2008 + YearDummies2012,
-                      # Dataset
-                      data = Data.Analysis.Complete,
-                      # Model
-                      family=binomial(link='logit'))
->>>>>>> CarlaChanges/master
-
 checkModel(Logit.pb.Min)
-
 
 # Anova test
 anova(Logit.pb.Min, test="Chisq")
@@ -439,15 +328,7 @@ anova(Logit.pb.Min, test="Chisq")
 s <- step(Logit.pb.Min, trace = FALSE, direction = "both")
 checkModel(s)
 
-
-
-<<<<<<< HEAD
-# Only PT mayors
-
-# Linear predicted model
-=======
 # Only PT mayors Linear predicted model (5)
->>>>>>> CarlaChanges/master
 LPM.pb.PT <- lm(MunicOP_OP ~ 
                # Lag dependent variable (LDV)
                lag.pb + MunicOP_OP.Acum +
@@ -461,13 +342,8 @@ LPM.pb.PT <- lm(MunicOP_OP ~
                lag.pb:InvestPer + log(BudgetPP):InvestPer + 
                # Time Variables
                YearDummies2004 + YearDummies2008 + YearDummies2012,  
-<<<<<<< HEAD
              # Dataset
              data = Data.Analysis.Complete.PT)
-=======
-               # Dataset
-               data = Data.Analysis.Complete.PT)
->>>>>>> CarlaChanges/master
 
 
 # Check model results
@@ -480,26 +356,6 @@ s <- step(LPM.pb.PT, trace = FALSE, direction = "both",
 checkModel(s)
 
 
-<<<<<<< HEAD
-
-# Linear predicted model
-LPM.pb.PT.min <- lm(MunicOP_OP ~ 
-                  # Lag dependent variable (LDV)
-                  lag.pb + MunicOP_OP.Acum +
-                  # population
-                  log(population) + 
-                  # Political Variables
-                  continuitypartpref + MayorsVulnerability + legprefpower + 
-                  ContinuityMayor + ContinuityMayor:lag.pb + continuitypartpref:lag.pb + 
-                  # Finantial variables
-                  log(BudgetPP) + taxrevenues + + InvestPer + 
-                  lag.pb:InvestPer + 
-                  # Time Variables
-                  YearDummies2004 + YearDummies2008 + YearDummies2012,  
-                # Dataset
-                data = Data.Analysis.Complete.PT)
-
-=======
 #  Only PT mayors Minimal Linear predicted model (7)
 LPM.pb.PT.min <- lm(MunicOP_OP ~ 
                       # Lag dependent variable (LDV)
@@ -516,7 +372,6 @@ LPM.pb.PT.min <- lm(MunicOP_OP ~
                       YearDummies2004 + YearDummies2008 + YearDummies2012,  
                       # Dataset
                       data = Data.Analysis.Complete.PT)
->>>>>>> CarlaChanges/master
 
 # Check model results
 checkModel(LPM.pb.PT.min)
@@ -531,11 +386,7 @@ s <- step(LPM.pb.PT.min, trace = FALSE, direction = "both",
 checkModel(s)
 
 
-<<<<<<< HEAD
-# Logit model
-=======
 # Only PT mayors Logit model (8)
->>>>>>> CarlaChanges/master
 Logit.pb.PT <- glm(MunicOP_OP ~ 
                   # Lag dependent variable (LDV)
                   lag.pb + MunicOP_OP.Acum +
@@ -546,7 +397,6 @@ Logit.pb.PT <- glm(MunicOP_OP ~
                   ContinuityMayor + ContinuityMayor * lag.pb +
                   # Finantial variables
                   log(BudgetPP) + taxrevenues + balsheetrev + + InvestPer + log(Investpp) + DebtPer + 
-<<<<<<< HEAD
                     lag.pb:InvestPer + FiscalSpacePer + lag.pb:FiscalSpacePer + log(BudgetPP):InvestPer + 
                   # Time Variables
                   YearDummies2004 + YearDummies2008 + YearDummies2012,  
@@ -554,15 +404,6 @@ Logit.pb.PT <- glm(MunicOP_OP ~
                 data = Data.Analysis.Complete.PT,
                 # Model
                 family=binomial(link='logit'))
-=======
-                  lag.pb:InvestPer + FiscalSpacePer + lag.pb:FiscalSpacePer + log(BudgetPP):InvestPer + 
-                  # Time Variables
-                  YearDummies2004 + YearDummies2008 + YearDummies2012,  
-                  # Dataset
-                  data = Data.Analysis.Complete.PT,
-                  # Model
-                  family=binomial(link='logit'))
->>>>>>> CarlaChanges/master
 
 
 checkModel(Logit.pb.PT)
@@ -575,15 +416,7 @@ s <- step(LPM.pb.PT, trace = FALSE, direction = "both",
                                           YearDummies2004 + YearDummies2008 + YearDummies2012)))
 checkModel(s)
 
-
-
-<<<<<<< HEAD
-# Only Left mayors
-
-# Linear predicted model
-=======
 # Only Left mayors Linear predicted model (9)
->>>>>>> CarlaChanges/master
 LPM.pb.Left <- lm(MunicOP_OP ~ 
                     # Lag dependent variable (LDV)
                     lag.pb + MunicOP_OP.Acum +
@@ -614,11 +447,7 @@ s <- step(LPM.pb.Left, trace = FALSE, direction = "both",
 checkModel(s)
 
 
-<<<<<<< HEAD
-# Logit model
-=======
 # Only Left mayors Logit model (10)
->>>>>>> CarlaChanges/master
 Logit.pb.Left <- glm(MunicOP_OP ~ 
                        # Lag dependent variable (LDV)
                        lag.pb + MunicOP_OP.Acum +
@@ -634,18 +463,10 @@ Logit.pb.Left <- glm(MunicOP_OP ~
                        lag.pb:InvestPer + FiscalSpacePer + lag.pb:FiscalSpacePer +
                        # Time Variables
                        YearDummies2004 + YearDummies2008 + YearDummies2012,  
-<<<<<<< HEAD
                    # Dataset
                    data = Data.Analysis.Complete.Left,
                    # Model
                    family=binomial(link='logit'))
-=======
-                       # Dataset
-                       data = Data.Analysis.Complete.Left,
-                       # Model
-                       family=binomial(link='logit'))
->>>>>>> CarlaChanges/master
-
 
 checkModel(Logit.pb.Left)
 
@@ -677,13 +498,7 @@ View(Data.Analysis.Complete[Data.Analysis.Complete$False.Positive == 1,])
 
 ################## Adoption of pb ##################
 
-<<<<<<< HEAD
-
-
-=======
 # LPM Adoption (11)
->>>>>>> CarlaChanges/master
-
 LPM.Adopt <- lm(Adopt.pb ~ 
                   # population
                   log(population) + Capital +
@@ -697,14 +512,8 @@ LPM.Adopt <- lm(Adopt.pb ~
                   FiscalSpacePer + 
                   # Time Variables
                   YearDummies2004 + YearDummies2008 + YearDummies2012,  
-<<<<<<< HEAD
              # Dataset
              data = Data.Analysis.Adoption)
-=======
-                  # Dataset
-                  data = Data.Analysis.Adoption)
->>>>>>> CarlaChanges/master
-
 
 checkModel(LPM.Adopt)
 
@@ -714,12 +523,7 @@ s <- step(LPM.Adopt, trace = FALSE, direction = "both",
 checkModel(s)
 
 
-
-<<<<<<< HEAD
-# Logit model
-=======
 # Logit model Adoption (12)
->>>>>>> CarlaChanges/master
 Logit.Adopt <- glm(MunicOP_OP ~ 
                      # population
                      log(population) + Capital +
@@ -746,11 +550,7 @@ s <- step(Logit.Adopt, trace = FALSE, direction = "both",
 checkModel(s)
 
 
-<<<<<<< HEAD
-# Only for PT mayors
-=======
 # LPM Adoption Only for PT mayors (13)
->>>>>>> CarlaChanges/master
 LPM.Adopt.PT <- lm(Adopt.pb ~ 
                      # population
                      log(population) + Capital +
@@ -774,11 +574,7 @@ checkModel(s)
 
 
 
-<<<<<<< HEAD
-# Logit model
-=======
 # Logit model Adoption only for PT mayors (14)
->>>>>>> CarlaChanges/master
 Logit.Adopt.PT <- glm(MunicOP_OP ~ 
                         # population
                         log(population) + Capital +
@@ -790,17 +586,10 @@ Logit.Adopt.PT <- glm(MunicOP_OP ~
                         FiscalSpacePer +
                         # Time Variables
                         YearDummies2004 + YearDummies2008 + YearDummies2012,  
-<<<<<<< HEAD
                    # Dataset
                    data = Data.Analysis.Adoption.PT,
                    # Model
                    family=binomial(link='logit'))
-=======
-                        # Dataset
-                        data = Data.Analysis.Adoption.PT,
-                        # Model
-                        family=binomial(link='logit'))
->>>>>>> CarlaChanges/master
 
 checkModel(Logit.Adopt.PT)
 
@@ -834,42 +623,11 @@ View(Data.Analysis.Adoption.PT[Data.Analysis.Adoption.PT$False.Positive == 1,])
 
 ################## Abandon of pb ##################
 
-
-<<<<<<< HEAD
-LPM.Abandon <- lm(Abandon.pb ~ 
-                         # Lag dependent variable (LDV)
-                         MunicOP_OP.Acum +
-                         # population
-                         log(population) + Capital +
-                         # PT variables
-                         ptwin + VictoryPTAfter2002 + LeftParty +
-                         # Political Variables
-                         continuitypartpref + MayorsVulnerability + MayorControlCouncil + legprefpower + 
-                         ContinuityMayor + 
-                         # Finantial variables
-                         taxrevenues + balsheetrev + log(BudgetPP) + InvestPer + log(Investpp) + DebtPer + 
-                         lag.pb:InvestPer + FiscalSpacePer + lag.pb:FiscalSpacePer +
-                         # Time Variables
-                         YearDummies2004 + YearDummies2008 + YearDummies2012,  
-                       # Dataset
-                       data = Data.Analysis.Complete)
-  
-  
-  
-checkModel(LPM.Abandon)
-
-s <- step(LPM.Abandon, trace = FALSE, direction = "both", 
-          scope = list(lower=as.formula(Adopt.pb ~ log(BudgetPP) + log(population) +
-                                          YearDummies2004 + YearDummies2008 + YearDummies2012)))
-
-checkModel(s)
-
-
-=======
-
+#### Model under review
 #LPM Abandon Model (15)
 #Carla: esse modelos aqui não me parece correto. Há uma sobreposição entre a sub-amostra
 # e as variáveis lags inseridas.
+
 #LPM.Abandon <- lm(Abandon.pb ~ 
                          # Lag dependent variable (LDV)
 #                         MunicOP_OP.Acum +
@@ -896,7 +654,6 @@ checkModel(s)
 #checkModel(s)
 
 #LPM Abandon Model (16)
->>>>>>> CarlaChanges/master
 # P(pb = 1 | pb(t-1) = 1) # A chance de continuidade do OP
 LPM.Abandon.pb <- lm((MunicOP_OP) ~ 
                     # Lag dependent variable (LDV)
@@ -912,13 +669,8 @@ LPM.Abandon.pb <- lm((MunicOP_OP) ~
                     taxrevenues + balsheetrev + log(BudgetPP) + InvestPer + log(Investpp) + DebtPer + FiscalSpacePer +
                     # Time Variables
                     YearDummies2004 + YearDummies2008 + YearDummies2012,  
-<<<<<<< HEAD
                   # Dataset
                   data = Data.Analysis.abandon)
-=======
-                    # Dataset
-                    data = Data.Analysis.abandon)
->>>>>>> CarlaChanges/master
 
 checkModel(LPM.Abandon.pb)
 
@@ -928,12 +680,7 @@ s <- step(LPM.Abandon.pb, trace = FALSE, direction = "both",
 
 checkModel(s)
 
-<<<<<<< HEAD
-
-=======
 #Logit Abandon Model (17)
->>>>>>> CarlaChanges/master
-
 Logit.Abandon.pb <- glm(MunicOP_OP ~ 
                        # Lag dependent variable (LDV)
                        MunicOP_OP.Acum + 
@@ -962,11 +709,7 @@ s <- step(Logit.Abandon.pb, trace = FALSE, direction = "both",
 checkModel(s)
 
 
-<<<<<<< HEAD
-# Only PT mayors
-=======
 # Only PT mayors LPM (18)
->>>>>>> CarlaChanges/master
 
 table(Data.Analysis.abandon.PT$MunicOP_OP)
 
@@ -998,11 +741,7 @@ s <- step(LPM.Abandon.pb.PT, trace = FALSE, direction = "both")
 
 checkModel(s)
 
-<<<<<<< HEAD
-=======
 # Only PT mayors Logit (19)
->>>>>>> CarlaChanges/master
-
 Logit.Abandon.pb.PT <- glm(MunicOP_OP ~ 
                           # Lag dependent variable (LDV)
                           MunicOP_OP.Acum + 
@@ -1015,17 +754,10 @@ Logit.Abandon.pb.PT <- glm(MunicOP_OP ~
                           taxrevenues + balsheetrev + log(BudgetPP) + InvestPer + log(Investpp) + DebtPer + FiscalSpacePer +
                           # Time Variables
                           YearDummies2004 + YearDummies2008 + YearDummies2012,  
-<<<<<<< HEAD
                         # Dataset
                         data = Data.Analysis.abandon.PT,
                         # Model
                         family=binomial(link='logit'))
-=======
-                          # Dataset
-                          data = Data.Analysis.abandon.PT,
-                          # Model
-                          family=binomial(link='logit'))
->>>>>>> CarlaChanges/master
 
 checkModel(Logit.Abandon.pb.PT)
 
@@ -1035,11 +767,7 @@ s <- step(Logit.Abandon.pb.PT, trace = FALSE, direction = "both",
 checkModel(s)
 
 
-<<<<<<< HEAD
-# Only left mayors
-=======
 # Only left mayors LPM Abandon (20)
->>>>>>> CarlaChanges/master
 LPM.Abandon.pb.Left <- lm(MunicOP_OP ~ 
                             # Lag dependent variable (LDV)
                             MunicOP_OP.Acum + 
@@ -1054,13 +782,8 @@ LPM.Abandon.pb.Left <- lm(MunicOP_OP ~
                             taxrevenues + balsheetrev + log(BudgetPP) + InvestPer + log(Investpp) + DebtPer + FiscalSpacePer +
                             # Time Variables
                             YearDummies2004 + YearDummies2008 + YearDummies2012,  
-<<<<<<< HEAD
                         # Dataset
                         data = Data.Analysis.abandon.Left)
-=======
-                            # Dataset
-                            data = Data.Analysis.abandon.Left)
->>>>>>> CarlaChanges/master
 
 checkModel(LPM.Abandon.pb.Left)
 
@@ -1070,12 +793,7 @@ s <- step(LPM.Abandon.pb.Left, trace = FALSE, direction = "both",
 
 checkModel(s)
 
-<<<<<<< HEAD
-
-=======
 # Only left mayors Logit Abandon (21)
->>>>>>> CarlaChanges/master
-
 Logit.Abandon.pb.Left <- glm(MunicOP_OP ~ 
                                # Lag dependent variable (LDV)
                                MunicOP_OP.Acum + 
@@ -1119,8 +837,6 @@ View(Data.Analysis.abandon[Data.Analysis.abandon$False.Negative == 1,])
 View(Data.Analysis.abandon[Data.Analysis.abandon$False.Positive == 1,])
 
 
-<<<<<<< HEAD
-=======
 #####################Comparison Table#################################
 
 ##CARLA: Creating chart for comparison between models
@@ -1148,6 +864,8 @@ Comparemodels <- sjt.lm (LPM.pb.Min, Logit.pb.Min,
                          #remove.estimates = c(2,7,8,9,13,14,15,16,19),
                          separate.ci.col = FALSE, show.aic = TRUE #group.pred = FALSE
 )
+
+
 
 Comparemodels
 
@@ -1180,6 +898,4 @@ Comparemodels <- sjt.lm (LPM.pb.Min, Logit.pb.Min,
 
 Comparemodels
 
-
->>>>>>> CarlaChanges/master
 # End

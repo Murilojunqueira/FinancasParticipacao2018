@@ -1,19 +1,12 @@
 
-<<<<<<< HEAD
-# Valores preditos do modelo em gráficos:
-=======
 ## Working paper "Why has the Participatory Budgeting declined in Brazil?"
 
 # Preficted values Graphs and Results. File 3 of 3.
 
-# By Murilo Junqueira
+# By Murilo Junqueira e Carla Bezerra
 
 # Created: 2018-05-09
-# Last Modified: 2018-02-07
-
-#CarlaBezerra fork: 2018-04-07
-
->>>>>>> CarlaChanges/master
+# Last Modified: 2018-07-07
 
 ################## Setup Working Space ##################
 
@@ -24,20 +17,13 @@ gc()
 
 # Os diretórios de inserção dos dados Brutos (InputFolder), destino dos 
 # dados (OutputFolder) e localização dos scripts (ScriptFolder). Atualize se necessário!
-<<<<<<< HEAD
 InputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
 OutputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
 ScriptFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
 
-=======
-InputFolder <- "C:/Users/Carla/FinancasParticipacao2018/data/" 
-OutputFolder <- "C:/Users/Carla/FinancasParticipacao2018/data/"
-ScriptFolder <- "C:/Users/Carla/FinancasParticipacao2018/"
->>>>>>> CarlaChanges/master
-
-# InputFolder <- "C:/Users/Murilo Junqueira/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
-# OutputFolder <- "C:/Users/Murilo Junqueira/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
-# ScriptFolder <- "C:/Users/Murilo Junqueira/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
+# InputFolder <- "C:/Users/Carla/FinancasParticipacao2018/data/" 
+# OutputFolder <- "C:/Users/Carla/FinancasParticipacao2018/data/"
+# ScriptFolder <- "C:/Users/Carla/FinancasParticipacao2018/"
 
 
 # Check folders
@@ -52,11 +38,7 @@ library(data.table)
 library(scales)
 library(tidyverse)
 library(Zelig)
-<<<<<<< HEAD
-
-=======
 library(ggthemes)
->>>>>>> CarlaChanges/master
 
 # Script with functions
 source(paste0(ScriptFolder, "PaperFunctions.R"))
@@ -76,18 +58,22 @@ Data.Analysis <- fread(paste0(InputFolder, "Data.Analysis.csv"),
 
 # Codebook for papers variables:
 
-<<<<<<< HEAD
 ## MunicOP_OP = If the municipality have or not participatory budget in one year
+## Adopt.pb = Adoption of pb,  Dependent Variable of models 1 and 2
+## Abandon.pb = Adandon of pb, Dependent Variable of models 3 and 4
 ## lag.pb = lag of MunicOP_OP
+## log (population) = Log of population
 ## MunicOP_OP.Acum = accumulated years number of continuous adoption of pb
 ## LeftParty = victory of left parties (PT, PDT, PSB and PCdoB)
-## ptwin = Victory of pt
+## ptwin = Victory of the PT (discrete)
 ## VictoryPTAfter202 = Victory of the PT before 2002 (discrete) * -1
 ## ChangeEffect2002 = Change in effect after 2002 (discrete)
 ## BudgetPP.log = Anual budget per capita.
 ## InvestPer = Percentual of investiments of anual budget
 ## taxrevenues == Tax share of revenues
 ## balsheetrev == Financial viability index
+## InvestPer = Percentual of investiments (investiments/total Budget)
+## Investpp = Investiment per capita
 ## continuitypartpref == City government continuity (discrete)
 ## MayorsVulnerability = Mayor's vulnerability
 ## MayorControlCouncil = Mayor controls the council (discrete)
@@ -96,43 +82,14 @@ Data.Analysis <- fread(paste0(InputFolder, "Data.Analysis.csv"),
 ## YearDummies2000 = Period4 (2001-2004)
 ## YearDummies2004 = Period5 (2005-2008)
 ## YearDummies2008 = Period 6 (2009-2012)
-=======
-## Adopt.pb = Adoption of pb,  Dependent Variable of models 1 and 2
-## Abandon.pb = Adandon of pb, Dependent Variable of models 3 and 4
-## VictoryPTAfter2002 = Victory of the PT after 2002 (discrete)
-## ptwin = Victory of the PT (discrete)
-## taxrevenues = Tax share of revenues
-## balsheetrev = Financial viability index
-## continuitypartpref = City government continuity (discrete)
-## MayorsVulnerability = Mayor's vulnerability
-## MayorControlCouncil = Mayor controls the council (discrete)
-## legprefpower = Mayor's share of council seats
-## InvestPer = ???
-## Investpp = ???
-## lag.pb = ?
-## log (population) = ?
-## YearDummies2000 = Period 3 (1996-2000)
-## YearDummies2004 = Period 4 (2001-2004)
-## YearDummies2008 = Period 5 (2005-2008)
-## YearDummies2012 = Period 6 (2009-2012)
-
-## CARLA: Updated codebook variables. Some definitions missing.
->>>>>>> CarlaChanges/master
-
 
 ################## Select and check data ##################
-
-<<<<<<< HEAD
-=======
-#CARLA: I would move this piece of code (that is repeated in PaperModels.R) to the Dataset building script.
->>>>>>> CarlaChanges/master
 
 ## avoid city duplication
 Data.Analysis <- Data.Analysis %>% 
   distinct(Munic_Id, year, .keep_all = TRUE)
 
-
-names(Data.Analysis)
+# names(Data.Analysis)
 
 # Filter only municipalities with more than 50k pop in 1996
 Data.Analysis <- Data.Analysis %>% 
@@ -182,11 +139,10 @@ table(Data.Analysis.Complete$year)
   
 ################## Models ##################
 
-<<<<<<< HEAD
 # Basic Model
-=======
+
 # A. Basic LPM Model [Minimal LPM (3) in PaperModels]
->>>>>>> CarlaChanges/master
+
 LPM.pb.Min <- lm(MunicOP_OP ~ 
                    # Lag dependent variable (LDV)
                    lag.pb + MunicOP_OP.Acum + 
@@ -201,33 +157,24 @@ LPM.pb.Min <- lm(MunicOP_OP ~
                    # Finantial variables
                    BudgetPP.log + InvestPer + lag.pb:InvestPer + BudgetPP.log:InvestPer + 
                    # Time Variables
-<<<<<<< HEAD
                    YearDummies2004 + YearDummies2008 + YearDummies2012
                  ,  
                  # Dataset
                  data = Data.Analysis.Complete)
-=======
-                   YearDummies2004 + YearDummies2008 + YearDummies2012,  
-                   # Dataset
-                   data = Data.Analysis.Complete)
->>>>>>> CarlaChanges/master
 
 
 # Check model results
 checkModel(LPM.pb.Min)
 
-<<<<<<< HEAD
-# Zelig Model
-=======
 # B. Zelig Model
->>>>>>> CarlaChanges/master
+
 Zelig.pb.Min <- zelig(MunicOP_OP ~ 
                         # Lag dependent variable (LDV)
                         lag.pb + MunicOP_OP.Acum + 
                         # population
                         population.log + population.log:LeftParty  + population.log:ptwin +
                         # PT variables
-                        ptwin + VictoryPTAfter2002 + LeftParty +  # ptwin:ContinuityMayor +
+                        ptwin + VictoryPTAfter2002 + LeftParty +   # ptwin:ContinuityMayor +
                         VictoryPTAfter2002:population.log + 
                         # Political Variables
                         continuitypartpref + MayorsVulnerability + legprefpower + 
@@ -235,19 +182,12 @@ Zelig.pb.Min <- zelig(MunicOP_OP ~
                         # Finantial variables
                         BudgetPP.log + InvestPer + lag.pb:InvestPer + BudgetPP.log:InvestPer + 
                         # Time Variables
-<<<<<<< HEAD
                         YearDummies2004 + YearDummies2008 + YearDummies2012
                       ,
                       # Dataset
                       data = Data.Analysis.Complete,
                       model = "ls",
                       cite = FALSE)
-=======
-                        YearDummies2004 + YearDummies2008 + YearDummies2012,
-                        # Dataset
-                        data = Data.Analysis.Complete,
-                        model = "ls", cite = FALSE)
->>>>>>> CarlaChanges/master
 
 summary(Zelig.pb.Min)
 
@@ -258,35 +198,14 @@ summary(Zelig.pb.Min)
 hist(Data.Analysis.Complete$InvestPer)
 summary(Data.Analysis.Complete$InvestPer)
 
-<<<<<<< HEAD
 # Quantities of interest
-SemPB <- setx(Zelig.pb.Min, InvestPer = seq(0.02, 0.2, by=0.02), lag.pb = 0)
-ComPB <- setx(Zelig.pb.Min, InvestPer = seq(0.02, 0.2, by=0.02), lag.pb = 1)
-=======
-# Values of interest
 SemPB <- setx(Zelig.pb.Min, InvestPer = seq(0, 0.3, by=0.01), lag.pb = 0)
 ComPB <- setx(Zelig.pb.Min, InvestPer = seq(0, 0.3, by=0.01), lag.pb = 1)
->>>>>>> CarlaChanges/master
+
 
 # Zelig Graph
 s.out <- sim(Zelig.pb.Min, x = SemPB, x1 = ComPB)
 # summary(s.out)
-<<<<<<< HEAD
-ci.plot(s.out, var = "InvestPer", ci = 90, leg = 0, 
-        xlab = "Percentual de investimento municipal",
-        ylab = "Chance de adoção do OP")
-
-
-# ggplot graph
-=======
-#portuguese subtitles
-ci.plot(s.out, var = "InvestPer", ci = 90, leg = 0,
-        main = "Efeitos Marginais da Interação",
-        xlab = "Investimento Municipal (%)",
-        ylab = "Adoção/continuidade do OP")
-
-
-
 #english subtitles
 ci.plot(s.out, var = "InvestPer", ci = 90, leg = 0, 
         main = "Interaction Marginal Effects",
@@ -295,32 +214,14 @@ ci.plot(s.out, var = "InvestPer", ci = 90, leg = 0,
 
 
 # Same info in ggplot graph
->>>>>>> CarlaChanges/master
 
 # Extract simulated data
 qi.Values <- list(SemPB, ComPB)
 plotdata <- Graph.Data(qi.Values, Zelig.pb.Min, "InvestPer", ci = 90)
-<<<<<<< HEAD
-levels(plotdata$Group) <- c("Sem PB", "Com PB")
-=======
-levels(plotdata$Group) <- c("Sem OP", "Com OP") # c("no PB", "adopts PB")
->>>>>>> CarlaChanges/master
-
+levels(plotdata$Group) <- c("No PB", "Adopts PB") 
 
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = InvestPer, y =mean, fill = Group)) + 
-<<<<<<< HEAD
-  theme_classic(base_size = 15) + 
-  geom_line(aes(y =mean)) + 
-  geom_line(aes(y =high), linetype="dashed", color=NA) + 
-  geom_line(aes(y =low), linetype="dashed", color=NA) + 
-  xlab("Percentual de investimento municipal") + 
-  ylab("Probabilidade de OP") + 
-  scale_y_continuous(labels = scales::percent) + 
-  scale_x_continuous(labels = scales::percent) + 
-  geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
-  scale_fill_manual(values=c("light blue", "orange"), name="Legenda")
-=======
   theme_classic(base_size = 12) + 
   theme(legend.position="bottom", plot.title = element_text(hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5)) +
@@ -338,8 +239,7 @@ ggplot(data=plotdata, aes(x = InvestPer, y =mean, fill = Group)) +
   scale_y_continuous(labels = scales::percent) + 
   scale_x_continuous(labels = scales::percent) + 
   geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
-  scale_fill_manual(values=c("light blue", "orange"), name="Gestão Anterior") #name = "Previous Adminsitration")
->>>>>>> CarlaChanges/master
+  scale_fill_manual(values=c("light blue", "orange"), name="Previous Adminsitration:") #name = "Previous Adminsitration")
 
 
 rm(ComPB, SemPB, s.out)
@@ -351,54 +251,24 @@ rm(qi.Values, plotdata)
 hist(Data.Analysis.Complete$population.log)
 summary(Data.Analysis.Complete$population.log)
 
-<<<<<<< HEAD
+
 # Quantities of interest
-=======
-# Values of interest
->>>>>>> CarlaChanges/master
 PT.Antes2002 <- setx(Zelig.pb.Min, population.log = seq(10, 16, by=0.5), ptwin = 1, LeftParty = 1, VictoryPTAfter2002 = 0)
 PT.Depois2002 <- setx(Zelig.pb.Min, population.log = seq(10, 16, by=0.5), ptwin = 1, LeftParty = 1, VictoryPTAfter2002 = 1)
 
 # Zelig Graph
 s.out <- sim(Zelig.pb.Min, x = PT.Antes2002, x1 = PT.Depois2002)
 ci.plot(s.out, var = "population.log", ci = 90, leg = 0, 
-<<<<<<< HEAD
-        xlab = "População (log)",
-        ylab = "Chance de adoção do OP")
-
-
-=======
-        xlab = "População (log)", #Population
-        ylab = "Chance de adoção do OP") #PB adoption probability
-
-
+        xlab = "Population (log)", 
+        ylab = "PB adoption probability")
 
 #Same data in in ggplot2
->>>>>>> CarlaChanges/master
-
-# Extract simulated data
 qi.Values <- list(PT.Antes2002, PT.Depois2002)
 plotdata <- Graph.Data(qi.Values, Zelig.pb.Min, "population.log", ci = 90)
-<<<<<<< HEAD
-levels(plotdata$Group) <- c("PT de Antes 2002", "PT Depois de 2002")
+levels(plotdata$Group) <- c("Before 2002", "After 2002")
 
 
 #plot in ggplot2
-ggplot(data=plotdata, aes(x = population.log, y =mean, fill = Group)) + 
-  theme_classic(base_size = 15) + 
-  geom_line(aes(y =mean)) + 
-  geom_line(aes(y =high), linetype="dashed", color=NA) + 
-  geom_line(aes(y =low), linetype="dashed", color=NA) + 
-  xlab("População (log)") + 
-  ylab("Probabilidade de OP") + 
-  scale_y_continuous(labels = scales::percent) + 
-  geom_ribbon(aes(ymin=low, ymax=high), alpha=0.6) + 
-  scale_fill_manual(values=c("red", "green", "blue"), name="Legenda")
-=======
-levels(plotdata$Group) <- c("Antes de 2002", "Depois de 2002") #c("Before 2002", "After 2002")
-
-
-#ggplot
 ggplot(data=plotdata, aes(x = population.log, y =mean, fill = Group)) + 
   theme_classic(base_size = 12) + 
   theme(legend.position="bottom", plot.title = element_text(hjust = 0.5), 
@@ -406,18 +276,18 @@ ggplot(data=plotdata, aes(x = population.log, y =mean, fill = Group)) +
   geom_line(aes(y =mean)) + 
   geom_line(aes(y =high), linetype="dashed", color=NA) + 
   geom_line(aes(y =low), linetype="dashed", color=NA) + 
-  labs(title = "Probabilidade de adoção do OP em Prefeituras do PT",
-       subtitle = "Eleição do PT ao Governo Federal em interação com população",
-       #caption = "Fonte: Spada(2012)/ TSE/ IBGE", 
-       x = "População (log)", y = "Adoção  de OP") +
-  #labs(title = "Probability of PB Adoption in PT Prefectures",
-       #subtitle = " Federal Government Election effects in interaction with Population",
-       #caption = "Source: Spada(2012)/ TSE/ IBGE", 
-       #x = "Population (log)", y = "PB Adoption") +
+  # labs(title = "Probabilidade de adoção do OP em Prefeituras do PT",
+  #      subtitle = "Eleição do PT ao Governo Federal em interação com população",
+  #      #caption = "Fonte: Spada(2012)/ TSE/ IBGE", 
+  #      x = "População (log)", y = "Adoção  de OP") +
+  labs(title = "Probability of PB Adoption in PT Prefectures",
+  subtitle = " Federal Government Election effects in interaction with Population",
+  caption = "Source: Spada(2012)/ TSE/ IBGE",
+  x = "Population (log)", y = "PB Adoption") +
   scale_y_continuous(labels = scales::percent) + 
   geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
   scale_fill_manual(values=c("#ba2121", "#ffc3a0"), name = "Período")
->>>>>>> CarlaChanges/master
+
 
 
 # Free memory
@@ -428,13 +298,8 @@ rm(plotdata, s.out, qi.Values)
 
 ################## Demography and Ideology ##################
 
-<<<<<<< HEAD
-# Quantities of interest
-=======
-# CARLA: tenho dúvida sobre usar esses gráficos aqui. Eu me concentraria nos dois primeiros, que já considero suficientes.
 
-# Values of interest
->>>>>>> CarlaChanges/master
+# Quantities of interest
 PT <- setx(Zelig.pb.Min, population.log = seq(10, 16, by=0.5), ptwin = 1, LeftParty = 1)
 PT.Depois2002 <- setx(Zelig.pb.Min, population.log = seq(10, 16, by=0.5), ptwin = 1, LeftParty = 1, VictoryPTAfter2002 = 1)
 PT.Antes2002 <- setx(Zelig.pb.Min, population.log = seq(10, 16, by=0.5), ptwin = 1, LeftParty = 1, VictoryPTAfter2002 = 0)
@@ -503,20 +368,12 @@ Zelig.pb <- zelig(MunicOP_OP ~
                     # Finantial variables
                     taxrevenues + balsheetrev + 
                     # Time Variables
-<<<<<<< HEAD
-                    YearDummies2004 + YearDummies2008 + YearDummies2012
-                  ,  
-                  # Dataset
-                  data = Data.Analysis.Complete,
-                  model = "ls",
-                  cite = FALSE)
-=======
                     YearDummies2004 + YearDummies2008 + YearDummies2012,  
                     # Dataset
                     data = Data.Analysis.Complete,
                     model = "ls",
                     cite = FALSE)
->>>>>>> CarlaChanges/master
+
 
                       
 
@@ -531,7 +388,7 @@ s.out <- sim(Zelig.pb, x = x.low, x1 = x.high)
 
 s.out <- sim(Zelig.pb.Min, x = x.low, x1 = x.high)
 
-summary(s.out)
+# summary(s.out)
 
 ev <- s.out[["sim.out"]][["x"]][["ev"]][[1]]
 ev1 <- s.out[["sim.out"]][["x1"]][["ev"]][[1]]
@@ -552,8 +409,6 @@ ggplot(df.summary, aes(x = x, y = ymean)) +
   ylab("Probabilidade de OP") +
   scale_y_continuous(labels = scales::percent)
 
-# Podemos ver que nessa análise não interativa, a chance do PT implementar o PB
-# depois de 2002 cai muito!
 
 rm(x.low, x.high, s.out)
 rm(ev, ev1, df.summary)
