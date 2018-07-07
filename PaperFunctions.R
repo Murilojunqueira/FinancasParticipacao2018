@@ -1,5 +1,20 @@
 
+<<<<<<< HEAD
 # Valores preditos do modelo em gráficos:
+=======
+## Working paper "Why has the Participatory Budgeting declined in Brazil?"
+
+# Functions for PaperModel.R. File 2 of 3
+
+
+# By Murilo Junqueira
+
+# Created: 2018-05-09
+# Last Modified: 2018-02-07
+
+#CarlaBezerra fork: 2018-03-07
+
+>>>>>>> CarlaChanges/master
 
 ################## Setup Working Space ##################
 
