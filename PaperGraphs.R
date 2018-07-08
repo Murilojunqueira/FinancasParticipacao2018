@@ -208,30 +208,33 @@ s.out <- sim(Zelig.pb.Min, x = SemPB, x1 = ComPB)
 # summary(s.out)
 #english subtitles
 ci.plot(s.out, var = "InvestPer", ci = 90, leg = 0, 
-        main = "Interaction Marginal Effects",
-        xlab = "Local Investment (%)",
-        ylab = "PB adoption/continuity")
-
+        # main = "Interaction Marginal Effects",
+        # xlab = "Local Investment (%)",
+        # ylab = "PB adoption/continuity")
+        xlab = "Investimento Municipal (%)",
+        ylab = "Chance de adotar o OP")
 
 # Same info in ggplot graph
 
 # Extract simulated data
 qi.Values <- list(SemPB, ComPB)
 plotdata <- Graph.Data(qi.Values, Zelig.pb.Min, "InvestPer", ci = 90)
-levels(plotdata$Group) <- c("No PB", "Adopts PB") 
+#levels(plotdata$Group) <- c("No PB", "Adopts PB") 
+levels(plotdata$Group) <- c("Sem OP  ", "Com OP") 
+
 
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = InvestPer, y =mean, fill = Group)) + 
-  theme_classic(base_size = 12) + 
+  theme_classic(base_size = 14) + 
   theme(legend.position="bottom", plot.title = element_text(hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5)) +
   geom_line(aes(y =mean)) + 
   geom_line(aes(y =high), linetype="dashed", color=NA) + 
   geom_line(aes(y =low), linetype="dashed", color=NA) + 
-  labs(title = "Probabilidade da adoção/continuidade do OP",
-       subtitle = "Existência prévia de OP em interação com taxa de investimento",
+  #labs(title = "Probabilidade da adoção/continuidade do OP",
+  #     subtitle = "Existência prévia de OP em interação com taxa de investimento")
        #caption = "Source: Spada(2012)/ TSE/ IBGE", 
-       x = "Taxa de Investimento Municipal", y = "Adoção/Continuidade do OP") +
+  labs(x = "Taxa de Investimento Municipal", y = "Adoção/Continuidade do OP") +
   #labs(title = "Probability of PB Adoption",
   #subtitle = "Previous PB existence effects in interaction with Investment rate",
   #caption = "Source: Spada(2012)/ TSE/ IBGE", 
@@ -239,7 +242,8 @@ ggplot(data=plotdata, aes(x = InvestPer, y =mean, fill = Group)) +
   scale_y_continuous(labels = scales::percent) + 
   scale_x_continuous(labels = scales::percent) + 
   geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
-  scale_fill_manual(values=c("light blue", "orange"), name="Previous Adminsitration:") #name = "Previous Adminsitration")
+  # scale_fill_manual(values=c("light blue", "orange"), name="Previous Adminsitration:")
+  scale_fill_manual(values=c("light blue", "orange"), name="Administração prévia:")
 
 
 rm(ComPB, SemPB, s.out)
@@ -265,28 +269,32 @@ ci.plot(s.out, var = "population.log", ci = 90, leg = 0,
 #Same data in in ggplot2
 qi.Values <- list(PT.Antes2002, PT.Depois2002)
 plotdata <- Graph.Data(qi.Values, Zelig.pb.Min, "population.log", ci = 90)
-levels(plotdata$Group) <- c("Before 2002", "After 2002")
+# levels(plotdata$Group) <- c("Before 2002", "After 2002")
+levels(plotdata$Group) <- c("Antes de 2002", "Depois de 2002")
 
 
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = population.log, y =mean, fill = Group)) + 
-  theme_classic(base_size = 12) + 
-  theme(legend.position="bottom", plot.title = element_text(hjust = 0.5), 
-        plot.subtitle = element_text(hjust = 0.5))+
+  theme_classic(base_size = 14) + 
   geom_line(aes(y =mean)) + 
   geom_line(aes(y =high), linetype="dashed", color=NA) + 
   geom_line(aes(y =low), linetype="dashed", color=NA) + 
-  # labs(title = "Probabilidade de adoção do OP em Prefeituras do PT",
-  #      subtitle = "Eleição do PT ao Governo Federal em interação com população",
-  #      #caption = "Fonte: Spada(2012)/ TSE/ IBGE", 
-  #      x = "População (log)", y = "Adoção  de OP") +
-  labs(title = "Probability of PB Adoption in PT Prefectures",
-  subtitle = " Federal Government Election effects in interaction with Population",
-  caption = "Source: Spada(2012)/ TSE/ IBGE",
-  x = "Population (log)", y = "PB Adoption") +
+  labs(title = "Probabilidade de adoção do OP em Prefeituras do PT",
+       subtitle = "Eleição do PT ao Governo Federal em interação com população",
+       #caption = "Fonte: Spada(2012)/ TSE/ IBGE",
+       x = "População (log)", y = "Adoção  de OP") +
+  # labs(title = "Probability of PB Adoption in PT Prefectures",
+  # subtitle = " Federal Government Election effects in interaction with Population",
+  # caption = "Source: Spada(2012)/ TSE/ IBGE",
+  # x = "Population (log)", y = "PB Adoption") +
   scale_y_continuous(labels = scales::percent) + 
+  scale_x_continuous(breaks=c(10:16), labels=c(exp.f(10:16))) +
   geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
-  scale_fill_manual(values=c("#ba2121", "#ffc3a0"), name = "Período")
+  scale_fill_manual(values=c("#ba2121", "#ffc3a0"), name = "Período") +
+  theme(legend.position="bottom", 
+        plot.title = element_text(hjust = 0.5), 
+        plot.subtitle = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 45, hjust = 1))
 
 
 
@@ -313,7 +321,7 @@ ci.plot(s.out, var = "population.log", ci = 90, leg = 0)
 # Extract simulated data
 qi.Values <- list(PT, Esquerda, CentroDireita)
 plotdata <- Graph.Data(qi.Values, Zelig.pb.Min, "population.log", ci = 90)
-levels(plotdata$Group) <- c("PT", "Esquerda", "Centro Direita")
+levels(plotdata$Group) <- c("PT   ", "Esquerda   ", "Centro Direita")
 
 
 #plot in ggplot2
@@ -325,8 +333,12 @@ ggplot(data=plotdata, aes(x = population.log, y =mean, fill = Group)) +
   xlab("População (log)") + 
   ylab("Probabilidade de OP") + 
   scale_y_continuous(labels = scales::percent) + 
+  scale_x_continuous(breaks=c(10:16), labels=c(exp.f(10:16))) +
   geom_ribbon(aes(ymin=low, ymax=high), alpha=0.6) + 
-  scale_fill_manual(values=c("red", "green", "blue"), name="Legenda")
+  scale_fill_manual(values=c("red", "green", "blue"), name="") + 
+  theme(legend.position="bottom", plot.title = element_text(hjust = 0.5), 
+        plot.subtitle = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 45, hjust = 1))
 
 
 ## Comparando o PT Depois de 2002 e os outros partidos
@@ -334,7 +346,7 @@ ggplot(data=plotdata, aes(x = population.log, y =mean, fill = Group)) +
 # Extract simulated data
 qi.Values <- list(PT.Depois2002, Esquerda, CentroDireita)
 plotdata <- Graph.Data(qi.Values, Zelig.pb.Min, "population.log", ci = 90)
-levels(plotdata$Group) <- c("PT Depois de 2002", "Esquerda", "Centro Direita")
+levels(plotdata$Group) <- c("PT Depois de 2002    ", "Esquerda   ", "Centro Direita")
 
 
 #plot in ggplot2
@@ -346,8 +358,13 @@ ggplot(data=plotdata, aes(x = population.log, y =mean, fill = Group)) +
   xlab("População (log)") + 
   ylab("Probabilidade de OP") + 
   scale_y_continuous(labels = scales::percent) + 
+  scale_x_continuous(breaks=c(10:16), labels=c(exp.f(10:16))) +
   geom_ribbon(aes(ymin=low, ymax=high), alpha=0.6) + 
-  scale_fill_manual(values=c("red", "green", "blue"), name="Legenda")
+  scale_fill_manual(values=c("red", "green", "blue"), name="") + 
+  theme(legend.position="bottom", plot.title = element_text(hjust = 0.5), 
+        plot.subtitle = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
 
 
 rm(PT, PT.Depois2002, PT.Antes2002, CentroDireita, Esquerda)
@@ -408,6 +425,8 @@ ggplot(df.summary, aes(x = x, y = ymean)) +
   xlab("Momento Político") + 
   ylab("Probabilidade de OP") +
   scale_y_continuous(labels = scales::percent)
+
+
 
 
 rm(x.low, x.high, s.out)

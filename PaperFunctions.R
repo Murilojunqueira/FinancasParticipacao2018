@@ -267,5 +267,18 @@ Graph.Data <- function(qi.Values, model.x, var, ci = 95) {
 }
 
 
+exp.f <- function(x) {
+  
+  unidade <- ifelse(exp(x)>1000000, "milhões", "mil")
+  divisao <- ifelse(exp(x)>1000000, 1000000, 1000)
+  digitos <- ifelse(exp(x)>1000000, 1, 0)
+  
+    exp(x) %>% 
+    "/"(divisao) %>% 
+    round(digitos) %>% 
+    format(big.mark = ".", decimal.mark = ",") %>% 
+    paste(unidade) %>% 
+      trimws
+}
 
 # End
