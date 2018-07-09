@@ -19,7 +19,7 @@ gc()
 # dados (OutputFolder) e localização dos scripts (ScriptFolder). Atualize se necessário!
 InputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
 OutputFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Dados/Dados Análise/"
-ScriptFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/"
+ScriptFolder <- "E:/Users/Murilo/Dropbox/Acadêmico e Educação/Publicações/2017 - Participação Carla/Scripts R/FinancasParticipacao2018/"
 
 # InputFolder <- "C:/Users/Carla/FinancasParticipacao2018/data/" 
 # OutputFolder <- "C:/Users/Carla/FinancasParticipacao2018/data/"
@@ -98,7 +98,7 @@ Data.Analysis <- Data.Analysis %>%
   group_by(Munic_Id) %>% 
   mutate(Sample.Selection = max(Sample.flag, na.rm = TRUE)) %>% 
   ungroup() %>% 
-  filter(Sample.Selection == 1) %>% 
+  # filter(Sample.Selection == 1) %>% 
   select(-Sample.flag, -Sample.Selection)
 
 
@@ -149,13 +149,14 @@ LPM.pb.Min <- lm(MunicOP_OP ~
                    # population
                    population.log + population.log:LeftParty  + population.log:ptwin +
                    # PT variables
-                   ptwin + VictoryPTAfter2002 + LeftParty + # ptwin:ContinuityMayor +
+                   ptwin + VictoryPTAfter2002 + LeftParty +  ptwin:ContinuityMayor +
                    VictoryPTAfter2002:population.log + 
                    # Political Variables
                    continuitypartpref + MayorsVulnerability + legprefpower + 
                    ContinuityMayor + ContinuityMayor:lag.pb + lag.pb:continuitypartpref +
                    # Finantial variables
                    BudgetPP.log + InvestPer + lag.pb:InvestPer + BudgetPP.log:InvestPer + 
+                   BudgetPP.log:lag.pb + BudgetPP.log:InvestPer:lag.pb +
                    # Time Variables
                    YearDummies2004 + YearDummies2008 + YearDummies2012
                  ,  
@@ -167,20 +168,20 @@ LPM.pb.Min <- lm(MunicOP_OP ~
 checkModel(LPM.pb.Min)
 
 # B. Zelig Model
-
 Zelig.pb.Min <- zelig(MunicOP_OP ~ 
                         # Lag dependent variable (LDV)
                         lag.pb + MunicOP_OP.Acum + 
                         # population
                         population.log + population.log:LeftParty  + population.log:ptwin +
                         # PT variables
-                        ptwin + VictoryPTAfter2002 + LeftParty +   # ptwin:ContinuityMayor +
+                        ptwin + VictoryPTAfter2002 + LeftParty +  ptwin:ContinuityMayor +
                         VictoryPTAfter2002:population.log + 
                         # Political Variables
                         continuitypartpref + MayorsVulnerability + legprefpower + 
                         ContinuityMayor + ContinuityMayor:lag.pb + lag.pb:continuitypartpref +
                         # Finantial variables
                         BudgetPP.log + InvestPer + lag.pb:InvestPer + BudgetPP.log:InvestPer + 
+                        BudgetPP.log:lag.pb +  BudgetPP.log:InvestPer:lag.pb +
                         # Time Variables
                         YearDummies2004 + YearDummies2008 + YearDummies2012
                       ,
@@ -199,8 +200,8 @@ hist(Data.Analysis.Complete$InvestPer)
 summary(Data.Analysis.Complete$InvestPer)
 
 # Quantities of interest
-SemPB <- setx(Zelig.pb.Min, InvestPer = seq(0, 0.3, by=0.01), lag.pb = 0)
-ComPB <- setx(Zelig.pb.Min, InvestPer = seq(0, 0.3, by=0.01), lag.pb = 1)
+SemPB <- setx(Zelig.pb.Min, InvestPer = seq(0, 0.25, by=0.01), lag.pb = 0)
+ComPB <- setx(Zelig.pb.Min, InvestPer = seq(0, 0.25, by=0.01), lag.pb = 1)
 
 
 # Zelig Graph
@@ -222,32 +223,188 @@ plotdata <- Graph.Data(qi.Values, Zelig.pb.Min, "InvestPer", ci = 90)
 #levels(plotdata$Group) <- c("No PB", "Adopts PB") 
 levels(plotdata$Group) <- c("Sem OP  ", "Com OP") 
 
-
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = InvestPer, y =mean, fill = Group)) + 
-  theme_classic(base_size = 14) + 
-  theme(legend.position="bottom", plot.title = element_text(hjust = 0.5),
-        plot.subtitle = element_text(hjust = 0.5)) +
   geom_line(aes(y =mean)) + 
   geom_line(aes(y =high), linetype="dashed", color=NA) + 
   geom_line(aes(y =low), linetype="dashed", color=NA) + 
-  #labs(title = "Probabilidade da adoção/continuidade do OP",
-  #     subtitle = "Existência prévia de OP em interação com taxa de investimento")
-       #caption = "Source: Spada(2012)/ TSE/ IBGE", 
-  labs(x = "Taxa de Investimento Municipal", y = "Adoção/Continuidade do OP") +
+  geom_bar(aes(y = (0.5/min(mean))*Freq/sum(Freq)), stat="identity", 
+           fill = "grey", colour = "white", alpha = 0.3) +
+  scale_y_continuous(labels = scales::percent) + 
+  scale_x_continuous(labels = scales::percent) + 
+  geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
+  labs(title = "Probabilidade da adoção/continuidade do OP",
+       subtitle = "Existência prévia de OP em interação com taxa de investimento",
+       caption = "Fonte: Spada(2012)/ TSE/ IBGE",
+       x = "Taxa de Investimento Municipal", y = "Adoção/Continuidade do OP") +
   #labs(title = "Probability of PB Adoption",
   #subtitle = "Previous PB existence effects in interaction with Investment rate",
   #caption = "Source: Spada(2012)/ TSE/ IBGE", 
   #x = "Investment rate", y = "PB Adoption/Continuity") +
-  scale_y_continuous(labels = scales::percent) + 
-  scale_x_continuous(labels = scales::percent) + 
-  geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
-  # scale_fill_manual(values=c("light blue", "orange"), name="Previous Adminsitration:")
-  scale_fill_manual(values=c("light blue", "orange"), name="Administração prévia:")
-
+  #scale_fill_manual(values=c("light blue", "orange"), name="Previous Adminsitration:")
+  scale_fill_manual(values=c("light blue", "orange"), name="Administração prévia:") +
+  theme_classic(base_size = 14) + 
+  theme(legend.position="bottom", plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5)) 
 
 rm(ComPB, SemPB, s.out)
 rm(qi.Values, plotdata)
+
+
+################## Interaction between BudgetPP.log and lag.pb ##################
+
+# Distribution of InvestPer
+hist(Data.Analysis.Complete$BudgetPP.log)
+summary(Data.Analysis.Complete$BudgetPP.log)
+
+# Quantities of interest
+SemPB <- setx(Zelig.pb.Min, BudgetPP.log = seq(6, 9, by=0.2), lag.pb = 0)
+ComPB <- setx(Zelig.pb.Min, BudgetPP.log = seq(6, 9, by=0.2), lag.pb = 1)
+
+
+# Zelig Graph
+s.out <- sim(Zelig.pb.Min, x = SemPB, x1 = ComPB)
+# summary(s.out)
+#english subtitles
+ci.plot(s.out, var = "BudgetPP.log", ci = 90, leg = 0, 
+        # main = "Interaction Marginal Effects",
+        # xlab = "Local Budget per capita (log) (%)",
+        # ylab = "PB adoption/continuity")
+        xlab = "Orçamento Municipal per capita (log) (%)",
+        ylab = "Chance de adotar o OP")
+
+# Same info in ggplot graph
+
+# Extract simulated data
+qi.Values <- list(SemPB, ComPB)
+plotdata <- Graph.Data(qi.Values, Zelig.pb.Min, "BudgetPP.log", ci = 90)
+#levels(plotdata$Group) <- c("No PB", "Adopts PB") 
+levels(plotdata$Group) <- c("Sem PB  ", "Com PB") 
+
+#plot in ggplot2
+ggplot(data=plotdata, aes(x = BudgetPP.log, y =mean, fill = Group)) + 
+  geom_line(aes(y =mean)) + 
+  geom_line(aes(y =high), linetype="dashed", color=NA) + 
+  geom_line(aes(y =low), linetype="dashed", color=NA) + 
+  geom_bar(aes(y = (0.5/max(mean))*Freq/sum(Freq)), stat="identity", 
+           fill = "grey", colour = "white", alpha = 0.3) +
+  scale_y_continuous(labels = scales::percent) + 
+  scale_x_continuous(breaks=c(6:9), labels=c(exp.f(6:9))) +
+  geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
+  labs(title = "Probabilidade da adoção/continuidade do OP",
+       subtitle = "Existência prévia de OP em interação com orçamento per capita",
+       caption = "Fonte: Spada(2012)/ TSE/ IBGE", 
+       x = "Orçamento Municipal per capita (log)", y = "Adoção/Continuidade do OP") +
+  #labs(title = "Probability of PB Adoption",
+  #subtitle = "Previous PB existence effects in interaction with Investment rate",
+  #caption = "Source: Spada(2012)/ TSE/ IBGE", 
+  #x = "Investment rate", y = "PB Adoption/Continuity") +
+  #scale_fill_manual(values=c("light blue", "orange"), name="Previous Adminsitration:")
+  scale_fill_manual(values=c("light blue", "orange"), name="Administração prévia:") +
+  theme_classic(base_size = 14) + 
+  theme(legend.position="bottom", plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+
+rm(s.out, SemPB, ComPB)
+rm(qi.Values, plotdata)
+
+
+################## Interaction between BudgetPP.log and InvestPer ##################
+
+# Distribution of InvestPer
+hist(Data.Analysis.Complete$BudgetPP.log)
+summary(Data.Analysis.Complete$BudgetPP.log)
+summary(Data.Analysis.Complete$InvestPer)
+
+
+# Quantities of interest
+LowInvestPer.NOpb <- setx(Zelig.pb.Min, BudgetPP.log = seq(6, 9, by=0.2), InvestPer = 0.05, lag.pb = 0)
+HighInvestPer.NOpb <- setx(Zelig.pb.Min, BudgetPP.log = seq(6, 9, by=0.2), InvestPer = 0.2, lag.pb = 0)
+LowInvestPer.pb <- setx(Zelig.pb.Min, BudgetPP.log = seq(6, 9, by=0.2), InvestPer = 0.05, lag.pb = 1)
+HighInvestPer.pb <- setx(Zelig.pb.Min, BudgetPP.log = seq(6, 9, by=0.2), InvestPer = 0.2, lag.pb = 1)
+
+
+# Zelig Graph
+s.out <- sim(Zelig.pb.Min, x = LowInvestPer.NOpb, x1 = HighInvestPer.NOpb)
+# summary(s.out)
+#english subtitles
+ci.plot(s.out, var = "BudgetPP.log", ci = 90, leg = 0, 
+        # main = "Interaction Marginal Effects",
+        # xlab = "Local Budget per capita (log) (%)",
+        # ylab = "PB adoption/continuity")
+        xlab = "Orçamento Municipal per capita (log) (%)",
+        ylab = "Chance de adotar o OP")
+
+# Same info in ggplot graph
+
+# Extract simulated data
+qi.Values <- list(LowInvestPer.NOpb, HighInvestPer.NOpb)
+plotdata <- Graph.Data(qi.Values, Zelig.pb.Min, "BudgetPP.log", ci = 90)
+#levels(plotdata$Group) <- c("No PB", "Adopts PB") 
+levels(plotdata$Group) <- c("Baixo Investimento (5%) ", "Alto Investimento (20%)") 
+
+#plot in ggplot2
+ggplot(data=plotdata, aes(x = BudgetPP.log, y =mean, fill = Group)) + 
+  geom_line(aes(y =mean)) + 
+  geom_line(aes(y =high), linetype="dashed", color=NA) + 
+  geom_line(aes(y =low), linetype="dashed", color=NA) + 
+  geom_bar(aes(y = (1/max(mean))*Freq/sum(Freq)), stat="identity", 
+           fill = "grey", colour = "white", alpha = 0.3) +
+  scale_y_continuous(labels = scales::percent) + 
+  scale_x_continuous(breaks=c(5:9), labels=c(exp.f(5:9))) +
+  geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
+  labs(title = "Probabilidade da adoção/continuidade do OP",
+       subtitle = "Sem existência prévia de OP, interação entre investimento e orçamento", 
+       caption = "Source: Spada(2012)/ TSE/ IBGE", 
+       x = "Orçamento Municipal per capita (log)", y = "Adoção do OP") +
+  #labs(title = "Probability of PB Adoption",
+  #subtitle = "Previous PB existence effects in interaction with Investment rate",
+  #caption = "Source: Spada(2012)/ TSE/ IBGE", 
+  #x = "Investment rate", y = "PB Adoption/Continuity") +
+  #scale_fill_manual(values=c("light blue", "orange"), name="Previous Adminsitration:")
+  scale_fill_manual(values=c("light blue", "orange"), name="Administração prévia:") +
+  theme_classic(base_size = 14) + 
+  theme(legend.position="bottom", plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+
+# Extract simulated data
+qi.Values <- list(LowInvestPer.pb, HighInvestPer.pb)
+plotdata <- Graph.Data(qi.Values, Zelig.pb.Min, "BudgetPP.log", ci = 90)
+#levels(plotdata$Group) <- c("No PB", "Adopts PB") 
+levels(plotdata$Group) <- c("Baixo Investimento  ", "Alto Investimento") 
+
+
+#plot in ggplot2
+ggplot(data=plotdata, aes(x = BudgetPP.log, y =mean, fill = Group)) + 
+  geom_line(aes(y =mean)) + 
+  geom_line(aes(y =high), linetype="dashed", color=NA) + 
+  geom_line(aes(y =low), linetype="dashed", color=NA) + 
+  geom_bar(aes(y = (1/max(mean))*Freq/sum(Freq)), stat="identity", 
+           fill = "grey", colour = "white", alpha = 0.3) +
+  scale_y_continuous(labels = scales::percent) + 
+  scale_x_continuous(breaks=c(6:9), labels=c(exp.f(6:9))) +
+  geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
+  labs(title = "Probabilidade da adoção/continuidade do OP",
+       subtitle = "Com existência prévia de OP em interação com taxa de investimento", 
+       caption = "Source: Spada(2012)/ TSE/ IBGE", 
+       x = "Taxa de Investimento Municipal", y = "Adoção/Continuidade do OP") +
+  #labs(title = "Probability of PB Adoption",
+  #subtitle = "Previous PB existence effects in interaction with Investment rate",
+  #caption = "Source: Spada(2012)/ TSE/ IBGE", 
+  #x = "Investment rate", y = "PB Adoption/Continuity") +
+  #scale_fill_manual(values=c("light blue", "orange"), name="Previous Adminsitration:")
+  scale_fill_manual(values=c("light blue", "orange"), name="Administração prévia:") +
+  theme_classic(base_size = 14) + 
+  theme(legend.position="bottom", plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+  
+    
+rm(s.out, LowInvestPer.pb, HighInvestPer.pb, LowInvestPer.NOpb, HighInvestPer.NOpb)
+rm(qi.Values, plotdata)
+
+
 
 ################## Interaction between Population and PT before and After 2002 ##################
 
@@ -334,7 +491,11 @@ ggplot(data=plotdata, aes(x = population.log, y =mean, fill = Group)) +
   ylab("Probabilidade de OP") + 
   scale_y_continuous(labels = scales::percent) + 
   scale_x_continuous(breaks=c(10:16), labels=c(exp.f(10:16))) +
-  geom_ribbon(aes(ymin=low, ymax=high), alpha=0.6) + 
+  geom_ribbon(aes(ymin=low, ymax=high), alpha=0.4) + 
+  labs(title = "Probabilidade da adoção/continuidade do OP",
+       subtitle = "Interação entre população e ideologia",
+       caption = "Fonte: Spada(2012)/ TSE/ IBGE",
+       x = "População (log)", y = "Adoção/Continuidade do OP") +
   scale_fill_manual(values=c("red", "green", "blue"), name="") + 
   theme(legend.position="bottom", plot.title = element_text(hjust = 0.5), 
         plot.subtitle = element_text(hjust = 0.5),
@@ -359,8 +520,13 @@ ggplot(data=plotdata, aes(x = population.log, y =mean, fill = Group)) +
   ylab("Probabilidade de OP") + 
   scale_y_continuous(labels = scales::percent) + 
   scale_x_continuous(breaks=c(10:16), labels=c(exp.f(10:16))) +
-  geom_ribbon(aes(ymin=low, ymax=high), alpha=0.6) + 
+  ylim(c(0, 1.10)) + 
+  geom_ribbon(aes(ymin=low, ymax=high), alpha=0.4) + 
   scale_fill_manual(values=c("red", "green", "blue"), name="") + 
+  labs(title = "Probabilidade da adoção/continuidade do OP",
+       subtitle = "Interação entre população e ideologia, PT depois de 2002",
+       caption = "Fonte: Spada(2012)/ TSE/ IBGE",
+       x = "População (log)", y = "Adoção/Continuidade do OP") +
   theme(legend.position="bottom", plot.title = element_text(hjust = 0.5), 
         plot.subtitle = element_text(hjust = 0.5),
         axis.text.x = element_text(angle = 45, hjust = 1))

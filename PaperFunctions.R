@@ -212,6 +212,10 @@ checkModel <- function(model, predict.level = 0.5) {
 
 getSimData <- function(Sim.Objetc, var, ci = 95) {
   
+  # Sim.Objetc <- Zelig.pb.Min
+  # qi.Values <- setx(Zelig.pb.Min, InvestPer = seq(0, 0.3, by=0.01), lag.pb = 0)
+  # Sim.Objetc <- sim(Sim.Objetc, x = qi.Values)
+  
   #extract ev
   myev <- Sim.Objetc$get_qi(qi='ev', xvalue = 'range')
   
@@ -223,7 +227,7 @@ getSimData <- function(Sim.Objetc, var, ci = 95) {
   
   AlphaValues <- c((1-ci/100), 1-(1-ci/100)) 
   
-  a<- apply(myev2, 2, quantile, probs = AlphaValues)
+  a <- apply(myev2, 2, quantile, probs = AlphaValues)
   low <- a[1,]
   high <- a[2,]
   mean <- apply(myev2, 2, mean) 
@@ -241,6 +245,12 @@ getSimData <- function(Sim.Objetc, var, ci = 95) {
   
   # Insert range of x
   plotdata[[var]] <- Var.Range
+  
+  # Frequency table
+  plotdata$Freq <- Sim.Objetc[["data"]][[var]] %>% # var data
+    cut(c(Var.Range[1] - Var.Range[2], Var.Range), # create one more leval ant the beginning
+        right=FALSE) %>%  # get frequency table
+    table() %>% as.numeric() # table frequency
   
   return(plotdata)
 }
