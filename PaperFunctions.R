@@ -210,17 +210,22 @@ checkModel <- function(model, predict.level = 0.5) {
   
 }
 
-getSimData <- function(Sim.Objetc, var, ci = 95) {
+getSimData <- function(Sim.Objetc, var, ci = 95, discrete = FALSE) {
   
   # Sim.Objetc <- Zelig.pb.Min
   # qi.Values <- setx(Zelig.pb.Min, InvestPer = seq(0, 0.3, by=0.01), lag.pb = 0)
-  # Sim.Objetc <- sim(Sim.Objetc, x = qi.Values)
+  # Sim.Objetc <- Sims.Data
   
   #extract ev
-  myev <- Sim.Objetc$get_qi(qi='ev', xvalue = 'range')
+  if(discrete == FALSE) {
+    myev <- Sim.Objetc$get_qi(qi='ev', xvalue = 'range')
+  } else {
+    myev <- Sim.Objetc$get_qi(qi='ev')
+  }
+  
   
   #convert the list into matrix
-  myev2 <- as.data.frame(matrix(unlist(myev), nrow = nrow(myev[[1]])))
+  myev2 <- as.data.frame(matrix(unlist(myev), nrow = nrow(myev)))
   
   #create plot data
   #This step is to create quantiles
@@ -234,36 +239,42 @@ getSimData <- function(Sim.Objetc, var, ci = 95) {
   
   plotdata <- as.data.frame(cbind(low, high, mean)) 
   
-  # qi names
-  qi.Vars <- names(Sim.Objetc[[".self"]][["range"]])
+
   
-  # qi in x axis
-  Var.Ref <- which(qi.Vars == var)
-  
-  # range of x
-  Var.Range <- Sim.Objetc[[".self"]][["range"]][[Var.Ref]]
-  
-  # Insert range of x
-  plotdata[[var]] <- Var.Range
-  
-  # Frequency table
-  plotdata$Freq <- Sim.Objetc[["data"]][[var]] %>% # var data
-    cut(c(Var.Range[1] - Var.Range[2], Var.Range), # create one more leval ant the beginning
-        right=FALSE) %>%  # get frequency table
-    table() %>% as.numeric() # table frequency
-  
+  if(discrete == FALSE) {
+    # qi names
+    qi.Vars <- names(Sim.Objetc[[".self"]][["range"]])
+    
+    # qi in x axis
+    Var.Ref <- which(qi.Vars == var)
+    
+    # range of x
+    Var.Range <- Sim.Objetc[[".self"]][["range"]][[Var.Ref]]
+    
+    # Insert range of x
+    plotdata[[var]] <- Var.Range
+    
+    # Frequency table
+    plotdata$Freq <- Sim.Objetc[["data"]][[var]] %>% # var data
+      cut(c(Var.Range[1] - Var.Range[2], Var.Range), # create one more leval ant the beginning
+          right=FALSE) %>%  # get frequency table
+      table() %>% as.numeric() # table frequency
+    
+  }
   return(plotdata)
 }
 
 
-Graph.Data <- function(qi.Values, model.x, var, ci = 95) {
+Graph.Data <- function(qi.Values, model.x, var, ci = 95, discrete = FALSE) {
+  
+  # model.x <- Zelig.pb.Min
   
   lineData <- list()
   plotdata <- data.frame()
   
   for (i in seq_along(qi.Values)) {
     Sims.Data <- sim(model.x, x = qi.Values[[i]])
-    lineData[[i]] <- getSimData(Sims.Data, var, ci = ci)
+    lineData[[i]] <- getSimData(Sims.Data, var, ci = ci, discrete = discrete)
     
     bindData <- as.data.frame(lineData[[i]]) %>% 
       mutate(Group = i)

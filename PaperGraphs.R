@@ -6,7 +6,7 @@
 # By Murilo Junqueira e Carla Bezerra
 
 # Created: 2018-05-09
-# Last Modified: 2018-07-07
+# Last Modified: 2018-07-07-10
 
 ################## Setup Working Space ##################
 
@@ -98,7 +98,7 @@ Data.Analysis <- Data.Analysis %>%
   group_by(Munic_Id) %>% 
   mutate(Sample.Selection = max(Sample.flag, na.rm = TRUE)) %>% 
   ungroup() %>% 
-  # filter(Sample.Selection == 1) %>% 
+  filter(Sample.Selection == 1) %>% 
   select(-Sample.flag, -Sample.Selection)
 
 
@@ -329,7 +329,7 @@ HighInvestPer.pb <- setx(Zelig.pb.Min, BudgetPP.log = seq(6, 9, by=0.2), InvestP
 s.out <- sim(Zelig.pb.Min, x = LowInvestPer.NOpb, x1 = HighInvestPer.NOpb)
 # summary(s.out)
 #english subtitles
-ci.plot(s.out, var = "BudgetPP.log", ci = 90, leg = 0, 
+ci.plot(s.out, var = "BudgetPP.log", ci = 90, #leg = 0, 
         # main = "Interaction Marginal Effects",
         # xlab = "Local Budget per capita (log) (%)",
         # ylab = "PB adoption/continuity")
@@ -389,7 +389,7 @@ ggplot(data=plotdata, aes(x = BudgetPP.log, y =mean, fill = Group)) +
   labs(title = "Probabilidade da adoção/continuidade do OP",
        subtitle = "Com existência prévia de OP em interação com taxa de investimento", 
        caption = "Source: Spada(2012)/ TSE/ IBGE", 
-       x = "Taxa de Investimento Municipal", y = "Adoção/Continuidade do OP") +
+       x = "Orçamento Municipal per capita (log)", y = "Continuidade do OP") +
   #labs(title = "Probability of PB Adoption",
   #subtitle = "Previous PB existence effects in interaction with Investment rate",
   #caption = "Source: Spada(2012)/ TSE/ IBGE", 
@@ -535,6 +535,52 @@ ggplot(data=plotdata, aes(x = population.log, y =mean, fill = Group)) +
 
 rm(PT, PT.Depois2002, PT.Antes2002, CentroDireita, Esquerda)
 rm(plotdata, s.out, qi.Values)
+
+
+################## Continuity ##################
+
+summary(Zelig.pb.Min)
+
+
+# Quantities of interest
+PartyOnly.Continuity.NoPB <- setx(Zelig.pb.Min, continuitypartpref = 1, ContinuityMayor = 0, lag.pb = 0)
+PartyOnly.Continuity.PB <- setx(Zelig.pb.Min, continuitypartpref = 1, ContinuityMayor = 0, lag.pb = 1)
+
+PartyPref.NoPB <- setx(Zelig.pb.Min, continuitypartpref = 1, ContinuityMayor = 1, lag.pb = 0)
+PartyPref.PB <- setx(Zelig.pb.Min, continuitypartpref = 1, ContinuityMayor = 1, lag.pb = 1)
+
+# Script with functions
+source(paste0(ScriptFolder, "PaperFunctions.R"))
+
+
+# Extract simulated data
+qi.Values <- list(PartyOnly.Continuity.NoPB, PartyPref.NoPB, 
+                  PartyOnly.Continuity.PB, PartyPref.PB)
+
+plotdata <- Graph.Data(qi.Values, Zelig.pb.Min, "range", ci = 90, discrete = TRUE)
+levels(plotdata$Group) <- c("Continuidade Partido (Sem OP)", "Reeleição Prefeito (Sem OP)",
+                           "Continuidade Partido (Com OP)", "Reeleição Prefeito (Com OP)")
+
+plotdata
+
+#plot in ggplot2
+ggplot(data=plotdata, aes(x = Group, y =mean)) + 
+  theme_classic(base_size = 15) + 
+  geom_errorbar(aes(ymin=low, ymax=high), width=.2,
+                position=position_dodge(.9)) +   
+  labs(title = "Probabilidade da adoção/continuidade do OP",
+       subtitle = "Efeitos da Continuidade Administrativa",
+       caption = "Fonte: Spada(2012)/ TSE/ IBGE",
+       x = "Continuidade Político-Adminsitrativa", y = "Adoção/Continuidade do OP") +
+  scale_y_continuous(labels = scales::percent) + 
+  theme(legend.position="bottom", plot.title = element_text(hjust = 0.5), 
+        plot.subtitle = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+
+
+
 
 
 ##################### Modelo Spada ###########################
