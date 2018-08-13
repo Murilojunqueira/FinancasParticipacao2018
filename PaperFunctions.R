@@ -225,7 +225,11 @@ getSimData <- function(Sim.Objetc, var, ci = 95, discrete = FALSE) {
   
   
   #convert the list into matrix
-  myev2 <- as.data.frame(matrix(unlist(myev), nrow = nrow(myev)))
+  nrowData <- ifelse(discrete == FALSE, length(myev[[1]]), nrow(myev))
+  
+  myev2 <- unlist(myev) %>% 
+    matrix(nrow = nrowData) %>% 
+    as.data.frame()
   
   #create plot data
   #This step is to create quantiles
@@ -239,7 +243,6 @@ getSimData <- function(Sim.Objetc, var, ci = 95, discrete = FALSE) {
   
   plotdata <- as.data.frame(cbind(low, high, mean)) 
   
-
   
   if(discrete == FALSE) {
     # qi names
@@ -261,6 +264,7 @@ getSimData <- function(Sim.Objetc, var, ci = 95, discrete = FALSE) {
       table() %>% as.numeric() # table frequency
     
   }
+  
   return(plotdata)
 }
 
@@ -273,6 +277,7 @@ Graph.Data <- function(qi.Values, model.x, var, ci = 95, discrete = FALSE) {
   plotdata <- data.frame()
   
   for (i in seq_along(qi.Values)) {
+    # i <- 1
     Sims.Data <- sim(model.x, x = qi.Values[[i]])
     lineData[[i]] <- getSimData(Sims.Data, var, ci = ci, discrete = discrete)
     
