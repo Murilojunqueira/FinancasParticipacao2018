@@ -56,7 +56,7 @@ write.table(OP.Data.Select,
 rm(OP.Data.Select, OP.Data)
 
 # Complete message
-print("PB data imported")
+message("Script Finished \n\nPB data imported\n\n")
 
 
 # End

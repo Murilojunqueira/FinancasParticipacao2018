@@ -19,3 +19,4 @@ options(encoding = "utf-8")
 cat("Welcome to \n 
     'Why has the Participatory Budgeting declined in Brazil?' \n 
     project.\n")
+
