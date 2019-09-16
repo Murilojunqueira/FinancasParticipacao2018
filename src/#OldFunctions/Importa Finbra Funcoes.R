@@ -1,16 +1,15 @@
 # Script para Importar dados do Finbra no R.
 
-# Script Para guardar as fun??es de extra??o dos dados do Finbra.
+# Script Para guardar as funções de extração dos dados do Finbra.
 
 # Criado por Murilo Junqueira.
 
-# Data cria??o: 2018-02-27.
-# Ultima modifica??o: 2018-03-01.
+# Data criação: 2018-02-27.
 
 
-################## Carrega pacotes necess?rios ##################
+################## Carrega pacotes necessários ##################
 
-# Lista de pacotes necess?rios para as fun??es desse arquivo.
+# Lista de pacotes necessários para as funções desse arquivo.
 list.of.packages <- c("tidyverse",
                       "data.table", 
                       "dplyr", 
@@ -19,26 +18,26 @@ list.of.packages <- c("tidyverse",
                       "lubridate",
                       "readxl")
 
-# Verifica os que n?o est?o instalados
+# Verifica os que não estão instalados
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 
-# Instala os pacotes n?o instalados
+# Instala os pacotes não instalados
 if(length(new.packages)) install.packages(new.packages)
 
-# L? todos os pacotes
+# Lê todos os pacotes
 for(i in 1:length(list.of.packages)) {
   #print(paste("Lendo o pacote", list.of.packages[i]))
   library(list.of.packages[i], character.only = TRUE)  
 }
 
-# Libera mem?ria
+# Libera memória
 rm(list.of.packages, new.packages, i)
 
 
 
-################## Fun??es ##################
+################## Funções ##################
 
-# Fun??es para formata??es b?sicas dos dados do Finbra para cada ano.
+# Funções para formatações básicas dos dados do Finbra para cada ano.
 FormataFinbra <- function(x, Ano, Aba, UGtoCodIBGE = NULL, BDCamposFinbra = NULL, 
                           InputFolder = NULL){
   
@@ -46,39 +45,39 @@ FormataFinbra <- function(x, Ano, Aba, UGtoCodIBGE = NULL, BDCamposFinbra = NULL
   # x <- MunicFinancas.New
   # Ano <- BDCamposFinbra.Select$FinbraCampo_Ano
   
-  # Garante que o Ano ? uma vari?vel inteira (integer).
+  # Garante que o Ano é uma variável inteira (integer).
   Ano <- as.integer(Ano)
   
-  # Atribui a fun??o correta para o dado  
-  ## 1998 a 2012 para a fun??o "Fun2012_1998"
+  # Atribui a função correta para o dado  
+  ## 1998 a 2012 para a função "Fun2012_1998"
   if(Ano <= 2012 & Ano >= 1998) {
     FUN <-  "Fun2012_1998" 
     } else if(Ano == 1997) {
-      ## 1997 para a fun??o "Fun1997"
+      ## 1997 para a função "Fun1997"
       FUN <-  "Fun1997"
     } else if(Ano <= 1996 & Ano >= 1992) {
-      ## 1996 a 1994 para a fun??o "Fun1996_1994"
+      ## 1996 a 1994 para a função "Fun1996_1994"
       FUN <-  "Fun1996_1994"
     }
   
-  # Caso o ano indicado n?o corresponder a nenhuma fun??o determinada, retorna erro.
+  # Caso o ano indicado não corresponder a nenhuma função determinada, retorna erro.
   if(is.null(FUN)) {
-    stop("Deve-se indicar um valor de ano com uma fun??o correspondente")
+    stop("Deve-se indicar um valor de ano com uma função correspondente")
   }
   
-  # fun??o para formatar os dados de 1998 a 2012.
+  # função para formatar os dados de 1998 a 2012.
   Fun2012_1998 <- function(x){
     
     Output <- x %>% 
-      # Cria uma vari?vel uniformizada de indentifica??o dos munic?pios
+      # Cria uma variável uniformizada de indentificação dos municípios
       mutate(Munic_Id6 = paste0(CD_UF, str_pad(CD_MUN, 4, "left", "0"))) %>% 
-      # Remove campos anteriores de indentifica??o dos munic?pios.
+      # Remove campos anteriores de indentificação dos municípios.
       select(-CD_UF, -CD_MUN) %>% 
-      # Deixa a vari?vel de indentifica??o com a primeira coluna da tabela.
+      # Deixa a variável de indentificação com a primeira coluna da tabela.
       select(Munic_Id6, everything())
   }
   
-  # fun??o para formatar os dados de 1998 a 2012.
+  # função para formatar os dados de 1998 a 2012.
   Fun1997 <- function(x){
     
     UGtoCodIBGE.ref6 <- DeParaUGCodIBGE %>% 
@@ -88,17 +87,17 @@ FormataFinbra <- function(x, Ano, Aba, UGtoCodIBGE = NULL, BDCamposFinbra = NULL
     Output <- x %>% 
       mutate(UG = as.character(UG)) %>% 
       left_join(UGtoCodIBGE.ref6, by = "UG")  %>% 
-      # Remove campos anteriores de indentifica??o dos munic?pios.
+      # Remove campos anteriores de indentificação dos municípios.
       select(-NOME, -UF, -Munic_Id, -UG, -Munic_Nome, -UF_Sigla) %>% 
-      # Deixa a vari?vel de indentifica??o com a primeira coluna da tabela.
+      # Deixa a variável de indentificação com a primeira coluna da tabela.
       select(Munic_Id6, everything())
   }
   
   
-  # fun??o para formatar os dados de 1998 a 2012.
+  # função para formatar os dados de 1998 a 2012.
   Fun1996_1994 <- function(x){
     
-    # Carrega a aba onde est?o os dados de UG
+    # Carrega a aba onde estão os dados de UG
     Ref.Munic <- BDCamposFinbra %>% 
       filter(FinbraCampo_Ano == Ano) %>% 
       filter(FinbraCampo_Campo == "UG") %>% 
@@ -117,15 +116,15 @@ FormataFinbra <- function(x, Ano, Aba, UGtoCodIBGE = NULL, BDCamposFinbra = NULL
     
     JoinMunic <- x %>% 
       filter(UF != "BR") %>% 
-      left_join(Fetch.UGTable, by = c("MUNIC?PIOS" = "munic?pio", "UF" = "uf")) %>% 
+      left_join(Fetch.UGTable, by = c("MUNICÍPIOS" = "município", "UF" = "uf")) %>% 
       left_join(UGtoCodIBGE.ref6, by = "UG") %>% 
-      rename(MUNICIPIOS = "MUNIC?PIOS")
+      rename(MUNICIPIOS = "MUNICÍPIOS")
     
     ExactMatch <- JoinMunic %>% 
       filter(!is.na(Munic_Id6)) %>% 
       select(-UF, -Munic_Id, -UG, -UF_Sigla, -Partial.Ref) %>% 
-      # Remove campos anteriores de indentifica??o dos munic?pios.
-      # Deixa a vari?vel de indentifica??o com a primeira coluna da tabela.
+      # Remove campos anteriores de indentificação dos municípios.
+      # Deixa a variável de indentificação com a primeira coluna da tabela.
       select(Munic_Id6, everything()) %>% 
       filter(!is.na(Munic_Id6)) %>%
       distinct(Munic_Id6, .keep_all = TRUE) %>% 
@@ -135,8 +134,8 @@ FormataFinbra <- function(x, Ano, Aba, UGtoCodIBGE = NULL, BDCamposFinbra = NULL
       filter(is.na(Munic_Id6)) %>% 
       select(1:3)
     
-    # Uiliza a fun??o MatchCity (acima), para encontrar as cidades sem correspond?ncia perfeita
-    # A busca ? feita dentro de cada estado.
+    # Uiliza a função MatchCity (acima), para encontrar as cidades sem correspondência perfeita
+    # A busca é feita dentro de cada estado.
     PartialMatch$Partial.Ref <- pmap_int(.l = list(CityName = PartialMatch$MUNICIPIOS,
                                                    Region = PartialMatch$UF),
                                          .f = MatchCity,
@@ -160,12 +159,12 @@ FormataFinbra <- function(x, Ano, Aba, UGtoCodIBGE = NULL, BDCamposFinbra = NULL
   }
   
   
-  # Fun??o gen?rica para consertar o banco (usando uma fun??o acima).
+  # Função genérica para consertar o banco (usando uma função acima).
   GenericFunction <- function(x, FUN) {
     x <- get(FUN)(x)
   }
   
-  # Executa a fun??o gen?rica para consertar o banco.
+  # Executa a função genérica para consertar o banco.
   Output <- GenericFunction(x, FUN)
   
   # Retorna o banco formatado.
@@ -174,8 +173,8 @@ FormataFinbra <- function(x, Ano, Aba, UGtoCodIBGE = NULL, BDCamposFinbra = NULL
 }
 
 
-# Fun??o para transformar o c?digo municipal IBGE de seis d?gitos 
-# em um c?digo de sete d?gitos.
+# Função para transformar o código municipal IBGE de seis dígitos 
+# em um código de sete dígitos.
 MuncCod6To7 <- function(x, Munc6.Name, Munc7.Name, InputFolder) {
   
   # Linhas de debug:
@@ -183,7 +182,7 @@ MuncCod6To7 <- function(x, Munc6.Name, Munc7.Name, InputFolder) {
   # Munc6.Name <- "Munic_Id6"
   # Munc7.Name <- "Munic_Id"
   
-  # Importa tabela com o c?digo dos munic?pios.
+  # Importa tabela com o código dos municípios.
   Municipios <- fread(paste0(InputFolder, "Municipios.csv"), 
                       sep = ";", dec = ",", stringsAsFactors = FALSE)
   
@@ -191,50 +190,50 @@ MuncCod6To7 <- function(x, Munc6.Name, Munc7.Name, InputFolder) {
   Municipios <- Municipios %>% 
     select(Munic_Id, Munic_Id6)
   
-  # Cria um banco com o c?digo municipal corrigido.
+  # Cria um banco com o código municipal corrigido.
   Output <- x %>% 
-    # Cria uma vari?vel "temp" com os mesmos valores do c?digo IBGE 6 dig.
+    # Cria uma variável "temp" com os mesmos valores do código IBGE 6 dig.
     mutate_(.dots = setNames(list(Munc6.Name), "temp")) %>% 
-    # Garante que essa vari?vel seja inteiros.
+    # Garante que essa variável seja inteiros.
     mutate(temp = as.integer(temp)) %>% 
-    # Insere banco com o c?digo de seis d?gitos.
+    # Insere banco com o código de seis dígitos.
     left_join(Municipios, by = c(temp = "Munic_Id6")) %>% 
-    # Remove a vari?vel temp.
+    # Remove a variável temp.
     select(-temp) %>% 
-    # Coloca a vari?vel c?digo 7 dig como a primeira do banco.
+    # Coloca a variável código 7 dig como a primeira do banco.
     select(Munic_Id, everything()) %>% 
-    # Remove antiga vari?vel com IBGE 6 dig.
+    # Remove antiga variável com IBGE 6 dig.
     select(-matches(Munc6.Name))
   
-  # Deixa a vari?vel de c?digo municipal com o nome determinado.
+  # Deixa a variável de código municipal com o nome determinado.
   names(Output)[1] <- Munc7.Name
   
-  # Retorna banco com os c?digos corrigidos.
+  # Retorna banco com os códigos corrigidos.
   return(Output)
 }
 
 
-# Fun??o para executar um match parcial nas cidades 
-## (ex: descobre que "Alvorada Do Norte" e "Alvorada Da Norte" s?o os mesmos)
-## Tem a op??o de realizar essa busca apenas dentro dos Estados.
+# Função para executar um match parcial nas cidades 
+## (ex: descobre que "Alvorada Do Norte" e "Alvorada Da Norte" são os mesmos)
+## Tem a opção de realizar essa busca apenas dentro dos Estados.
 MatchCity <- function(CityName, CompareData, CityNameVar, Region = NULL, RegionVarName = NULL) {
   
-  # Vari?veis para debug:
+  # Variáveis para debug:
   # CityName = "ALVORADA DO OESTE"
   # CompareData = ConsolidaMunic 
   # CityNameVar = "Munic_Nome"
   # Region = "RO"
   # RegionVarName = "UF_Sigla"
   
-  # Adiciona uma vari?vel igual ao n?mero das linhas
+  # Adiciona uma variável igual ao número das linhas
   CompareData <- CompareData %>% mutate(n = row_number())
   
-  # Caso houve a indica??o de regi?o, faz um subset no banco. 
+  # Caso houve a indicação de região, faz um subset no banco. 
   if(!is.null(Region) & !is.null(RegionVarName)) {
     CompareData <- CompareData %>% 
       filter_(.dots = paste0(RegionVarName, " == ", "'", Region,"'"))
   }
   
-  # Retorna o n?mero da linha em que existe o match parcial
+  # Retorna o número da linha em que existe o match parcial
   CompareData$n[agrep(CityName, CompareData$Munic_Nome)][1]
 }

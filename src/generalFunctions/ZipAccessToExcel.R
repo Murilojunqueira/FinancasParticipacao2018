@@ -6,7 +6,9 @@
 # Created at 2018-08-18
 
 # Dependencies
+
 library(openxlsx)
+library(readr)
 
 
 ################## External Functions ##################
@@ -23,13 +25,13 @@ source("src/generalFunctions/GetMSAccessData.R")
 # FileNameXlsx: Name os the xlsx file
 
 # Debug:
-# FileRaw = paste0("data/raw/Finbra/OriginalFiles/", FinantialRawFiles$FinRawFiles_FileName[1])
-# FileNameXlsx = paste0("data/raw/Finbra/ExcelFiles/", FinantialRawFiles$FinRawFiles_FileXlsx[1])
+# FileRaw = paste0("data/raw/Finbra/OriginalFiles/", FinantialRawFiles$FinRawFiles_FileName[2])
+# FileNameXlsx = paste0("data/raw/Finbra/ExcelFiles/", FinantialRawFiles$FinRawFiles_FileXlsx[2])
 # TableNameVar = "TABLE_NAME"
 # tableType = "TABLE"
 # TableNameFilter = "."
 # Override = FALSE
-# 
+ 
 # ZipAccessToExcel(FileRaw, FileNameXlsx, TableNameVar, tableType, TableNameFilter, Override)
 
 
@@ -47,7 +49,6 @@ ZipAccessToExcel <- function(FileRaw, FileNameXlsx, TableNameVar, tableType, Tab
   if(!isTRUE(Override) & file.exists(FileNameXlsx)) {
     message(FileNameXlsx, " already exists")
     return()
-    
   }
   
   message("Processing File ", FileRaw)
@@ -66,11 +67,20 @@ ZipAccessToExcel <- function(FileRaw, FileNameXlsx, TableNameVar, tableType, Tab
   # Select only relevant tables
   DataTables <- RawData[grep(TableNameFilter, names(RawData), value = TRUE)]
   
+  # Remove NA elementes (GetMSAccessData return NA for error in extract table)
+  DataTables <- DataTables[!is.na(DataTables)]
+  
+  message("Salvando arquivo ", FileNameXlsx)
+  
+  # Convert sheet names to ASCII; "write.xlsx" doesn't work otherwise.
+  names(DataTables) <- gsub(" ", "_", names(DataTables))
+  names(DataTables) <- iconv(names(DataTables),
+                             from = readr::guess_encoding(names(DataTables))[[1]], 
+                             to = "ASCII//TRANSLIT")
+
   # names(RawData)
   # names(DataTables)
   
-  message("Salvando arquivo ", FileNameXlsx)
-
   # Write File with all tables
   write.xlsx(DataTables, file = FileNameXlsx)
   }

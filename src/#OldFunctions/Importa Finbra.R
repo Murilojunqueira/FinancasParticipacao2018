@@ -1,53 +1,53 @@
 # Script para Importar dados do Finbra no R.
 
-# Esse È um scrip de controle, que manipula as funÁıes que est„o
+# Esse √© um scrip de controle, que manipula as fun√ß√µes que est√£o
 # no arquivo "Importa Finbra Funcoes.R".
 
 # Criado por Murilo Junqueira.
 
-# Data criaÁ„o: 2018-02-22.
-# Ultima modificaÁ„o: 2018-05-28
+# Data cria√ß√£o: 2018-02-22.
+# Ultima modifica√ß√£o: 2018-05-28
 
 
-################## Prepara ·rea de trabalho ##################
+################## Prepara √°rea de trabalho ##################
 
 #clean memory.
 rm(list=ls(all=TRUE))
 gc()
 
-# Os diretÛrios de inserÁ„o dos dados Brutos (InputFolder), destino dos 
-# dados (OutputFolder) e localizaÁ„o dos scripts (ScriptFolder). Atualize se necess·rio!
-InputFolder <- "E:/Users/Murilo/Dropbox/AcadÍmico e EducaÁ„o/PublicaÁıes/2017 - ParticipaÁ„o Carla/Dados/Dados Brutos/FinbraExcel/"
-OutputFolder <- "E:/Users/Murilo/Dropbox/AcadÍmico e EducaÁ„o/PublicaÁıes/2017 - ParticipaÁ„o Carla/Dados/BD csv/"
-ScriptFolder <- "E:/Users/Murilo/Dropbox/AcadÍmico e EducaÁ„o/PublicaÁıes/2017 - ParticipaÁ„o Carla/Scripts R/"
+# Os diret√≥rios de inser√ß√£o dos dados Brutos (InputFolder), destino dos 
+# dados (OutputFolder) e localiza√ß√£o dos scripts (ScriptFolder). Atualize se necess√°rio!
+InputFolder <- "E:/Users/Murilo/Dropbox/Acad√™mico e Educa√ß√£o/Publica√ß√µes/2017 - Participa√ß√£o Carla/Dados/Dados Brutos/FinbraExcel/"
+OutputFolder <- "E:/Users/Murilo/Dropbox/Acad√™mico e Educa√ß√£o/Publica√ß√µes/2017 - Participa√ß√£o Carla/Dados/BD csv/"
+ScriptFolder <- "E:/Users/Murilo/Dropbox/Acad√™mico e Educa√ß√£o/Publica√ß√µes/2017 - Participa√ß√£o Carla/Scripts R/"
 
 
-# InputFolder <- "C:/Users/Murilo Junqueira/Dropbox/AcadÍmico e EducaÁ„o/PublicaÁıes/2017 - ParticipaÁ„o Carla/Dados/Dados Brutos/FinbraExcel/"
-# OutputFolder <- "C:/Users/Murilo Junqueira/Dropbox/AcadÍmico e EducaÁ„o/PublicaÁıes/2017 - ParticipaÁ„o Carla/Dados/BD csv/"
-# ScriptFolder <- "C:/Users/Murilo Junqueira/Dropbox/AcadÍmico e EducaÁ„o/PublicaÁıes/2017 - ParticipaÁ„o Carla/Scripts R/"
+# InputFolder <- "C:/Users/Murilo Junqueira/Dropbox/Acad√™mico e Educa√ß√£o/Publica√ß√µes/2017 - Participa√ß√£o Carla/Dados/Dados Brutos/FinbraExcel/"
+# OutputFolder <- "C:/Users/Murilo Junqueira/Dropbox/Acad√™mico e Educa√ß√£o/Publica√ß√µes/2017 - Participa√ß√£o Carla/Dados/BD csv/"
+# ScriptFolder <- "C:/Users/Murilo Junqueira/Dropbox/Acad√™mico e Educa√ß√£o/Publica√ß√µes/2017 - Participa√ß√£o Carla/Scripts R/"
 
 
 
-# Checa se os diretÛrios existem.
+# Checa se os diret√≥rios existem.
 dir.exists(c(InputFolder, OutputFolder, ScriptFolder))
 
-# Importa FunÁıes necess·rias para a importaÁ„o de dados.
+# Importa Fun√ß√µes necess√°rias para a importa√ß√£o de dados.
 source(paste0(ScriptFolder, "Importa Finbra Funcoes.R"))
 
 
 ################## Tabelas de Trabalho  ##################
 
-# Nesta seÁ„o, importamos partes da base de dados final que ser„o usadas 
+# Nesta se√ß√£o, importamos partes da base de dados final que ser√£o usadas 
 # nesse script.
 
-# Importa tabela BDCamposFinbra (j· trabalhada)
-## AtenÁ„o, esse arquivo È criado pela rotina da seÁ„o "Cria BDCamposFinbra", abaixo.
+# Importa tabela BDCamposFinbra (j√° trabalhada)
+## Aten√ß√£o, esse arquivo √© criado pela rotina da se√ß√£o "Cria BDCamposFinbra", abaixo.
 BDCamposFinbra <- fread(paste0(OutputFolder, "BDCamposFinbra.csv"), 
                         sep = ";", dec = ",", stringsAsFactors = FALSE)
 
 
 # Importa tabela DeParaFinbra
-# A criaÁ„o desses dados È manual, estudando os campos da tabela BDCamposFinbra.csv
+# A cria√ß√£o desses dados √© manual, estudando os campos da tabela BDCamposFinbra.csv
 DeParaFinbra <- fread(paste0(OutputFolder, "DeParaFinbra.csv"), 
                       sep = ";", dec = ",", stringsAsFactors = FALSE)
 
@@ -57,27 +57,27 @@ ContasPublicas <- fread(paste0(OutputFolder, "ContasPublicas.csv"),
                         sep = ";", dec = ",", stringsAsFactors = FALSE)
 
 
-# RelaÁ„o dos municÌpios brasileiros, com os respectivos cÛdigos do IBGE.
+# Rela√ß√£o dos munic√≠pios brasileiros, com os respectivos c√≥digos do IBGE.
 Municipios <- fread(paste0(OutputFolder, "Municipios.csv"), 
                     sep = ";", dec = ",", stringsAsFactors = FALSE)
 
 
-# RelaÁ„o dos estados brasileiros, com os respectivos cÛdigos do IBGE.
+# Rela√ß√£o dos estados brasileiros, com os respectivos c√≥digos do IBGE.
 UFs <- fread(paste0(OutputFolder, "UFs.csv"), 
                     sep = ";", dec = ",", stringsAsFactors = FALSE)
 
 
-# De/Para entre cÛdigo UG (usado no Finbra atÈ 1997) e o CÛdigo Municipal IBGE
+# De/Para entre c√≥digo UG (usado no Finbra at√© 1997) e o C√≥digo Municipal IBGE
 DeParaUGCodIBGE <- fread(paste0(OutputFolder, "DeParaUGCodIBGE.csv"), 
                          sep = ";", dec = ",", stringsAsFactors = FALSE)
 
 ################## Extrai Dados Finbra  ##################
 
-# Essa seÁ„o visa extrair os dados brutos do Finbra, que j· est„o inseridos
-# em tabelas Excel no diretÛrio InputFolder, para o modelo escolhido 
+# Essa se√ß√£o visa extrair os dados brutos do Finbra, que j√° est√£o inseridos
+# em tabelas Excel no diret√≥rio InputFolder, para o modelo escolhido 
 # para ser a base de dados, ou seja, a tabela "MunicFinancas.csv".
 
-# Cria um banco de dados vazio para agregar os dados de finanÁas municipais.
+# Cria um banco de dados vazio para agregar os dados de finan√ßas municipais.
 MunicFinancas <- tibble()
 
 
@@ -90,43 +90,43 @@ for(i in seq_len(nrow(ContasPublicas))) {
   # Linha de debug:
   # i <- 1
   
-  # Exibe a conta que est· sendo processada.
-  print(paste0("Formatando vari·vel ", ContasPublicas$ContasPublica_Descricao[i]))
+  # Exibe a conta que est√° sendo processada.
+  print(paste0("Formatando vari√°vel ", ContasPublicas$ContasPublica_Descricao[i]))
   
-  # Filtra apenas a conta p˙blica que est· sendo processada da tabela DeParaFinbra.
+  # Filtra apenas a conta p√∫blica que est√° sendo processada da tabela DeParaFinbra.
   DeParaFinbra.Select <- DeParaFinbra %>% 
-    # Filtra a conta p˙blica correspondente.
+    # Filtra a conta p√∫blica correspondente.
     filter(ContasPublica_Id == ContasPublicas$ContasPublica_Id[i]) %>% 
     # Ordena as linhas por ano.
     arrange(desc(DeParaFinbra_Ano)) %>% 
-    # Garante que o ano s„o dados inteiros (integer).
+    # Garante que o ano s√£o dados inteiros (integer).
     mutate(DeParaFinbra_Ano = as.integer(DeParaFinbra_Ano)) %>% 
-    # Filtra os anos de an·lise que ser„o puxados
+    # Filtra os anos de an√°lise que ser√£o puxados
     filter(DeParaFinbra_Ano %in% AnosDados)
   
-  # Cria um banco de dados vazio para agregar os dados da conta que est„ sendo processada.
+  # Cria um banco de dados vazio para agregar os dados da conta que est√£ sendo processada.
   MunicFinancas.NewVar <- as_tibble()
   
-  # Loop para cada linha selecionada na tabela DeParaFinbra (correspondente ‡ conta processada).
+  # Loop para cada linha selecionada na tabela DeParaFinbra (correspondente √† conta processada).
   for(j in seq_len(nrow(DeParaFinbra.Select)) ) {
     
     # Linha de debug.
     # j <- 1
     
-    # Exibe o ano que est· sendo processado na tabela DeParaFinbra.
+    # Exibe o ano que est√° sendo processado na tabela DeParaFinbra.
     print(paste0("Encontrando dados do ano ", DeParaFinbra.Select$DeParaFinbra_Ano[j]))
     
     # Transforma a linha do ano na tabela DeParaFinbra em uma lista.
     CampoFinbra.Ref <- DeParaFinbra.Select[j,] %>% 
       unlist %>% as.list()
     
-    # Cria uma lista com a localizaÁ„o (Arquivo, aba e coluna) dos dados a serem
-    # extraidos do diretÛrio OutputFolder.
+    # Cria uma lista com a localiza√ß√£o (Arquivo, aba e coluna) dos dados a serem
+    # extraidos do diret√≥rio OutputFolder.
     BDCamposFinbra.Select <- BDCamposFinbra %>% 
       filter(FinbraCampo_Id == CampoFinbra.Ref$FinbraCampo_Id) %>% 
       unlist %>% as.list()
     
-    # Cria um vetor com os nomes dos campos que identificam os municÌpios.
+    # Cria um vetor com os nomes dos campos que identificam os munic√≠pios.
     Munic.Select <- BDCamposFinbra %>% 
       filter(FinbraCampo_Ano == CampoFinbra.Ref$DeParaFinbra_Ano) %>% 
       filter(FinbraCampo_AbaXls == BDCamposFinbra.Select$FinbraCampo_AbaXls) %>% 
@@ -144,28 +144,28 @@ for(i in seq_len(nrow(ContasPublicas))) {
                            sheet = BDCamposFinbra.Select$FinbraCampo_AbaXls)
     
     # Cria um vetor com as colunas que precisam ser selecionadas (colunas de
-    # identificaÁ„o do municÌpio mais colunas de dados).
+    # identifica√ß√£o do munic√≠pio mais colunas de dados).
     Select.Columns <- c(Munic.Select, BDCamposFinbra.Select$FinbraCampo_Campo)
     
     # Formata os dados para que eles ficam no formato desejado.
     MunicFinancas.New <- BD.Fetch %>% 
       # Seleciona as colunas correspondentes
       select(Select.Columns)  %>% 
-      # Formata os dados (atualmente a funÁ„o FormataFinbra apenas melhora o formato das
-      # colunas de identificaÁ„o dos municÌpios). Mais informaÁıes em "Importa Finbra Funcoes.R".
+      # Formata os dados (atualmente a fun√ß√£o FormataFinbra apenas melhora o formato das
+      # colunas de identifica√ß√£o dos munic√≠pios). Mais informa√ß√µes em "Importa Finbra Funcoes.R".
       FormataFinbra(Ano = BDCamposFinbra.Select$FinbraCampo_Ano,
                     Aba = BDCamposFinbra.Select$FinbraCampo_AbaXls,
                     UGtoCodIBGE = DeParaUGCodIBGE, 
                     BDCamposFinbra = BDCamposFinbra,
                     InputFolder = InputFolder) %>% 
-      # Muda o formato do cÛdigo IBGE de 6 dÌgitos (antigo) para 7 dÌgitos (novo).
+      # Muda o formato do c√≥digo IBGE de 6 d√≠gitos (antigo) para 7 d√≠gitos (novo).
       MuncCod6To7("Munic_Id6", "Munic_Id", OutputFolder) %>% 
       # Garante que o ano seja inteiro (integer)
       mutate(MunicFinancas_Ano = as.integer(BDCamposFinbra.Select$FinbraCampo_Ano)) %>%
       # Seleciona os dados finais
       select(Munic_Id, MunicFinancas_Ano, everything())
     
-    # Padroniza o nome da vari·vel, de acordo com a tabela ContasPublicas.
+    # Padroniza o nome da vari√°vel, de acordo com a tabela ContasPublicas.
     names(MunicFinancas.New)[
       which(names(MunicFinancas.New) == BDCamposFinbra.Select$FinbraCampo_Campo)] <-
       ContasPublicas$ContasPublica_Nome[i]
@@ -173,10 +173,10 @@ for(i in seq_len(nrow(ContasPublicas))) {
     # Linha de debug:
     # head(MunicFinancas.New)
     
-    # Acrescenta os dados processados do ano ‡ tabela de agregaÁ„o da vari·vel processada.
+    # Acrescenta os dados processados do ano √† tabela de agrega√ß√£o da vari√°vel processada.
     MunicFinancas.NewVar <- rbind(MunicFinancas.NewVar, MunicFinancas.New)
     
-    # Libera memÛria
+    # Libera mem√≥ria
     rm(Select.Columns, MunicFinancas.New)
     rm(BD.Fetch, CampoFinbra.Ref, BDCamposFinbra.Select, Munic.Select)
   }
@@ -187,14 +187,14 @@ for(i in seq_len(nrow(ContasPublicas))) {
   
   MunicFinancas <- rbind(MunicFinancas, MunicFinancas.NewVar.Format)
   
-  # Libera memÛria
+  # Libera mem√≥ria
   rm(j, DeParaFinbra.Select, MunicFinancas.NewVar)
   rm(MunicFinancas.NewVar.Format)
   gc()
 }
 rm(i, AnosDados)
 
-# Verifica os dados extraÌdos;
+# Verifica os dados extra√≠dos;
 # names(MunicFinancas)
 # dim(MunicFinancas)
 # table(MunicFinancas$MunicFinancas_Ano)
@@ -203,7 +203,7 @@ rm(i, AnosDados)
 # tail(MunicFinancas, n = 10)
 # View(MunicFinancas)
 
-# Verifica repetiÁıes no banco.
+# Verifica repeti√ß√µes no banco.
  # x <- table(MunicFinancas$Munic_Id, MunicFinancas$MunicFinancas_Ano) %>% as.data.frame()
  # x[x$Freq > 12,]
  # View(x)
@@ -213,7 +213,7 @@ rm(i, AnosDados)
 # View(test)
 # rm(test, x)
  
-## Obtem o cÛdigo das contas financeiras.
+## Obtem o c√≥digo das contas financeiras.
 ContasPublicas.Select <- ContasPublicas %>% 
   mutate(ContasPublica_Id = as.character(ContasPublica_Id)) %>% 
   select(ContasPublica_Nome, ContasPublica_Id)
@@ -221,9 +221,9 @@ ContasPublicas.Select <- ContasPublicas %>%
 # Obtem o total de colunas.
 totalColunas <- ncol(MunicFinancas)
 
-# Substitui o nome das contas pelos cÛdigos
+# Substitui o nome das contas pelos c√≥digos
 MunicFinancas.Short <- MunicFinancas %>% 
-  # Acrecenta o cÛdigo das contas p˙blicas.
+  # Acrecenta o c√≥digo das contas p√∫blicas.
   left_join(ContasPublicas.Select, by = "ContasPublica_Nome") %>% 
   # Seleciona as colunas da base de dados final.
   select(Munic_Id, MunicFinancas_Ano, ContasPublica_Id, MunicFinancas_ContaValor)
@@ -232,7 +232,7 @@ names(MunicFinancas.Short)
 head(MunicFinancas.Short)
 table(MunicFinancas.Short$ContasPublica_Id)
 
-# Libera memÛria
+# Libera mem√≥ria
 rm(ContasPublicas.Select)
 
 # Salvar em arquivo no Banco de Dados
@@ -244,17 +244,17 @@ pathFile <- paste0(OutputFolder, "MunicFinancas.csv")
 write.table(MunicFinancas.Short, file = pathFile, sep = ";", dec = ",", 
             row.names=FALSE, append = FALSE)
 
-# Libera memÛria
+# Libera mem√≥ria
 rm(MunicFinancas.Short, MunicFinancas, pathFile)
 
 
-################## Encontra CÛdigos Municipais prÈ-1998  ##################
+################## Encontra C√≥digos Municipais pr√©-1998  ##################
 
-# Script para importar dados do FINBRA antes de 1998, quando os municÌpios n„o eram
-# identificados pelo cÛdigo IBGE, mas pelo cÛdigo UG.
+# Script para importar dados do FINBRA antes de 1998, quando os munic√≠pios n√£o eram
+# identificados pelo c√≥digo IBGE, mas pelo c√≥digo UG.
 
-# Consolidar (empilhar e depois retirar repetiÁıes) dos anos de 1997 e 1996 
-# (em 94-95 nem UG tem, È sÛ nomes dos MunicÌpios).
+# Consolidar (empilhar e depois retirar repeti√ß√µes) dos anos de 1997 e 1996 
+# (em 94-95 nem UG tem, √© s√≥ nomes dos Munic√≠pios).
 
 ## Caminho dos arquivos
 FilePath197 <- paste0(InputFolder, "Finbra1997.xlsx")
@@ -264,43 +264,43 @@ FilePath196 <- paste0(InputFolder, "Finbra1996.xlsx")
 UGs1997 <- read_excel(FilePath197, sheet = "DespesasReceitas")
 UGs1996 <- read_excel(FilePath196, sheet = "Plan6")
 
-# Libera memÛria
+# Libera mem√≥ria
 rm(FilePath196, FilePath197)
 
 UGs1997 <- UGs1997 %>% 
-  # Seleciona vari·veis relevantes
+  # Seleciona vari√°veis relevantes
   select(UG, NOME, UF) %>% 
-  # Determina que as vari·veis UG ser„o de tipo texto.
+  # Determina que as vari√°veis UG ser√£o de tipo texto.
   mutate(UG = as.character(UG)) %>% 
   mutate(Origem = 1997)
 
 UGs1996 <- UGs1996 %>% 
-  # Determina que as vari·veis UG ser„o de tipo texto.
+  # Determina que as vari√°veis UG ser√£o de tipo texto.
   mutate(UG = as.character(UG)) %>% 
   mutate(Origem = 1996)
 
-# Uniformiza os nomes de vari·veis entre os dois arquivos
+# Uniformiza os nomes de vari√°veis entre os dois arquivos
 names(UGs1996) <- names(UGs1997)
 
-# Cria um arquivo ˙nico com as UGs de 1997 e 1997
+# Cria um arquivo √∫nico com as UGs de 1997 e 1997
 ConsolidaUG <- rbind(UGs1996, UGs1997) %>% 
   arrange(desc(Origem)) %>% 
-  # Remove repetiÁıes
+  # Remove repeti√ß√µes
   distinct(UG, .keep_all = TRUE) %>%
-  # Renomeia algumas vari·veis, para deixa-las no padr„o do banco.
+  # Renomeia algumas vari√°veis, para deixa-las no padr√£o do banco.
   rename(Munic_Nome = NOME) %>% 
   rename(UF_Sigla = UF) %>% 
-  # Retira os casos dos municÌpios sem nome.
-  ## Como o nome È a ponte entre o cÛdigo IBGE e o UG, n„o podemos trabalhar sem ele.
+  # Retira os casos dos munic√≠pios sem nome.
+  ## Como o nome √© a ponte entre o c√≥digo IBGE e o UG, n√£o podemos trabalhar sem ele.
   filter(!is.na(Munic_Nome)) %>% 
-  # Trata as vari·veis de nome, para deixa-las mais uniformes.
-  ## Remove espaÁos e caracteres especiais.
+  # Trata as vari√°veis de nome, para deixa-las mais uniformes.
+  ## Remove espa√ßos e caracteres especiais.
   mutate(Munic_Nome = trimws(Munic_Nome)) %>% 
   ## Remove apostroves (ex: Pau D'Agua -> Pau DAgua)
   mutate(Munic_Nome = gsub("'", "", Munic_Nome)) %>% 
   mutate(Munic_Nome = gsub("`", "", Munic_Nome)) %>% 
-  ## AlteraÁıes de nomes que, apÛs pesquisa, descobrimos as verdadeiras reverÍncias no IBGE.
-  ## A maioria dos casos se referem a municÌpios que realmente mudaram de nome no perÌodo.
+  ## Altera√ß√µes de nomes que, ap√≥s pesquisa, descobrimos as verdadeiras rever√™ncias no IBGE.
+  ## A maioria dos casos se referem a munic√≠pios que realmente mudaram de nome no per√≠odo.
   mutate(Munic_Nome = sub("ALTO JEQUITIBA (PRESIDENTE SOARES)", "ALTO JEQUITIBA", Munic_Nome, fixed = TRUE)) %>% 
   mutate(Munic_Nome = sub("CACHOEIRA DO PAJEU (EX-ANDRE FERNANDES)", "CACHOEIRA DO PAJEU", Munic_Nome, fixed = TRUE)) %>% 
   mutate(Munic_Nome = sub("MATHIAS LOBATO (VILA MATIAS)", "MATHIAS LOBATO", Munic_Nome, fixed = TRUE)) %>% 
@@ -327,34 +327,34 @@ ConsolidaUG <- rbind(UGs1996, UGs1997) %>%
   distinct(Munic_Nome, UF_Sigla, .keep_all = TRUE) %>%
   select(UG, Munic_Nome, UF_Sigla)
 
-# Checa se n„o h· repetiÁıes de nomes dentro de um mesmo Estado
+# Checa se n√£o h√° repeti√ß√µes de nomes dentro de um mesmo Estado
 # x <- table(ConsolidaUG$Munic_Nome, ConsolidaUG$UF_Sigla) %>% as.data.frame()
 # x[x$Freq > 1,]
 # View(x)
 # ConsolidaUG[ConsolidaUG$Munic_Nome %in% x$Var1[x$Freq > 1],] %>% arrange(Munic_Nome)
 
-# Libera memÛria
+# Libera mem√≥ria
 rm(UGs1996, UGs1997)
 
-# Formata os nomes da lista do IBGE, para deixa-los mais compar·veis.
+# Formata os nomes da lista do IBGE, para deixa-los mais compar√°veis.
 ConsolidaMunic <- Municipios %>% 
-  # Determina que os cÛdigos s„o textos.
+  # Determina que os c√≥digos s√£o textos.
   mutate(Munic_Id = as.character(Munic_Id)) %>% 
-  # Garante que todos ser„o MAI⁄SCULAS.
+  # Garante que todos ser√£o MAI√öSCULAS.
   mutate(Munic_Nome = toupper(Munic_Nome)) %>% 
   # Remove os acentos.
   mutate(Munic_Nome = iconv(Munic_Nome, to = "ASCII//TRANSLIT")) %>% 
   ## Remove apostroves (ex: Pau D'Agua -> Pau DAgua)
   mutate(Munic_Nome = gsub("'", "", Munic_Nome)) %>% 
   mutate(Munic_Nome = gsub("`", "", Munic_Nome)) %>%
-  # Adiciona o banco dos Estados (necess·rio para rotinas abaixo)
+  # Adiciona o banco dos Estados (necess√°rio para rotinas abaixo)
   left_join(UFs, by = "UF_Id") %>% 
   # Remove "D"s isolados (ex: PAU D AGUA - > PAU DAGUA)
   mutate(Munic_Nome = gsub(" D ", " D", Munic_Nome)) %>% 
-  # Adiciona um coluna com os n˙meros das linhas
+  # Adiciona um coluna com os n√∫meros das linhas
   mutate(n = row_number())
   
-# Join os bancos da lista de UGs com a lista de municÌpios IBGE, pelo nome dos municÌpios.
+# Join os bancos da lista de UGs com a lista de munic√≠pios IBGE, pelo nome dos munic√≠pios.
 JoinUG <- ConsolidaUG %>% 
   left_join(ConsolidaMunic, by = c("Munic_Nome", "UF_Sigla"))
 
@@ -362,16 +362,16 @@ JoinUG <- ConsolidaUG %>%
 #View(JoinUG)
 #names(JoinUG)
 
-# Cria um banco onde h· apenas os casos onde n„o h· correspondÍncia perfeita 
+# Cria um banco onde h√° apenas os casos onde n√£o h√° correspond√™ncia perfeita 
 # entre os nomes de cidades.
 PartialMatching <- JoinUG %>% 
   filter(is.na(Munic_Id)) %>% 
   select(UG, Munic_Nome, UF_Sigla)
 
-# Banco apenas com os municÌpios onde n„o tive match exato.
+# Banco apenas com os munic√≠pios onde n√£o tive match exato.
 
-# Uiliza a funÁ„o MatchCity (acima), para encontrar as cidades sem correspondÍncia perfeita
-# A busca È feita dentro de cada estado.
+# Uiliza a fun√ß√£o MatchCity (acima), para encontrar as cidades sem correspond√™ncia perfeita
+# A busca √© feita dentro de cada estado.
 PartialMatching$Partial.Ref <- pmap_int(.l = list(CityName = PartialMatching$Munic_Nome, 
                                                   Region = PartialMatching$UF_Sigla),
                                         .f = MatchCity,
@@ -379,33 +379,33 @@ PartialMatching$Partial.Ref <- pmap_int(.l = list(CityName = PartialMatching$Mun
                                         CityNameVar = "Munic_Nome", 
                                         RegionVarName = "UF_Sigla")
 
-# Verifica os casos onde mesmo o matching parcial n„o encontrou correspondÍncia
+# Verifica os casos onde mesmo o matching parcial n√£o encontrou correspond√™ncia
 PartialMatching %>% 
   filter(is.na(Partial.Ref)) %>% 
   select(Munic_Nome, UF_Sigla)
 
-# S„o Apenas dois casos.
+# S√£o Apenas dois casos.
 
-# Adiciona o cÛdigo IBGE dos municÌpios com match parcial.
+# Adiciona o c√≥digo IBGE dos munic√≠pios com match parcial.
 PartialMatchingJoin  <-  PartialMatching %>% 
   left_join(select(ConsolidaMunic, n, Munic_Id, UF_Id), by = c("Partial.Ref" = "n")) %>% 
   # filter(!is.na(Partial.Ref)) %>% 
-  # Adicina uma vari·vel indicadora de que È correspondÍncia parcial
+  # Adicina uma vari√°vel indicadora de que √© correspond√™ncia parcial
   mutate(Origem = "Partial") %>% 
   select(Munic_Id, UG, Munic_Nome, UF_Sigla, Origem)
   
-# Cria um banco ˙nico com o match exato e o match parcial empilhados
+# Cria um banco √∫nico com o match exato e o match parcial empilhados
 DeParaUGIBGE <- JoinUG %>% 
   select(Munic_Id, UG, Munic_Nome, UF_Sigla) %>% 
   filter(!is.na(Munic_Id)) %>% 
-  # Adicina uma vari·vel indicadora de que È correspondÍncia exata
+  # Adicina uma vari√°vel indicadora de que √© correspond√™ncia exata
   mutate(Origem = "Exact") %>% 
   rbind(PartialMatchingJoin) %>% 
   arrange(Munic_Id, Origem) %>% 
   distinct(Munic_Id, .keep_all = TRUE)
   
 
-# Checa repetiÁıes do banco:
+# Checa repeti√ß√µes do banco:
 # Check <- table(DeParaUGIBGE$Munic_Id) %>% as.data.frame()
 # View(Check)
 # Check[Check$Freq > 1,]
@@ -431,7 +431,7 @@ write.table(DeParaUGIBGE, file = OutputFile, sep = ";", dec = ",",
             row.names=FALSE, append = FALSE)
 
 
-# Libera memÛria
+# Libera mem√≥ria
 rm(ConsolidaMunic, ConsolidaUG)
 rm(PartialMatching, PartialMatchingJoin)
 rm(MatchCity, JoinUG)
@@ -441,19 +441,19 @@ rm(DeParaUGIBGE, OutputFile)
 
 ### Problemas para ver no futuro
 
-# Modelar casos onde existem dois UGs para um mesmo municÌpio (comparando 1996 e 1997)
-# Como lidar com municÌpios que mudaram de nome entre 1996 e 1997, tendo o mesmo UG e Cod IBGE?
+# Modelar casos onde existem dois UGs para um mesmo munic√≠pio (comparando 1996 e 1997)
+# Como lidar com munic√≠pios que mudaram de nome entre 1996 e 1997, tendo o mesmo UG e Cod IBGE?
 
 
 ################## Cria BDCamposFinbra  ##################
 
-# Script para analisar todos os arquivos do diretÛrio InputFolder e listar todos
+# Script para analisar todos os arquivos do diret√≥rio InputFolder e listar todos
 # os arquivos Excel, abas e colunas, agrevando tudo na tabela BDCamposFinbra.csv.
 
-# Lista os arquivos do diretÛrio InputFolder que comeÁa com "Finbra".
+# Lista os arquivos do diret√≥rio InputFolder que come√ßa com "Finbra".
 FileList <- list.files(InputFolder, pattern = "^Finbra*")
 
-# Cria um banco de dados agregador das informaÁıes.
+# Cria um banco de dados agregador das informa√ß√µes.
 BDCamposFinbra <- data.frame()
 
 # Lopp para cada arquivo encontrado em FileList.
@@ -462,10 +462,10 @@ for(i in seq_along(FileList)) {
   # Linha de debug.
   # i <- 20
   
-  # Exibe o arquivo que est· sendo processado.
+  # Exibe o arquivo que est√° sendo processado.
   print(paste("Lendo o arquivo", FileList[i]))
   
-  # Cria uma lista vazia para agregar as informaÁıes de uma linha da tabela BDCamposFinbra.
+  # Cria uma lista vazia para agregar as informa√ß√µes de uma linha da tabela BDCamposFinbra.
   NewRow <- list()
   
   # Insere na lista o nome do arquivo.
@@ -477,19 +477,19 @@ for(i in seq_along(FileList)) {
   # Cria um vetor de texto com o nome das Abas do arquivo.
   sheets <- excel_sheets(FullPath)
   
-  # Loop para cada Aba do arquivo que est· sendo processado.
+  # Loop para cada Aba do arquivo que est√° sendo processado.
   for(j in seq_along(sheets)) {
     
     # Linha de debug.
     # j <- 2
     
-    # Exibe a Aba que est· sendo processada.
+    # Exibe a Aba que est√° sendo processada.
     print(paste("Aba", sheets[[j]]))
     
-    # Insere na lista agregadora o nome da aba que est· sendo processada.
+    # Insere na lista agregadora o nome da aba que est√° sendo processada.
     NewRow$Sheet <- sheets[[j]]
     
-    # Insere na lista agregadora o nome das colunas na Aba que est· sendo processada.
+    # Insere na lista agregadora o nome das colunas na Aba que est√° sendo processada.
     NewRow$Campos <- names(read_excel(FullPath, sheet = sheets[[j]]))
     
     # Transforma os dados coletados (Nome do arquivo, da Aba e das colunas)
@@ -507,7 +507,7 @@ for(i in seq_along(FileList)) {
   }
 }
 
-# Libera memÛria.
+# Libera mem√≥ria.
 rm(i, j, FullPath)
 rm(sheets, NewRow, NewRows)
 
@@ -518,13 +518,13 @@ OutputFile <- paste0(InputFolder, "BDCamposFinbra.csv")
 write.csv2(BDCamposFinbra, file = OutputFile, 
            sep = ";", dec = ",")
 
-# Libera memÛria.
+# Libera mem√≥ria.
 rm(FileList, BDCamposFinbra)
 
 
 ################## Altera De/Para Finbra  ##################
 
-# Busca os campos de receita orÁament·ria no banco BDCamposFinbra
+# Busca os campos de receita or√ßament√°ria no banco BDCamposFinbra
 
 names(BDCamposFinbra)
 
@@ -535,39 +535,39 @@ BuscaCampo <- BDCamposFinbra %>%
   # filter(FinbraCampo_Ano == 1993)  %>% 
   mutate(Busca = substr(FinbraCampo_Campo, 1, 3)) %>% 
   #filter(Busca == "Des")
-  filter(FinbraCampo_Campo == "DESPESAOR«AMENT¡RIA")
+  filter(FinbraCampo_Campo == "DESPESAOR√áAMENT√ÅRIA")
 
 
-"Despesas OrÁament·rias" # 2012-1998
-"Rec OrÁament·ria" # 2012-1998
+"Despesas Or√ßament√°rias" # 2012-1998
+"Rec Or√ßament√°ria" # 2012-1998
 "REC_ORCAM" # 1997
 "D_ORCAMENT" # 1997
-"RECOR«AMENT¡RIAS" # 1996
-"RECOR«AMENT¡RIA" # 1995-1989
-"DESPOR«AMENT¡RIA" # 1996 - 1994
-"DESPESAOR«AMENT¡RIA" # 1993 - 1989
+"RECOR√áAMENT√ÅRIAS" # 1996
+"RECOR√áAMENT√ÅRIA" # 1995-1989
+"DESPOR√áAMENT√ÅRIA" # 1996 - 1994
+"DESPESAOR√áAMENT√ÅRIA" # 1993 - 1989
 
-Rec <- c("Rec OrÁament·ria",
+Rec <- c("Rec Or√ßament√°ria",
           "REC_ORCAM",
-          "RECOR«AMENT¡RIAS", 
-          "RECOR«AMENT¡RIA")
+          "RECOR√áAMENT√ÅRIAS", 
+          "RECOR√áAMENT√ÅRIA")
 
-desp <- c("Despesas OrÁament·rias",
+desp <- c("Despesas Or√ßament√°rias",
           "D_ORCAMENT",
-          "DESPOR«AMENT¡RIA",
-          "DESPESAOR«AMENT¡RIA")
+          "DESPOR√áAMENT√ÅRIA",
+          "DESPESAOR√áAMENT√ÅRIA")
 
 
 
 NewRows <- BDCamposFinbra %>% 
-  filter(FinbraCampo_Campo == "Despesas OrÁament·rias" |
-           FinbraCampo_Campo == "Rec OrÁament·ria" |
+  filter(FinbraCampo_Campo == "Despesas Or√ßament√°rias" |
+           FinbraCampo_Campo == "Rec Or√ßament√°ria" |
            FinbraCampo_Campo == "REC_ORCAM" |
            FinbraCampo_Campo == "D_ORCAMENT" |
-           FinbraCampo_Campo == "RECOR«AMENT¡RIAS" |
-           FinbraCampo_Campo == "RECOR«AMENT¡RIA" |
-           FinbraCampo_Campo == "DESPOR«AMENT¡RIA" |
-           FinbraCampo_Campo == "DESPESAOR«AMENT¡RIA") %>% 
+           FinbraCampo_Campo == "RECOR√áAMENT√ÅRIAS" |
+           FinbraCampo_Campo == "RECOR√áAMENT√ÅRIA" |
+           FinbraCampo_Campo == "DESPOR√áAMENT√ÅRIA" |
+           FinbraCampo_Campo == "DESPESAOR√áAMENT√ÅRIA") %>% 
   mutate(DespRec = ifelse(FinbraCampo_Campo %in% desp, "d", "r")) %>% 
   arrange(DespRec, desc(FinbraCampo_Ano), FinbraCampo_Campo) %>% 
   mutate(ContasPublica_Id = ifelse(DespRec == "r", 71200000000, NA)) %>% 
@@ -577,14 +577,14 @@ NewRows <- BDCamposFinbra %>%
 
 
 DeParaFinbra <- DeParaFinbra %>% 
-  # Evita duplicaÁ„p de linhas
+  # Evita duplica√ß√£p de linhas
   filter(!(ContasPublica_Id %in% NewRows$ContasPublica_Id)) %>% 
   rbind(NewRows)
 
 
 names(ContasPublicas)
 
-# Novas Contas P˙blicas
+# Novas Contas P√∫blicas
 
 NewRowContas <- list(ContasPublica_Id = c(71200000000, 73400000000),
                      ContasPublica_RD = c("r", "d"),
