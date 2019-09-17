@@ -33,11 +33,10 @@ source("src/specifcFuntions/MuncCod6To7.R")
 # DeParaUGCodIBGE <- DeParaUGCodIBGE
 # Municipios <- Municipios
 # InputFolder <- "data/raw/Finbra/ExcelFiles/"
-# OutputFolder <- "data/dataset/"
 
 
 ImportFinbra_89_2012 <- function(years_extract,  ContasPublicas, DeParaFinbra, BDCamposFinbra, 
-                                 DeParaUGCodIBGE, Municipios, InputFolder, OutputFolder) {
+                                 DeParaUGCodIBGE, Municipios, InputFolder) {
 
   
   # Creates an empty database to aggregate municipal finance data.
@@ -48,7 +47,7 @@ ImportFinbra_89_2012 <- function(years_extract,  ContasPublicas, DeParaFinbra, B
   for(i in seq_len(nrow(ContasPublicas))) {
     
     # Debug:
-    # i <- 7
+    # i <- 14
     
     # Displays the account being processed.
     message("Formatting Variable ", ContasPublicas$ContasPublica_Descricao[i])
@@ -81,7 +80,7 @@ ImportFinbra_89_2012 <- function(years_extract,  ContasPublicas, DeParaFinbra, B
         unlist %>% as.list()
       
       # Creates a list with the location (File, table and column) of the data to be
-      # extracted from the OutputFolder directory.
+      # extracted.
       BDCamposFinbra.Select <- BDCamposFinbra %>% 
         dplyr::filter(FinbraCampo_Id == CampoFinbra.Ref$FinbraCampo_Id) %>% 
         unlist %>% as.list()
@@ -120,7 +119,7 @@ ImportFinbra_89_2012 <- function(years_extract,  ContasPublicas, DeParaFinbra, B
                      BDCamposFinbra = BDCamposFinbra,
                      InputFolder = InputFolder) %>% 
         # Muda o formato do código IBGE de 6 dígitos (antigo) para 7 dígitos (novo).
-        MuncCod6To7("Munic_Id6", OutputFolder, Municipios) %>% 
+        MuncCod6To7("Munic_Id6", Municipios) %>% 
         # Garante que o ano seja inteiro (integer)
         mutate(MunicFinancas_Ano = as.integer(BDCamposFinbra.Select$FinbraCampo_Ano)) %>%
         # Seleciona os dados finais

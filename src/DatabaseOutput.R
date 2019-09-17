@@ -3,7 +3,7 @@
 
 # # This script: create a tidy relational dataset from raw data
 
-# By Murilo Junqueira and Carla Bezerra
+# By Murilo Junqueira (m.junqueira@yahoo.com.br)
 
 # Created at 2018-05-09
 
@@ -71,22 +71,22 @@ rm(ZipAccessToExcel, unzipTemp, GetMSAccessData, i)
 # UnzipFiles in CSV format (after 2013)
 source("src/generalFunctions/unzipTemp.R")
 
-# Unizip Files
-for (i in seq_len(nrow(CsvFiles))) {
-  # i <- 1
-  message("Extracting ", paste0("data/raw/Finbra/OriginalFiles/", CsvFiles$FinRawFiles_FileName[i]))
-  # UnzipingFile
-  rawfile <- unzipTemp(paste0("data/raw/Finbra/OriginalFiles/", CsvFiles$FinRawFiles_FileName[i]))
-  # Removing first 3 rows (source, data, file)
-  df_temp <- fread(rawfile, skip = 3)
-  fwrite(x = df_temp,
-              file = paste0("data/raw/Finbra/ExcelFiles/", CsvFiles$FinRawFiles_FileXlsx[i]),
-              sep = ";", dec = ",")
-  rm(df_temp)
-  }
-
-rm(unzipTemp, rawfile, i)
-gc()
+# # Unizip Files
+# for (i in seq_len(nrow(CsvFiles))) {
+#   # i <- 1
+#   message("Extracting ", paste0("data/raw/Finbra/OriginalFiles/", CsvFiles$FinRawFiles_FileName[i]))
+#   # UnzipingFile
+#   rawfile <- unzipTemp(paste0("data/raw/Finbra/OriginalFiles/", CsvFiles$FinRawFiles_FileName[i]))
+#   # Removing first 3 rows (source, data, file)
+#   df_temp <- fread(rawfile, skip = 3)
+#   fwrite(x = df_temp,
+#               file = paste0("data/raw/Finbra/ExcelFiles/", CsvFiles$FinRawFiles_FileXlsx[i]),
+#               sep = ";", dec = ",")
+#   rm(df_temp)
+#   }
+# 
+# rm(unzipTemp, rawfile, i)
+# gc()
 
 
 ############### 2.4 - Create BDCamposFinbra ###############
@@ -114,18 +114,17 @@ BDCamposFinbra <- fread("data/dataset/BDCamposFinbra.csv",
 DeParaFinbra <- fread("data/dataset/DeParaFinbra.csv",
                       sep = ";", dec = ",", stringsAsFactors = FALSE)
 
-ContasPublicas <- fread("data/dataset/ContasPublicas.csv",
-                      sep = ";", dec = ",", stringsAsFactors = FALSE)
-
 DeParaUGCodIBGE <- fread("data/dataset/DeParaUGCodIBGE.csv", 
                          sep = ";", dec = ",", stringsAsFactors = FALSE)
 
 Municipios <- fread("data/dataset/Municipios.csv", 
                     sep = ";", dec = ",", stringsAsFactors = FALSE)
 
+ContasPublicas <- fread("data/dataset/ContasPublicas.csv",
+                        sep = ";", dec = ",", stringsAsFactors = FALSE)
+
 
 ############### 2.6 - Function: Extract data to MunicFinancas (according to each year) ###############
-
 
 # Importing data from 1989 to 2012
 source("src/specifcFuntions/ImportFinbra_89_2012.R")
@@ -136,24 +135,38 @@ Finbra_89_2012.df <- ImportFinbra_89_2012(years_extract = 2012:1994,
                                           BDCamposFinbra = BDCamposFinbra, 
                                           DeParaUGCodIBGE = DeParaUGCodIBGE, 
                                           Municipios = Municipios, 
-                                          InputFolder = "data/raw/Finbra/ExcelFiles/", 
-                                          OutputFolder = "data/dataset/")
-
-
-rm(ImportFinbra_89_2012, FormatFinbra, MuncCod6To7, PartialMatchFilter)
+                                          InputFolder = "data/raw/Finbra/ExcelFiles/")
 
 
 # Importing data from 1989 to 2012
 source("src/specifcFuntions/ImportFinbra_2013.R")
 
+# Import raw data url. Select only raw files that uses csv format.
+CsvFiles <- fread("data/dataset/FinantialRawFiles.csv", 
+                  sep = ";", dec = ",", stringsAsFactors = FALSE) %>% 
+  dplyr::filter(FinRawFiles_FormatRawFile == "csv")
+
+
+Finbra_After2013.df <- ImportFinbra_2013(years_extract = 2016:2013,
+                                       ExtractAccounts <- as.character(ContasPublicas$ContasPublica_Id),
+                                       CsvFiles = CsvFiles,
+                                       ContasPublicas = ContasPublicas,
+                                       InputFolder = "data/raw/Finbra/OriginalFiles/")
 
 
 
 
+MunicFinancas <- bind_rows(Finbra_89_2012.df, Finbra_After2013.df) %>% 
+  distinct(Munic_Id, MunicFinancas_Ano, ContasPublica_Id, .keep_all = TRUE)
 
-# Importing Participatory Budget Census
-# source("src/specifcFuntions/ImportFinantialData.R")
 
+fwrite(MunicFinancas, 
+       file = "data/dataset/MunicFinancas.csv", 
+       sep = ";", dec = ",")
+
+rm(ImportFinbra_89_2012, FormatFinbra, MuncCod6To7, PartialMatchFilter, Finbra_89_2012.df)
+rm(ImportFinbra_2013, CsvFiles, Finbra_After2013.df, unzipTemp)
+rm(MunicFinancas)
 
 
 

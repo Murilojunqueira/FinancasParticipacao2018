@@ -124,7 +124,7 @@ ContasPublica_Id;DeParaFinbra_Ano;FinbraCampo_Id;ContasPublica_Nome;FinbraCampo_
 30000000;2009;5540;DesCor;Desp Correntes
 30000000;2010;6701;DesCor;Desp Correntes
 30000000;2011;7940;DesCor;Desp Correntes
-30000000;2012;9179;DesCor;Despesas Orçamentárias
+30000000;2012;9180;DesCor;Desp Correntes
 31000000;1989;190;PES;PESSOAL
 31000000;1990;202;PES;PESSOAL
 31000000;1991;214;PES;PESSOAL
@@ -277,3 +277,4 @@ ContasPublica_Id;DeParaFinbra_Ano;FinbraCampo_Id;ContasPublica_Nome;FinbraCampo_
 73400000000;2009;5539;DespOrcamentaria;Despesas Orçamentárias
 73400000000;2010;6700;DespOrcamentaria;Despesas Orçamentárias
 73400000000;2011;7939;DespOrcamentaria;Despesas Orçamentárias
+73400000000;2012;9179;DespOrcamentaria;Despesas Orçamentárias

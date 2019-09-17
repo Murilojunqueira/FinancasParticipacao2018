@@ -9,7 +9,7 @@ library(dplyr)
 # Munc6.Name <- "Munic_Id6"
 # Munc7.Name <- "Munic_Id"
 
-MuncCod6To7 <- function(x, Munc6.Name, InputFolder, Municipios) {
+MuncCod6To7 <- function(x, Munc6.Name, Municipios) {
 
   
   # seleciona apenas as colunas relevantes.
