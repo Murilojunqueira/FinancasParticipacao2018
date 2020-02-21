@@ -66,7 +66,7 @@ ImportFinbra_2013 <- function(years_extract, ExtractAccounts, CsvFiles, ContasPu
   
   # Extrac data by file.
   for (i in seq_len(nrow(Extrac_Files))) {
-    # i <- 4
+    # i <- 5
     
     message("Extract data from file ", Extrac_Files$FinRawFiles_FileName[i])
     
@@ -82,7 +82,7 @@ ImportFinbra_2013 <- function(years_extract, ExtractAccounts, CsvFiles, ContasPu
     unlink(rawfile)
     rm(rawfile)
     
-    # Formating
+    # Formating data
     df_temp <- df_temp %>% 
       # Insert year
       mutate(MunicFinancas_Ano = Extrac_Files$FinRawFiles_InitialYear[i]) %>%
@@ -90,23 +90,26 @@ ImportFinbra_2013 <- function(years_extract, ExtractAccounts, CsvFiles, ContasPu
       rename(Munic_Id = Cod.IBGE) %>% 
       rename(MunicFinancas_ContaValor = Valor) %>%
       # Cread Account ID
-      mutate(ContasPublica_Id = substr(Conta, 1, 14)) %>% 
-      mutate(ContasPublica_Id = gsub("\\.", "", ContasPublica_Id))
+      mutate(ContasPublica_Id = gsub("\\.", "", Conta)) %>% 
+      mutate(ContasPublica_Id = substr(ContasPublica_Id, 1, 8))
     
     
-    # Formating data
+    
     MunicFinancas.New <- df_temp %>% 
       # Filter only raised funds or paided speding 
-      dplyr::filter(Coluna %in% c("Receitas Realizadas", "Receitas Brutas Realizadas", "Despesas Pagas")) %>% 
-      mutate(ContasPublica_Id = ifelse(ContasPublica_Id == "Total Receitas", 
-                                       "71200000000", ContasPublica_Id)) %>% 
-      mutate(ContasPublica_Id = ifelse(ContasPublica_Id == "Total Despesa", 
-                                       "73400000000", ContasPublica_Id)) %>% 
+      dplyr::filter(Coluna %in% c("Receitas Realizadas", "Receitas Brutas Realizadas", "Despesas Pagas")) %>%
+      mutate(Teste1 = str_detect(Conta, "(?i)Total")) %>% 
+      mutate(Teste2 = str_detect(Conta, "(?i)Despesa")) %>% 
+      mutate(Teste3 = str_detect(Conta, "(?i)Receita")) %>% 
+      mutate(ContasPublica_Id = ifelse(Teste1 & Teste3,
+                                       "71200000000", ContasPublica_Id)) %>%
+      mutate(ContasPublica_Id = ifelse(Teste1 & Teste2,
+                                       "73400000000", ContasPublica_Id)) %>%
       # Selectind variables
       dplyr::select(Munic_Id, MunicFinancas_Ano, ContasPublica_Id,
-                    MunicFinancas_ContaValor) %>% 
+                    MunicFinancas_ContaValor) %>%
       # Filtering selected accounts
-      dplyr::filter(ContasPublica_Id %in% ExtractAccounts)
+      dplyr::filter(ContasPublica_Id %in% ExtractAccounts) 
       
     
     # In Revenues, we must extrac revenue deductions
@@ -116,7 +119,7 @@ ImportFinbra_2013 <- function(years_extract, ExtractAccounts, CsvFiles, ContasPu
       Deductions <- df_temp %>%
         dplyr::filter(Coluna == "Deduções da Receita") %>% 
         dplyr::filter(ContasPublica_Id == "10000000") %>% 
-        mutate(ContasPublica_Id = "900000000") %>% 
+        mutate(ContasPublica_Id = "90000000") %>% 
         select(Munic_Id, MunicFinancas_Ano, ContasPublica_Id,
                MunicFinancas_ContaValor)
       
@@ -134,33 +137,5 @@ ImportFinbra_2013 <- function(years_extract, ExtractAccounts, CsvFiles, ContasPu
 }
 
 
-# View list of values in column "Coluna"
-# ColunaList <- tibble()
-# for (i in seq_len(nrow(Extrac_Files))) {
-#   # i <- 1
-#   message("Extract data from file ", Extrac_Files$FinRawFiles_FileName[i])
-#   rawfile <- unzipTemp(paste0(InputFolder, Extrac_Files$FinRawFiles_FileName[i]))
-#   # Removing first 3 rows (source, data, file)
-#   df_temp <- fread(rawfile, skip = 3, 
-#                    sep = ";", dec = ",",
-#                    quote="",
-#                    colClasses = c("factor", "integer", "factor", "integer", "factor", "factor", "numeric")) %>% 
-#     # Remove quotes
-#     mutate(Coluna = gsub('"', "", Coluna)) %>% 
-#     mutate(Conta = gsub('"', "", Conta))
-#   
-#   # Deleta arquivo csv descompactado
-#   unlink(rawfile)
-#   rm(rawfile)
-#   
-#   ColunaList.New <- df_temp %>% 
-#     distinct(Coluna) %>% 
-#     mutate(MunicFinancas_Ano = Extrac_Files$FinRawFiles_InitialYear[i])
-#   
-#   ColunaList <- bind_rows(ColunaList, ColunaList.New)
-#   rm(ColunaList.New, df_temp)
-# }
-# View(ColunaList)
-# rm(ColunaList)
 
 # End

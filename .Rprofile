@@ -6,10 +6,13 @@
 
 # Created at 2019-08-08
 
+# Set Working Directory
+# setwd(rstudioapi::getActiveProject())
 
 # Main packages
-library(data.table)
 library(tidyverse)
+library(data.table)
+
 
 # Options
 options(stringsAsFactors = FALSE)

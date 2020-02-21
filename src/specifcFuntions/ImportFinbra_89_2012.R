@@ -26,7 +26,7 @@ source("src/specifcFuntions/MuncCod6To7.R")
 
 
 # Debug:
-# years_extract <- 2000:1997
+# years_extract <- 2012:1994
 # ContasPublicas <- ContasPublicas
 # DeParaFinbra <- DeParaFinbra
 # BDCamposFinbra <- BDCamposFinbra
@@ -71,7 +71,7 @@ ImportFinbra_89_2012 <- function(years_extract,  ContasPublicas, DeParaFinbra, B
     for(j in seq_len(nrow(DeParaFinbra.Select))) {
       
       # Linha de debug.
-      # j <- 1
+      # j <- 15
       
       message("Searching data for year ", DeParaFinbra.Select$DeParaFinbra_Ano[j])
       

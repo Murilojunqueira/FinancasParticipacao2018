@@ -1,280 +1,282 @@
 ContasPublica_Id;DeParaFinbra_Ano;FinbraCampo_Id;ContasPublica_Nome;FinbraCampo_Campo
-10000000;1993;55;RecCor;RECCORRENTE
-10000000;1994;313;RecCor;RECCORRENTES
-10000000;1995;327;RecCor;TOTALRECCOR
-10000000;1996;341;RecCor;RECCORRENTES
-10000000;1997;508;RecCor;REC_CORRE
-10000000;1998;765;RecCor;Rec Correntes
-10000000;1999;1010;RecCor;Rec Correntes
-10000000;2000;1262;RecCor;Rec Correntes
-10000000;2001;1505;RecCor;Rec Correntes
-10000000;2002;1712;RecCor;Rec Correntes
-10000000;2003;2061;RecCor;Rec Correntes
-10000000;2004;2710;RecCor;Rec Correntes
-10000000;2005;3331;RecCor;Rec Correntes
-10000000;2006;3953;RecCor;Rec Correntes
-10000000;2007;4588;RecCor;Rec Correntes
-10000000;2008;5239;RecCor;Rec Correntes
-10000000;2009;6364;RecCor;Rec Correntes
-10000000;2010;7581;RecCor;Rec Correntes
-10000000;2011;8820;RecCor;Rec Correntes
-10000000;2012;10061;RecCor;Rec Correntes
 11000000;1989;8;RecTributaria;RECTRIBUTÁRIA
-11000000;1990;20;RecTributaria;RECTRIBUTÁRIA
-11000000;1991;32;RecTributaria;RECTRIBUTÁRIA
-11000000;1992;44;RecTributaria;RECTRIBUTÁRIA
-11000000;1993;56;RecTributaria;RECTRIBUTÁRIA
-11000000;1994;314;RecTributaria;RECTRIBUTÁRIAS
-11000000;1995;328;RecTributaria;RECTRIBUTARIA
-11000000;1996;342;RecTributaria;RECTRIBUTÁRIA
-11000000;1997;509;RecTributaria;REC_TRIBUT
-11000000;1998;766;RecTributaria;Rec Tributária
-11000000;1999;1011;RecTributaria;Rec Tributária
-11000000;2000;1263;RecTributaria;Rec Tributária
-11000000;2001;1506;RecTributaria;Rec Tributária
-11000000;2002;1713;RecTributaria;Rec Tributária
-11000000;2003;2062;RecTributaria;Rec Tributária
-11000000;2004;2711;RecTributaria;Rec Tributária
-11000000;2005;3332;RecTributaria;Rec Tributária
-11000000;2006;3954;RecTributaria;Rec Tributária
-11000000;2007;4589;RecTributaria;Rec Tributária
-11000000;2008;5240;RecTributaria;Rec Tributária
-11000000;2009;6365;RecTributaria;Rec Tributária
-11000000;2010;7582;RecTributaria;Rec Tributária
-11000000;2011;8821;RecTributaria;Rec Tributária
-11000000;2012;10062;RecTributaria;Rec Tributária
 13000000;1989;66;RecPatri;RECPATRIMONIAL
-13000000;1990;78;RecPatri;RECPATRIMONIAL
-13000000;1991;90;RecPatri;RECPATRIMONIAL
-13000000;1992;102;RecPatri;RECPATRIMONIAL
-13000000;1993;114;RecPatri;RECPATRIMONIAL
-13000000;1994;315;RecPatri;RECPATRIMONIAL
-13000000;1995;329;RecPatri;RECPATRIMONIAL
-13000000;1996;343;RecPatri;RECPATRIMONIAL
-13000000;1997;510;RecPatri;REC_PATRIM
-13000000;1998;779;RecPatri;Rec Patrimonial
-13000000;1999;1024;RecPatri;Rec Patrimonial
-13000000;2000;1276;RecPatri;Rec Patrimonial
-13000000;2001;1519;RecPatri;Rec Patrimonial
-13000000;2002;1726;RecPatri;Rec Patrimonial
-13000000;2003;2075;RecPatri;Rec Patrimonial
-13000000;2004;2727;RecPatri;Rec Patrimonial
-13000000;2005;3348;RecPatri;Rec Patrimonial
-13000000;2006;3970;RecPatri;Rec Patrimonial
-13000000;2007;4606;RecPatri;Rec Patrimonial
-13000000;2008;5257;RecPatri;Rec Patrimonial
-13000000;2009;6399;RecPatri;Rec Patrimonial
-13000000;2010;7616;RecPatri;Rec Patrimonial
-13000000;2011;8855;RecPatri;Rec Patrimonial
-13000000;2012;10096;RecPatri;Rec Patrimonial
-17000000;1993;117;RecTransCor;TRANSFCORRENTES
-17000000;1994;317;RecTransCor;TRANSFCORRENTES
-17000000;1995;331;RecTransCor;TRANSFCORRENTES
-17000000;1996;345;RecTransCor;TRANSFCORRENTES
-17000000;1997;512;RecTransCor;Rec_TR_CORRENTE
-17000000;1998;785;RecTransCor;Rec Transf Correntes
-17000000;1999;1030;RecTransCor;Rec Transf Correntes
-17000000;2000;1282;RecTransCor;Rec Transf Correntes
-17000000;2001;1525;RecTransCor;Rec Transf Correntes
-17000000;2002;1734;RecTransCor;Rec Transf Correntes
-17000000;2003;2083;RecTransCor;Rec Transf Correntes
-17000000;2004;2735;RecTransCor;Rec Transf Correntes
-17000000;2005;3356;RecTransCor;Rec Transf Correntes
-17000000;2006;3979;RecTransCor;Rec Transf Correntes
-17000000;2007;4615;RecTransCor;Rec Transf Correntes
-17000000;2008;5266;RecTransCor;Rec Transf Correntes
-17000000;2009;6416;RecTransCor;Rec Transf Correntes
-17000000;2010;7647;RecTransCor;Rec Transf Correntes
-17000000;2011;8886;RecTransCor;Rec Transf Correntes
-17000000;2012;10127;RecTransCor;Rec Transf Correntes
-20000000;1993;175;RecCap;RECCAPITAL
-20000000;1994;319;RecCap;RECCAPITAL
-20000000;1995;333;RecCap;TOTALRECCAP
-20000000;1996;347;RecCap;RECCAPITAL
-20000000;1997;514;RecCap;REC_CAPIT
-20000000;1998;808;RecCap;Rec de Capital
-20000000;1999;1053;RecCap;Rec de Capital
-20000000;2000;1305;RecCap;Rec de Capital
-20000000;2001;1548;RecCap;Rec de Capital
-20000000;2002;1773;RecCap;Rec de Capital
-20000000;2003;2122;RecCap;Rec de Capital
-20000000;2004;2805;RecCap;Rec de Capital
-20000000;2005;3425;RecCap;Rec de Capital
-20000000;2006;4049;RecCap;Rec de Capital
-20000000;2007;4690;RecCap;Rec de Capital
-20000000;2008;5341;RecCap;Rec de Capital
-20000000;2009;6493;RecCap;Rec de Capital
-20000000;2010;7731;RecCap;Rec de Capital
-20000000;2011;8970;RecCap;Rec de Capital
-20000000;2012;10211;RecCap;Rec de Capital
-30000000;1993;236;DesCor;DESPESACORRENTE
-30000000;1994;439;DesCor;DESPCORRENTES
-30000000;1995;453;DesCor;DESPCORRENTES
-30000000;1996;467;DesCor;DESPCORRENTES
-30000000;1997;547;DesCor;D_CORRENTE
-30000000;1998;671;DesCor;Despesas Orçamentárias
-30000000;1999;917;DesCor;Desp Correntes
-30000000;2000;1163;DesCor;Desp Correntes
-30000000;2001;1406;DesCor;Desp Correntes
-30000000;2004;2355;DesCor;Desp Correntes
-30000000;2005;2963;DesCor;Despesas Orçamentárias
-30000000;2006;3590;DesCor;Desp Correntes
-30000000;2007;4217;DesCor;Desp Correntes
-30000000;2008;4867;DesCor;Desp Correntes
-30000000;2009;5540;DesCor;Desp Correntes
-30000000;2010;6701;DesCor;Desp Correntes
-30000000;2011;7940;DesCor;Desp Correntes
-30000000;2012;9180;DesCor;Desp Correntes
 31000000;1989;190;PES;PESSOAL
-31000000;1990;202;PES;PESSOAL
-31000000;1991;214;PES;PESSOAL
-31000000;1992;226;PES;PESSOAL
-31000000;1993;238;PES;PESSOAL
-31000000;1994;441;PES;PESSOAL
-31000000;1995;455;PES;PESSOAL
-31000000;1996;469;PES;PESSOAL
-31000000;1997;549;PES;D_PESSOAL
-31000000;1998;674;PES;Desp de Pessoal
-31000000;1999;919;PES;Desp de Pessoal
-31000000;2000;1165;PES;Desp de Pessoal
-31000000;2001;1408;PES;Desp de Pessoal
-31000000;2002;1803;PES;Pessoal e Encarg Soc_PES
-31000000;2003;2152;PES;Pessoal e Encarg Soc_PES
-31000000;2004;2356;PES;Pessoal e Encarg Soc_PES
-31000000;2005;2965;PES;Pessoal e Encarg Soc_PES
-31000000;2006;3591;PES;Pessoal e Encarg Soc_PES
-31000000;2007;4218;PES;Pessoal e Encarg Soc_PES
-31000000;2008;4868;PES;Pessoal e Encarg Soc_PES
-31000000;2009;5541;PES;Pessoal e Encarg Soc_PES
-31000000;2010;6702;PES;Pessoal e Encarg Soc_PES
-31000000;2011;7941;PES;Pessoal e Encarg Soc_PES
-31000000;2012;9181;PES;Pessoal e Encarg Soc_PES
-32000000;1998;689;DespJED;Juros e Encargos da Dívida
-32000000;1999;934;DespJED;Juros e Encargos da Dívida
-32000000;2000;1180;DespJED;Juros e Encargos da Dívida
-32000000;2001;1423;DespJED;Juros e Encargos da Dívida
-32000000;2002;1824;DespJED;Juros e Encargos Dívida
-32000000;2003;2172;DespJED;Juros e Encargos Dívida
-32000000;2004;2376;DespJED;Juros e Encargos Dívida_JED
-32000000;2005;2985;DespJED;Juros e Encargos Dívida_JED
-32000000;2006;3613;DespJED;Juros e Encargos Dívida_JED
-32000000;2007;4242;DespJED;Juros e Encargos Dívida_JED
-32000000;2008;4892;DespJED;Juros e Encargos Dívida_JED
-32000000;2009;5578;DespJED;Juros e Encargos Dívida_JED
-32000000;2010;6740;DespJED;Juros e Encargos Dívida_JED
-32000000;2011;7979;DespJED;Juros e Encargos Dívida_JED
-32000000;2012;9219;DespJED;Juros e Encargos Dívida_JED
-40000000;1993;241;DespCap;DESPESACAPITAL
-40000000;1994;446;DespCap;DESPCAPITAL
-40000000;1995;460;DespCap;DESPCAPITAL
-40000000;1996;474;DespCap;DESPCAPITAL
-40000000;1997;554;DespCap;D_CAPITAL
-40000000;1998;692;DespCap;Despesas de Capital
-40000000;1999;937;DespCap;Despesas de Capital
-40000000;2000;1183;DespCap;Despesas de Capital
-40000000;2001;1426;DespCap;Despesas de Capital
-40000000;2002;1869;DespCap;Despesas de Capital
-40000000;2003;2217;DespCap;Despesas de Capital
-40000000;2004;2430;DespCap;Despesas de Capital
-40000000;2005;3041;DespCap;Despesas de Capital
-40000000;2006;3669;DespCap;Despesas de Capital
-40000000;2007;4300;DespCap;Despesas de Capital
-40000000;2008;4950;DespCap;Despesas de Capital
-40000000;2009;5638;DespCap;Despesas de Capital
-40000000;2010;6800;DespCap;Despesas de Capital
-40000000;2011;8039;DespCap;Despesas de Capital
-40000000;2012;9279;DespCap;Despesas de Capital
 44000000;1989;194;Investimentos;INVESTIMENTOS
-44000000;1990;206;Investimentos;INVESTIMENTOS
-44000000;1991;218;Investimentos;INVESTIMENTOS
-44000000;1992;230;Investimentos;INVESTIMENTOS
-44000000;1993;242;Investimentos;INVESTIMENTOS
-44000000;1994;447;Investimentos;INVESTIMENTOS
-44000000;1995;461;Investimentos;INVESTIMENTOS
-44000000;1996;475;Investimentos;INVESTIMENTOS
-44000000;1997;555;Investimentos;INVESTIMEN
-44000000;1998;693;Investimentos;Investimentos
-44000000;1999;938;Investimentos;Investimentos
-44000000;2000;1184;Investimentos;Investimentos
-44000000;2001;1427;Investimentos;Investimentos
-44000000;2002;1870;Investimentos;Investimentos
-44000000;2003;2218;Investimentos;Investimentos
-44000000;2004;2431;Investimentos;Investimentos
-44000000;2005;3042;Investimentos;Investimentos
-44000000;2006;3670;Investimentos;Investimentos
-44000000;2007;4301;Investimentos;Investimentos
-44000000;2008;4951;Investimentos;Investimentos
-44000000;2009;5639;Investimentos;Investimentos
-44000000;2010;6801;Investimentos;Investimentos
-44000000;2011;8040;Investimentos;Investimentos
-44000000;2012;9280;Investimentos;Investimentos
-46000000;1998;696;DespAmortizacao;Amortizações
-46000000;1999;941;DespAmortizacao;Amortizações
-46000000;2000;1187;DespAmortizacao;Amortizações
-46000000;2001;1430;DespAmortizacao;Amortizações
-46000000;2002;1872;DespAmortizacao;Amortização da Dívida
-46000000;2003;2220;DespAmortizacao;Amortização da Dívida
-46000000;2004;2472;DespAmortizacao;Amortização da Dívida
-46000000;2005;3083;DespAmortizacao;Amortização da Dívida
-46000000;2006;3712;DespAmortizacao;Amortização da Dívida
-46000000;2007;4347;DespAmortizacao;Amortização da Dívida
-46000000;2008;4998;DespAmortizacao;Amortização da Dívida
-46000000;2009;5690;DespAmortizacao;Amortização da Dívida
-46000000;2010;6852;DespAmortizacao;Amortização da Dívida
-46000000;2011;8091;DespAmortizacao;Amortização da Dívida
-46000000;2012;9331;DespAmortizacao;Amortização da Dívida
-900000000;2002;1796;DeducCor;Deduções Rec Corrente
-900000000;2003;2145;DeducCor;Deduções Rec Corrente
-900000000;2004;2850;DeducCor;Deduções Rec Corrente
-900000000;2005;3476;DeducCor;Deduções Rec Corrente
-900000000;2006;4102;DeducCor;Deduções Rec Corrente
-900000000;2007;4746;DeducCor;Deduções Rec Corrente
-900000000;2008;5397;DeducCor;Deduções Rec Corrente
-900000000;2009;6549;DeducCor;Deduções Rec Corrente
-900000000;2010;7787;DeducCor;Deduções Rec Corrente
-900000000;2011;9026;DeducCor;Deduções Rec Corrente
-900000000;2012;10267;DeducCor;Deduções Rec Corrente
 71200000000;1989;6;RecOrcamentaria;RECORÇAMENTÁRIA
-71200000000;1990;18;RecOrcamentaria;RECORÇAMENTÁRIA
-71200000000;1992;42;RecOrcamentaria;RECORÇAMENTÁRIA
-71200000000;1993;54;RecOrcamentaria;RECORÇAMENTÁRIA
-71200000000;1995;326;RecOrcamentaria;RECORÇAMENTÁRIA
-71200000000;1996;340;RecOrcamentaria;RECORÇAMENTÁRIAS
-71200000000;1997;507;RecOrcamentaria;REC_ORCAM
-71200000000;1998;764;RecOrcamentaria;Rec Orçamentária
-71200000000;1999;1009;RecOrcamentaria;Rec Orçamentária
-71200000000;2000;1261;RecOrcamentaria;Rec Orçamentária
-71200000000;2001;1504;RecOrcamentaria;Rec Orçamentária
-71200000000;2002;1711;RecOrcamentaria;Rec Orçamentária
-71200000000;2003;2060;RecOrcamentaria;Rec Orçamentária
-71200000000;2004;2709;RecOrcamentaria;Rec Orçamentária
-71200000000;2005;3330;RecOrcamentaria;Rec Orçamentária
-71200000000;2006;3952;RecOrcamentaria;Rec Orçamentária
-71200000000;2007;4587;RecOrcamentaria;Rec Orçamentária
-71200000000;2008;5238;RecOrcamentaria;Rec Orçamentária
-71200000000;2009;6363;RecOrcamentaria;Rec Orçamentária
-71200000000;2010;7580;RecOrcamentaria;Rec Orçamentária
-71200000000;2011;8819;RecOrcamentaria;Rec Orçamentária
-71200000000;2012;10060;RecOrcamentaria;Rec Orçamentária
 73400000000;1989;187;DespOrcamentaria;DESPESAORÇAMENTÁRIA
+11000000;1990;20;RecTributaria;RECTRIBUTÁRIA
+13000000;1990;78;RecPatri;RECPATRIMONIAL
+31000000;1990;202;PES;PESSOAL
+44000000;1990;206;Investimentos;INVESTIMENTOS
+71200000000;1990;18;RecOrcamentaria;RECORÇAMENTÁRIA
 73400000000;1990;199;DespOrcamentaria;DESPESAORÇAMENTÁRIA
+11000000;1991;32;RecTributaria;RECTRIBUTÁRIA
+13000000;1991;90;RecPatri;RECPATRIMONIAL
+31000000;1991;214;PES;PESSOAL
+44000000;1991;218;Investimentos;INVESTIMENTOS
 73400000000;1991;211;DespOrcamentaria;DESPESAORÇAMENTÁRIA
+11000000;1992;44;RecTributaria;RECTRIBUTÁRIA
+13000000;1992;102;RecPatri;RECPATRIMONIAL
+31000000;1992;226;PES;PESSOAL
+44000000;1992;230;Investimentos;INVESTIMENTOS
+71200000000;1992;42;RecOrcamentaria;RECORÇAMENTÁRIA
 73400000000;1992;223;DespOrcamentaria;DESPESAORÇAMENTÁRIA
+10000000;1993;55;RecCor;RECCORRENTE
+11000000;1993;56;RecTributaria;RECTRIBUTÁRIA
+13000000;1993;114;RecPatri;RECPATRIMONIAL
+17000000;1993;117;RecTransCor;TRANSFCORRENTES
+20000000;1993;175;RecCap;RECCAPITAL
+30000000;1993;236;DesCor;DESPESACORRENTE
+31000000;1993;238;PES;PESSOAL
+40000000;1993;241;DespCap;DESPESACAPITAL
+44000000;1993;242;Investimentos;INVESTIMENTOS
+71200000000;1993;54;RecOrcamentaria;RECORÇAMENTÁRIA
 73400000000;1993;235;DespOrcamentaria;DESPESAORÇAMENTÁRIA
+10000000;1994;313;RecCor;RECCORRENTES
+11000000;1994;314;RecTributaria;RECTRIBUTÁRIAS
+13000000;1994;315;RecPatri;RECPATRIMONIAL
+17000000;1994;317;RecTransCor;TRANSFCORRENTES
+20000000;1994;319;RecCap;RECCAPITAL
+30000000;1994;439;DesCor;DESPCORRENTES
+31000000;1994;441;PES;PESSOAL
+40000000;1994;446;DespCap;DESPCAPITAL
+44000000;1994;447;Investimentos;INVESTIMENTOS
 73400000000;1994;438;DespOrcamentaria;DESPORÇAMENTÁRIA
+10000000;1995;327;RecCor;TOTALRECCOR
+11000000;1995;328;RecTributaria;RECTRIBUTARIA
+13000000;1995;329;RecPatri;RECPATRIMONIAL
+17000000;1995;331;RecTransCor;TRANSFCORRENTES
+20000000;1995;333;RecCap;TOTALRECCAP
+30000000;1995;453;DesCor;DESPCORRENTES
+31000000;1995;455;PES;PESSOAL
+40000000;1995;460;DespCap;DESPCAPITAL
+44000000;1995;461;Investimentos;INVESTIMENTOS
+71200000000;1995;326;RecOrcamentaria;RECORÇAMENTÁRIA
 73400000000;1995;452;DespOrcamentaria;DESPORÇAMENTÁRIA
+10000000;1996;341;RecCor;RECCORRENTES
+11000000;1996;342;RecTributaria;RECTRIBUTÁRIA
+13000000;1996;343;RecPatri;RECPATRIMONIAL
+17000000;1996;345;RecTransCor;TRANSFCORRENTES
+20000000;1996;347;RecCap;RECCAPITAL
+30000000;1996;467;DesCor;DESPCORRENTES
+31000000;1996;469;PES;PESSOAL
+40000000;1996;474;DespCap;DESPCAPITAL
+44000000;1996;475;Investimentos;INVESTIMENTOS
+71200000000;1996;340;RecOrcamentaria;RECORÇAMENTÁRIAS
 73400000000;1996;466;DespOrcamentaria;DESPORÇAMENTÁRIA
+10000000;1997;508;RecCor;REC_CORRE
+11000000;1997;509;RecTributaria;REC_TRIBUT
+13000000;1997;510;RecPatri;REC_PATRIM
+17000000;1997;512;RecTransCor;Rec_TR_CORRENTE
+20000000;1997;514;RecCap;REC_CAPIT
+30000000;1997;547;DesCor;D_CORRENTE
+31000000;1997;549;PES;D_PESSOAL
+40000000;1997;554;DespCap;D_CAPITAL
+44000000;1997;555;Investimentos;INVESTIMEN
+71200000000;1997;507;RecOrcamentaria;REC_ORCAM
 73400000000;1997;546;DespOrcamentaria;D_ORCAMENT
+10000000;1998;765;RecCor;Rec Correntes
+11000000;1998;766;RecTributaria;Rec Tributária
+13000000;1998;779;RecPatri;Rec Patrimonial
+17000000;1998;785;RecTransCor;Rec Transf Correntes
+20000000;1998;808;RecCap;Rec de Capital
+30000000;1998;672;DesCor;Desp Correntes
+31000000;1998;674;PES;Desp de Pessoal
+32000000;1998;689;DespJED;Juros e Encargos da Dívida
+40000000;1998;692;DespCap;Despesas de Capital
+44000000;1998;693;Investimentos;Investimentos
+46000000;1998;696;DespAmortizacao;Amortizações
+71200000000;1998;764;RecOrcamentaria;Rec Orçamentária
+73400000000;1998;671;DespOrcamentaria;Despesas Orçamentárias
+10000000;1999;1010;RecCor;Rec Correntes
+11000000;1999;1011;RecTributaria;Rec Tributária
+13000000;1999;1024;RecPatri;Rec Patrimonial
+17000000;1999;1030;RecTransCor;Rec Transf Correntes
+20000000;1999;1053;RecCap;Rec de Capital
+30000000;1999;917;DesCor;Desp Correntes
+31000000;1999;919;PES;Desp de Pessoal
+32000000;1999;934;DespJED;Juros e Encargos da Dívida
+40000000;1999;937;DespCap;Despesas de Capital
+44000000;1999;938;Investimentos;Investimentos
+46000000;1999;941;DespAmortizacao;Amortizações
+71200000000;1999;1009;RecOrcamentaria;Rec Orçamentária
 73400000000;1999;916;DespOrcamentaria;Despesas Orçamentárias
+10000000;2000;1262;RecCor;Rec Correntes
+11000000;2000;1263;RecTributaria;Rec Tributária
+13000000;2000;1276;RecPatri;Rec Patrimonial
+17000000;2000;1282;RecTransCor;Rec Transf Correntes
+20000000;2000;1305;RecCap;Rec de Capital
+30000000;2000;1163;DesCor;Desp Correntes
+31000000;2000;1165;PES;Desp de Pessoal
+32000000;2000;1180;DespJED;Juros e Encargos da Dívida
+40000000;2000;1183;DespCap;Despesas de Capital
+44000000;2000;1184;Investimentos;Investimentos
+46000000;2000;1187;DespAmortizacao;Amortizações
+71200000000;2000;1261;RecOrcamentaria;Rec Orçamentária
 73400000000;2000;1162;DespOrcamentaria;Despesas Orçamentárias
+10000000;2001;1505;RecCor;Rec Correntes
+11000000;2001;1506;RecTributaria;Rec Tributária
+13000000;2001;1519;RecPatri;Rec Patrimonial
+17000000;2001;1525;RecTransCor;Rec Transf Correntes
+20000000;2001;1548;RecCap;Rec de Capital
+30000000;2001;1406;DesCor;Desp Correntes
+31000000;2001;1408;PES;Desp de Pessoal
+32000000;2001;1423;DespJED;Juros e Encargos da Dívida
+40000000;2001;1426;DespCap;Despesas de Capital
+44000000;2001;1427;Investimentos;Investimentos
+46000000;2001;1430;DespAmortizacao;Amortizações
+71200000000;2001;1504;RecOrcamentaria;Rec Orçamentária
 73400000000;2001;1405;DespOrcamentaria;Despesas Orçamentárias
+10000000;2002;1712;RecCor;Rec Correntes
+11000000;2002;1713;RecTributaria;Rec Tributária
+13000000;2002;1726;RecPatri;Rec Patrimonial
+17000000;2002;1734;RecTransCor;Rec Transf Correntes
+20000000;2002;1773;RecCap;Rec de Capital
+31000000;2002;1803;PES;Pessoal e Encarg Soc_PES
+32000000;2002;1824;DespJED;Juros e Encargos Dívida
+40000000;2002;1869;DespCap;Despesas de Capital
+44000000;2002;1870;Investimentos;Investimentos
+46000000;2002;1872;DespAmortizacao;Amortização da Dívida
+900000000;2002;1796;DeducCor;Deduções Rec Corrente
+71200000000;2002;1711;RecOrcamentaria;Rec Orçamentária
 73400000000;2002;1801;DespOrcamentaria;Despesas Orçamentárias
+10000000;2003;2061;RecCor;Rec Correntes
+11000000;2003;2062;RecTributaria;Rec Tributária
+13000000;2003;2075;RecPatri;Rec Patrimonial
+17000000;2003;2083;RecTransCor;Rec Transf Correntes
+20000000;2003;2122;RecCap;Rec de Capital
+31000000;2003;2152;PES;Pessoal e Encarg Soc_PES
+32000000;2003;2172;DespJED;Juros e Encargos Dívida
+40000000;2003;2217;DespCap;Despesas de Capital
+44000000;2003;2218;Investimentos;Investimentos
+46000000;2003;2220;DespAmortizacao;Amortização da Dívida
+900000000;2003;2145;DeducCor;Deduções Rec Corrente
+71200000000;2003;2060;RecOrcamentaria;Rec Orçamentária
 73400000000;2003;2150;DespOrcamentaria;Despesas Orçamentárias
+10000000;2004;2710;RecCor;Rec Correntes
+11000000;2004;2711;RecTributaria;Rec Tributária
+13000000;2004;2727;RecPatri;Rec Patrimonial
+17000000;2004;2735;RecTransCor;Rec Transf Correntes
+20000000;2004;2805;RecCap;Rec de Capital
+30000000;2004;2355;DesCor;Desp Correntes
+31000000;2004;2356;PES;Pessoal e Encarg Soc_PES
+32000000;2004;2376;DespJED;Juros e Encargos Dívida_JED
+40000000;2004;2430;DespCap;Despesas de Capital
+44000000;2004;2431;Investimentos;Investimentos
+46000000;2004;2472;DespAmortizacao;Amortização da Dívida
+900000000;2004;2850;DeducCor;Deduções Rec Corrente
+71200000000;2004;2709;RecOrcamentaria;Rec Orçamentária
 73400000000;2004;2354;DespOrcamentaria;Despesas Orçamentárias
+10000000;2005;3331;RecCor;Rec Correntes
+11000000;2005;3332;RecTributaria;Rec Tributária
+13000000;2005;3348;RecPatri;Rec Patrimonial
+17000000;2005;3356;RecTransCor;Rec Transf Correntes
+20000000;2005;3425;RecCap;Rec de Capital
+30000000;2005;2964;DesCor;Desp Correntes
+31000000;2005;2965;PES;Pessoal e Encarg Soc_PES
+32000000;2005;2985;DespJED;Juros e Encargos Dívida_JED
+40000000;2005;3041;DespCap;Despesas de Capital
+44000000;2005;3042;Investimentos;Investimentos
+46000000;2005;3083;DespAmortizacao;Amortização da Dívida
+900000000;2005;3476;DeducCor;Deduções Rec Corrente
+71200000000;2005;3330;RecOrcamentaria;Rec Orçamentária
+73400000000;2005;2963;DespOrcamentaria;Despesas Orçamentárias
+10000000;2006;3953;RecCor;Rec Correntes
+11000000;2006;3954;RecTributaria;Rec Tributária
+13000000;2006;3970;RecPatri;Rec Patrimonial
+17000000;2006;3979;RecTransCor;Rec Transf Correntes
+20000000;2006;4049;RecCap;Rec de Capital
+30000000;2006;3590;DesCor;Desp Correntes
+31000000;2006;3591;PES;Pessoal e Encarg Soc_PES
+32000000;2006;3613;DespJED;Juros e Encargos Dívida_JED
+40000000;2006;3669;DespCap;Despesas de Capital
+44000000;2006;3670;Investimentos;Investimentos
+46000000;2006;3712;DespAmortizacao;Amortização da Dívida
+900000000;2006;4102;DeducCor;Deduções Rec Corrente
+71200000000;2006;3952;RecOrcamentaria;Rec Orçamentária
 73400000000;2006;3589;DespOrcamentaria;Despesas Orçamentárias
+10000000;2007;4588;RecCor;Rec Correntes
+11000000;2007;4589;RecTributaria;Rec Tributária
+13000000;2007;4606;RecPatri;Rec Patrimonial
+17000000;2007;4615;RecTransCor;Rec Transf Correntes
+20000000;2007;4690;RecCap;Rec de Capital
+30000000;2007;4217;DesCor;Desp Correntes
+31000000;2007;4218;PES;Pessoal e Encarg Soc_PES
+32000000;2007;4242;DespJED;Juros e Encargos Dívida_JED
+40000000;2007;4300;DespCap;Despesas de Capital
+44000000;2007;4301;Investimentos;Investimentos
+46000000;2007;4347;DespAmortizacao;Amortização da Dívida
+900000000;2007;4746;DeducCor;Deduções Rec Corrente
+71200000000;2007;4587;RecOrcamentaria;Rec Orçamentária
 73400000000;2007;4216;DespOrcamentaria;Despesas Orçamentárias
+10000000;2008;5239;RecCor;Rec Correntes
+11000000;2008;5240;RecTributaria;Rec Tributária
+13000000;2008;5257;RecPatri;Rec Patrimonial
+17000000;2008;5266;RecTransCor;Rec Transf Correntes
+20000000;2008;5341;RecCap;Rec de Capital
+30000000;2008;4867;DesCor;Desp Correntes
+31000000;2008;4868;PES;Pessoal e Encarg Soc_PES
+32000000;2008;4892;DespJED;Juros e Encargos Dívida_JED
+40000000;2008;4950;DespCap;Despesas de Capital
+44000000;2008;4951;Investimentos;Investimentos
+46000000;2008;4998;DespAmortizacao;Amortização da Dívida
+900000000;2008;5397;DeducCor;Deduções Rec Corrente
+71200000000;2008;5238;RecOrcamentaria;Rec Orçamentária
 73400000000;2008;4866;DespOrcamentaria;Despesas Orçamentárias
+10000000;2009;6364;RecCor;Rec Correntes
+11000000;2009;6365;RecTributaria;Rec Tributária
+13000000;2009;6399;RecPatri;Rec Patrimonial
+17000000;2009;6416;RecTransCor;Rec Transf Correntes
+20000000;2009;6493;RecCap;Rec de Capital
+30000000;2009;5540;DesCor;Desp Correntes
+31000000;2009;5541;PES;Pessoal e Encarg Soc_PES
+32000000;2009;5578;DespJED;Juros e Encargos Dívida_JED
+40000000;2009;5638;DespCap;Despesas de Capital
+44000000;2009;5639;Investimentos;Investimentos
+46000000;2009;5690;DespAmortizacao;Amortização da Dívida
+900000000;2009;6549;DeducCor;Deduções Rec Corrente
+71200000000;2009;6363;RecOrcamentaria;Rec Orçamentária
 73400000000;2009;5539;DespOrcamentaria;Despesas Orçamentárias
+10000000;2010;7581;RecCor;Rec Correntes
+11000000;2010;7582;RecTributaria;Rec Tributária
+13000000;2010;7616;RecPatri;Rec Patrimonial
+17000000;2010;7647;RecTransCor;Rec Transf Correntes
+20000000;2010;7731;RecCap;Rec de Capital
+30000000;2010;6701;DesCor;Desp Correntes
+31000000;2010;6702;PES;Pessoal e Encarg Soc_PES
+32000000;2010;6740;DespJED;Juros e Encargos Dívida_JED
+40000000;2010;6800;DespCap;Despesas de Capital
+44000000;2010;6801;Investimentos;Investimentos
+46000000;2010;6852;DespAmortizacao;Amortização da Dívida
+900000000;2010;7787;DeducCor;Deduções Rec Corrente
+71200000000;2010;7580;RecOrcamentaria;Rec Orçamentária
 73400000000;2010;6700;DespOrcamentaria;Despesas Orçamentárias
+10000000;2011;8820;RecCor;Rec Correntes
+11000000;2011;8821;RecTributaria;Rec Tributária
+13000000;2011;8855;RecPatri;Rec Patrimonial
+17000000;2011;8886;RecTransCor;Rec Transf Correntes
+20000000;2011;8970;RecCap;Rec de Capital
+30000000;2011;7940;DesCor;Desp Correntes
+31000000;2011;7941;PES;Pessoal e Encarg Soc_PES
+32000000;2011;7979;DespJED;Juros e Encargos Dívida_JED
+40000000;2011;8039;DespCap;Despesas de Capital
+44000000;2011;8040;Investimentos;Investimentos
+46000000;2011;8091;DespAmortizacao;Amortização da Dívida
+900000000;2011;9026;DeducCor;Deduções Rec Corrente
+71200000000;2011;8819;RecOrcamentaria;Rec Orçamentária
 73400000000;2011;7939;DespOrcamentaria;Despesas Orçamentárias
+10000000;2012;10061;RecCor;Rec Correntes
+11000000;2012;10062;RecTributaria;Rec Tributária
+13000000;2012;10096;RecPatri;Rec Patrimonial
+17000000;2012;10127;RecTransCor;Rec Transf Correntes
+20000000;2012;10211;RecCap;Rec de Capital
+30000000;2012;9180;DesCor;Desp Correntes
+31000000;2012;9181;PES;Pessoal e Encarg Soc_PES
+32000000;2012;9219;DespJED;Juros e Encargos Dívida_JED
+40000000;2012;9279;DespCap;Despesas de Capital
+44000000;2012;9280;Investimentos;Investimentos
+46000000;2012;9331;DespAmortizacao;Amortização da Dívida
+900000000;2012;10267;DeducCor;Deduções Rec Corrente
+71200000000;2012;10060;RecOrcamentaria;Rec Orçamentária
 73400000000;2012;9179;DespOrcamentaria;Despesas Orçamentárias
