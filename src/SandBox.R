@@ -43,6 +43,16 @@ inflation <- ImportIPEAData(CodeVar = "PAN_IPCAG",
 
 
 
+
+Check_FileList <- list.files(recursive = TRUE, include.dirs = TRUE) %>% 
+  as.data.frame() %>% 
+  magrittr::set_names("FileList_FilePath")
+
+
+fwrite(Check_FileList, "data/temp/FileList.csv",
+       sep = ";", dec= ',')
+
+
 #
 ################## Interaction between Budget per capita (log) and lag.pb ##################
 

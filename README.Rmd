@@ -1,24 +1,28 @@
 ---
-title: "README"
-author: "Murilo Junqueira"
-date: "28/02/2020"
+title: "Participation and Budget 2018 (article repo)"
 output: rmarkdown::github_document
 ---
-# Participation and Budget 2018 (article repo) 
 
-
-**Carla de Paiva Bezerra**  
-**Murilo Junqueira**  
+  **Carla de Paiva Bezerra** (carla.bezerra@gmail.com)  
+  **Murilo Junqueira**  (m.junqueira@yahoo.com.br)  
 
 ## 1. Short Description
 
 This is the repo for the working paper "Why has the Participatory Budgeting declined in Brazil?".
+
+### Abstract  
+
+Participatory Budgeting (PB) is a policy innovation that originated in Brazil and is recognized worldwide by scholars and international organizations as an effective policy tool for directly involving the population in decisions about the local budget. Its diffusion in Brazil was strongly stimulated by the Workers' Party (Partido dos Trabalhadores - PT), as a showcase of the "Petista Way of Governing". However, when the Party took the Federal Office, it abandoned PB as its main participatory policy priority. 
+The motivation for such drastic change in policy preference remains unexplained, by both scholars and the Party itself. To understand the reasons for it, we present an original hypothesis, based on party adaptation to increasing fiscal and budgetary rigidity. To test this hypothesis, we use a mixed-methods approach, with qualitative data, such as interviews and newspapers content analysis, and quantitative panel-data analysis: the correlation between the state of public finances and the local PB adoption probability. Our results show that the most significant factors for explaining PB adoption by a municipality are: having the PT as incumbent, a bigger population and a higher budget per capita. The factors that stood out to explain PB continuity are: political-administrative continuity and a higher investment rate.  
+
 
 For full paper: carlabezerra.info -> Research 
 
 ## 2. Dependencies
 
 1. R version 3.4.3 (2017-11-30) -- "Kite-Eating Tree"
+2. Java
+3. Microsoft Access Database Engine
 
 ## 3. Files
 
@@ -60,7 +64,7 @@ Dataset importing and merging
 5.Importa IPEAData.R  
 6.Importa TSE.R  
 
-Spada model replication 
+Spada model replication  
 1.Reproducao Spada.R  
 2.AditionalVars.R  
 3.Cria Variaveis.R  

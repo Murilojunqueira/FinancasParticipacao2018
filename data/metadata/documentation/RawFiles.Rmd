@@ -2,7 +2,7 @@
 title: "RawFiles"
 author: "Murilo Junqueira"
 date: "28/02/2020"
-output: html_document
+output: rmarkdown::github_document
 ---
 
 ```{r setup, include=FALSE}
