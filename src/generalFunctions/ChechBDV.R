@@ -1,4 +1,4 @@
-# Function to Check Binary Dependent Variable Model
+# Function to analysis binary dependent variable regression models
 
 # By Murilo Junqueira (m.junqueira@yahoo.com.br)
 

@@ -1,7 +1,7 @@
 
 # Project: Working paper "Why has the Participatory Budgeting declined in Brazil?"
 
-# This script: Create tables Partidos "Parties".
+# This script: Extract information from IPEA into R. 
 
 # Documentação do pacote de extração dos dados do IPEA Data:
 # https://cran.r-project.org/web/packages/ipeadatar/ipeadatar.pdf

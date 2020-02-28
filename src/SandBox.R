@@ -1,4 +1,49 @@
 
+
+FilePath <- "data/dataset/DeParaSitEleitoral.csv"
+
+Info <- file.info(FilePath)
+
+Info
+
+Info$size
+
+Info$mtime
+
+
+
+
+
+
+
+names(FilePath_list)
+
+FilePath_list <- fread("data/dataset/FinantialRawFiles.csv") %>% 
+  select(FileList_FilePath) %>% 
+  unlist() %>% as.character()
+
+FilePath_list <- list.files("data/raw/TSE/2000/", full.names = TRUE)
+
+Info <- map_df(FilePath_list, file.info) %>% 
+  bind_cols(as.data.frame(FilePath_list))
+
+fwrite(Info, "data/temp/info.csv",
+       sep = ";", dec = ",")
+#
+
+
+
+
+inflation <- ImportIPEAData(CodeVar = "PAN_IPCAG", 
+                            VarName = "SocioMunic_PIBCorrente", 
+                            Territory = "Municípios", 
+                            TerritoryVarName = "Munic_Id",
+                            TimeAgregattion = "year", 
+                            TimeAgregattionName = "SocioMunic_Ano")
+
+
+
+#
 ################## Interaction between Budget per capita (log) and lag.pb ##################
 
 # Distribution of InvestPer

@@ -1,7 +1,7 @@
 
 # Project: Working paper "Why has the Participatory Budgeting declined in Brazil?"
 
-# This script: Import electoral data
+# This script: Import electoral data from CEPESP API
 
 # Original source data from TSE - Tribunal Superior Eleitural (Superior Electoral Court)
 # Most of the data come from CEPESP API: https://github.com/Cepesp-Fgv/cepesp-r 

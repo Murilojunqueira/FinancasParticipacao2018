@@ -4,30 +4,6 @@
 .Ruserdata
 packrat/lib*/
 .Rprofile
-data/raw/Finbra/Backup/Finbra1989.xlsx
-data/raw/Finbra/Backup/Finbra1990.xlsx
-data/raw/Finbra/Backup/Finbra1991.xlsx
-data/raw/Finbra/Backup/Finbra1992.xlsx
-data/raw/Finbra/Backup/Finbra1993.xlsx
-data/raw/Finbra/Backup/Finbra1994.xlsx
-data/raw/Finbra/Backup/Finbra1995.xlsx
-data/raw/Finbra/Backup/Finbra1996.xlsx
-data/raw/Finbra/Backup/Finbra1997.xlsx
-data/raw/Finbra/Backup/Finbra1998.xlsx
-data/raw/Finbra/Backup/Finbra1999.xlsx
-data/raw/Finbra/Backup/Finbra2000.xlsx
-data/raw/Finbra/Backup/Finbra2001.xlsx
-data/raw/Finbra/Backup/Finbra2002.xlsx
-data/raw/Finbra/Backup/Finbra2003.xlsx
-data/raw/Finbra/Backup/Finbra2004.xlsx
-data/raw/Finbra/Backup/Finbra2005.xlsx
-data/raw/Finbra/Backup/Finbra2006.xlsx
-data/raw/Finbra/Backup/Finbra2007.xlsx
-data/raw/Finbra/Backup/Finbra2008.xlsx
-data/raw/Finbra/Backup/Finbra2009.xlsx
-data/raw/Finbra/Backup/Finbra2010.xlsx
-data/raw/Finbra/Backup/Finbra2011.xlsx
-data/raw/Finbra/Backup/Finbra2012.xlsx
 data/raw/Finbra/ExcelFiles/Finbra1997.xlsx
 data/raw/Finbra/ExcelFiles/Finbra1998.xlsx
 data/raw/Finbra/ExcelFiles/Finbra1999.xlsx
@@ -88,46 +64,13 @@ data/raw/Finbra/OriginalFiles/pge_finbra_2009.zip
 data/raw/Finbra/OriginalFiles/pge_finbra_2010.zip
 data/raw/Finbra/OriginalFiles/pge_finbra_2011.zip
 data/raw/Finbra/OriginalFiles/pge_finbra_2012.zip
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Prefeito).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador AC).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador AL).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador AM).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador AP).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador BA).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador CE).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador ES).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador GO).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador MA).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador MG).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador MS).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador MT).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador PA).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador PB).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador PE).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador PI).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador PR).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador RJ).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador RN).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador RO).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador RR).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador RS).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador SC).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador SE).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador SP).csv
-data/raw/TSE/Resultado_da_Eleição_(Por_Municipio)_1996 (Vereador TO).csv
 data/dataset/CandidatoAno.csv
 data/dataset/Coligacoes.csv
 data/dataset/ColigacoesPartidos.csv
-data/dataset/DeParaFinbra.csv
-data/dataset/DeParaSitEleitoral.csv
 data/dataset/Inflacao.csv
 data/dataset/MunicFinancas.csv
 data/dataset/Partidos.csv
 data/dataset/SocioDemoEconomia.csv
-data/dataset/UEToCodIBGE.csv
-data/dataset/DeParaFinbra.csv
-data/dataset/MunicFinancas.csv
-data/dataset/DeParaFinbra.csv
 data/dataset/MunicFinancas.csv
 data/raw/CepespData/.cepespdata/10579.csv
 data/raw/CepespData/.cepespdata/10615.csv
@@ -156,7 +99,6 @@ data/raw/CepespData/.cepespdata/8821.csv
 data/raw/CepespData/.cepespdata/8984.csv
 data/raw/CepespData/.cepespdata/9120.csv
 data/dataset/MunicFinancas.csv
-data/dataset/DeParaFinbra.csv
 data/raw/CepespData/LAMBDA_TSE_VEREADOR_MUNICIPIO_CANDIDATO_2000_AC.csv
 data/raw/CepespData/LAMBDA_TSE_VEREADOR_MUNICIPIO_CANDIDATO_2000_SP.csv
 data/raw/Finbra/Backup/finbra_MUN_DespesasOrcamentarias(AnexoI-D) - 2013.zip
@@ -171,30 +113,6 @@ data/raw/Finbra/Backup/finbra_MUN_ReceitasOrcamentarias(AnexoI-C) - 2013.zip
 data/raw/Finbra/Backup/finbra_MUN_ReceitasOrcamentarias(AnexoI-C) - 2014.zip
 data/raw/Finbra/Backup/finbra_MUN_ReceitasOrcamentarias(AnexoI-C) - 2015.zip
 data/raw/Finbra/Backup/finbra_MUN_ReceitasOrcamentarias(AnexoI-C) - 2016.zip
-data/raw/TSE/1996/LEIAME.pdf
-data/raw/TSE/1996/votacao_candidato_munzona_1996.zip
-data/raw/TSE/1996/votacao_candidato_munzona_1996_AC.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_AL.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_AM.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_AP.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_BA.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_CE.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_ES.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_GO.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_MA.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_MG.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_MS.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_PA.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_PB.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_PE.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_PI.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_RN.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_RO.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_RR.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_RS.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_SE.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_SP.txt
-data/raw/TSE/1996/votacao_candidato_munzona_1996_TO.txt
 data/raw/TSE/2000/LEIAME.pdf
 data/raw/TSE/2000/votacao_candidato_munzona_2000.zip
 data/raw/TSE/2000/votacao_candidato_munzona_2000_AC.txt
@@ -226,7 +144,8 @@ data/raw/TSE/2000/votacao_candidato_munzona_2000_TO.txt
 data/raw/TSE/Candidatos_1996.xlsx
 data/raw/TSE/LEIAME.pdf
 data/raw/TSE/TSE-relacao-candidatos-1996/Candidatos_1996.xlsx
-data/raw/TSE/TSE-relacao-candidatos-1996/Resultado_da_Eleição_(Por_Municipio)_1996.csv
 data/raw/TSE/TSE-relacao-candidatos-1996/TSE-relacao-candidatos-1996.zip
 data/dataset/MunicFinancas.csv
-data/dataset/DeParaFinbra.csv
+.Rhistory
+data/metadata/dataModel_MySQL/Participação e Finanças Dados.mwb.bak
+data/temp/~$Metadata.xlsm

@@ -1,7 +1,7 @@
 
 # Project: Working paper "Why has the Participatory Budgeting declined in Brazil?"
 
-# This script: Import electoral data of 2000 election
+# This script: Import coalition data from electoral data of 2000 election
 
 # Original source data from TSE - Tribunal Superior Eleitural (Superior Electoral Court)
 

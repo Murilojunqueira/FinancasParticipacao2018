@@ -16,7 +16,7 @@ library(stringi)
 
 ################## Function ListFieldsCSV.R  ##################
 
-ListFieldsCSV.R <- function(FileList) {
+ListFieldsCSV <- function(FileList) {
   
   # Dataframe to set all information
   output <- data.frame()

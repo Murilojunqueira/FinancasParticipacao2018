@@ -1,5 +1,5 @@
 
-# Import a List of dataframes to Excelworkbook
+# Import a List of dataframes to Excel workbook
 
 # By Murilo Junqueira (m.junqueira@yahoo.com.br)
 
@@ -9,6 +9,9 @@
 
 library(openxlsx)
 library(readr)
+
+# External dependency: Microsoft Access Database Engine
+# More information on "src/generalFunctions/GetMSAccessData.R"
 
 
 ################## External Functions ##################
@@ -25,12 +28,11 @@ source("src/generalFunctions/GetMSAccessData.R")
 # FileNameXlsx: Name os the xlsx file
 
 # Debug:
-# FileRaw = paste0("data/raw/Finbra/OriginalFiles/", FinantialRawFiles$FinRawFiles_FileName[2])
-# FileNameXlsx = paste0("data/raw/Finbra/ExcelFiles/", FinantialRawFiles$FinRawFiles_FileXlsx[2])
+# FileRaw = "data/raw/TSE/TSE-relacao-candidatos-1996/TSE-relacao-candidatos-1996.zip"
+# FileNameXlsx = "data/raw/TSE/TSE-relacao-candidatos-1996/Candidatos_1996.xlsx"
 # TableNameVar = "TABLE_NAME"
 # tableType = "TABLE"
-# TableNameFilter = "."
-# Override = FALSE
+# Override = TRUE
  
 # ZipAccessToExcel(FileRaw, FileNameXlsx, TableNameVar, tableType, TableNameFilter, Override)
 

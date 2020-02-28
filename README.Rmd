@@ -1,7 +1,9 @@
 
 # Participation and Budget 2018 (article repo) 
-##Carla de Paiva Bezerra
-##Murilo Junqueira
+
+
+**Carla de Paiva Bezerra**  
+**Murilo Junqueira**  
 
 ## 1. Short Description
 
@@ -24,10 +26,10 @@ A. Raw Data
 01_Participedia_Spada_PBcensus1989-2012.xlsx
 
 2. IPEADATA: 
-http://www.ipeadata.gov.br
+http://www.ipeadata.gov.br  
 A portal of the Brazilian Government Institute for Applied Economics Research, that puts together several data sources of the Brazilian Governement. The data is downloaded. We accessed the following sources:
 - IBGE: Brazilian Institute of Geography and Statistics. For demographic variables.
-02_IPEA_IBGE_ latitude_longitude1998.xls
+02_IPEA_IBGE_ latitude_longitude1998.xls  
 03_IPEA_IBGE_PopulacaoMunic_1992-2017.xls
 04_IPEA_IBGE_PIBMunic_1996-2017.xls
 
@@ -45,25 +47,25 @@ B. FINAL DATASET
 
 ### 3.2. Code
 
-Dataset importing and merging
-1.Importa CEPESPdata.R
-2.Importa Dados Spada.R
-3.Importa Finbra Funcoes.R
-4.Importa Finbra.R
-5.Importa IPEAData.R
-6.Importa TSE.R
+Dataset importing and merging  
+1.Importa CEPESPdata.R  
+2.Importa Dados Spada.R  
+3.Importa Finbra Funcoes.R  
+4.Importa Finbra.R  
+5.Importa IPEAData.R  
+6.Importa TSE.R  
 
 Spada model replication 
-1.Reproducao Spada.R
-2.AditionalVars.R
-3.Cria Variaveis.R
-4.Full replication Spada - Modelos.R
-5.Full replication Spada - Variaveis.R
+1.Reproducao Spada.R  
+2.AditionalVars.R  
+3.Cria Variaveis.R  
+4.Full replication Spada - Modelos.R  
+5.Full replication Spada - Variaveis.R  
 
-Final Model
-1.PaperFunctions.R
-2.PaperGraphs.R
-3.PaperModels.R
+Final Model  
+1.PaperFunctions.R  
+2.PaperGraphs.R  
+3.PaperModels.R  
 
 
 ### 4. Results

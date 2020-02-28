@@ -22,6 +22,9 @@
 library(RODBC)
 library(dplyr)
 
+# Debug
+# file <-  Rawfile
+
 GetMSAccessData <- function(file, TableNameVar, tableType = NULL, verbose = TRUE) {
   
   # Concennect to AccessFile
@@ -36,9 +39,13 @@ GetMSAccessData <- function(file, TableNameVar, tableType = NULL, verbose = TRUE
   
   for(i in seq_along(TablesNames)) {
     
+    # i <- 1
+    
     if(isTRUE(verbose)) message("Getting data from table ", TablesNames[i])
     
-    AccessData[[TablesNames[i]]] <- try(sqlFetch(dta, TablesNames[i]))
+    AccessData[[TablesNames[i]]] <- try(RODBC::sqlFetch(channel = dta, 
+                                                        sqtable = TablesNames[[i]],
+                                                        as.is = TRUE))
     
     # Error Handling
     if(class(AccessData[[TablesNames[i]]]) == "try-error") {

@@ -1,0 +1,197 @@
+FileList_FilePath;FileList_Type;FileList_DescriptionPT;FileList_Description
+ToDo.txt;Text;Lista de Coisas para fazer;List of Things to Do
+data/dataset/FileList.csv;Metadata;Lista os arquivos dos projeto;The list project's files
+README.Rmd;Text;Descreve os fatos básicos do repositório do arquivo.;Describes the basic facts of the file repository.
+data;Folder;Reune todos os dados utilizados no Projeto, tanto dados brutos quantos transformados. Contém metadados.;Gathers all the data used in the Project, both raw and transformed data. Contains metadata.
+data/analysisdata;Folder;Reune as variáveis utilizadas para rodar os modelos de regressão, tabelas e figuras do paper.;Gathers the variables used to run the regression models, tables and figures in the paper.
+data/analysisdata/DataAnalysis.csv;Analysis Data;"Tabela com as variáveis utilizadas para os modelos, tabelas e gráficos do artigo. É fruto dos dados extraidos do banco de cados completo ( arquivos do diretório ""data/dataset"").";"Table with the variables used for the models, tables and graphs of the article. It is the result of data extracted from the complete database (files in the ""data/dataset"" directory)."
+data/dataset;Folder;Dados extraídos das fontes brutas em um modelo banco de dados relacional.;Data extracted from the raw sources together into a relational base model.
+data/dataset/BDCamposFinbra.csv;Metadata;"Lista dos campos (nome das variáveis) dos arquivos de dados brutos do banco de dados ""Finbra"" (Finanças do Brasil, STN). Essa tabela é necessária para extrair os dados dos arquivos.";"List of fields (name of variables) of the raw data files of the ""Finbra"" database (Finances of Brazil, STN). This table is necessary to extract the data from the files."
+data/dataset/CandidatoAno.csv;Modeled data;Dados eleitorais dos candidatos das eleições brasileiras;Electoral data of candidates of Brazilian elections
+data/dataset/Coligacoes.csv;Modeled data;Dados sobre as coligações nas eleições brasileiras.;Data on coalitions in Brazilian elections.
+data/dataset/ColigacoesPartidos.csv;Modeled data;Mostra quais partidos foram coligados em cada município em cada eleição.;Shows which parties colligated in each municipality in each election.
+data/dataset/ContasPublicas.csv;Modeled data;Listas os códigos das contas públicas segundo as regras de contabilidade públicas do Brasil. Mostra uma descrição básica de cada conta.;Lists the codes of public accounts according to public accounting rules in Brazil. It shows a basic description of each account.
+data/dataset/DeParaFinbra.csv;Metadata;Relaciona as contas públicas da tabela ContasPublicas com os campos da tabela BDCamposFinbra;Lists the public accounts of ContasPublicas table with the fields of the table BDCamposFinbra
+data/dataset/DeParaSitEleitoral.csv;Metadata;Relaciona os códigos da situação eleitoral dos candidatos com a sua descrição. Também mostra uma relação de/para que uniformiza os códigos em diferentes eleições.;Lists the codes of the electoral situation of the candidates with its description. It also shows a from/to list standardizing the codes in different elections.
+data/dataset/DeParaUGCodIBGE.csv;Metadata;Uma lista de/para o código da UG, utilizado pela STN até 1995 para identificar os municípios, com o código municipal do IBGE, que passou a identificar os municípios a partir de então.;A from/to list between EU (Unidade Eleitoral) code (used by the TSE) with IBGE municipal code.
+data/dataset/FinantialRawFiles.csv;Metadata;Lista os arquivos brutos utilizados para se extrair os dados financeiros.;List the raw files used to extract financial data.
+data/dataset/Inflacao.csv;Modeled data;Mostra a inflação anual acumulada, segundo dados do IPEAdata.;Shows the cumulative annual inflation, according IPEAdata data.
+data/dataset/MunicFinancas.csv;Modeled data;Dados brutos sobre as finanças municipais, mostrando os valores município-conta-ano.;Raw data on municipal finances, showing the municipality-year-account values.
+data/dataset/Municipios.csv;Modeled data;Lista dos municípios Brasileiros.;List of Brazilian municipalities.
+data/dataset/MunicOp.csv;Modeled data;"Censo do Orçamento Participativo, obtido através Spada, P. 2012. ""Brazilian Participatory Budgeting Census: 1989-2012."" Available at: http://participedia.net/en/content/brazilian-participatory-budgeting-census / Access date: April 20, 2018. (licensed under CC BY-NC-SA 3.0).";"Participatory Budget Census, obtained by Spada, P. 2012. ""Brazilian Participatory Budgeting Census:. 1989-2012"" Available at: http://participedia.net/en/content/brazilian-participatory-budgeting-census / Access date: April 20, 2018. (licensed under CC BY-NC-SA 3.0)."
+data/dataset/Partidos.csv;Modeled data;Lista dos partidos políticos brasileiros;List of Brazilian political parties
+data/dataset/SocioDemoEconomia.csv;Modeled data;Dados Socioeconomicos brasileiros por município-ano. Retirado sobretudo dos dados do IBGE.;Brazilian socioeconomic data by municipality-year. Mainly taken from IBGE.
+data/dataset/UEToCodIBGE.csv;Metadata;Uma tabela de/para entre o código UG (usado pelo TSE) com o código do IBGE.;A from/to list  between the table to code (used by the TSE) with IBGE code.
+data/dataset/UFs.csv;Modeled data;Lista das Unidades Federativas brasileiras.;List of Brazilian Federative Units.
+data/metadata;Folder;Metadados;metadata
+data/metadata/dataModel_MySQL;Folder;Diagrama de entidade-relacionamento utilizando o MySQL_Workbench;Entity-relationship diagram using MySQL_Workbench
+data/metadata/dataModel_MySQL/History;Folder;Histórico dos modelos de dados utilizados;History of data models
+data/metadata/dataModel_MySQL/History/Participação e Finanças Dados (Backup 2018-03-01 16h07).mwb;MySQLModel;Modelo de dados criado durante a construção do banco. A última data de atualização está no nome do arquivo.;Data model created during the construction of the bank. The last update date is in the file name.
+data/metadata/dataModel_MySQL/History/Participação e Finanças Dados (Backup 2018-03-01 16h07).png;MySQLModel;Modelo de dados criado durante a construção do banco. A última data de atualização está no nome do arquivo.;Data model created during the construction of the bank. The last update date is in the file name.
+data/metadata/dataModel_MySQL/History/Participação e Finanças Dados (Backup 2018-03-02 17h07).mwb;MySQLModel;Modelo de dados criado durante a construção do banco. A última data de atualização está no nome do arquivo.;Data model created during the construction of the bank. The last update date is in the file name.
+data/metadata/dataModel_MySQL/History/Participação e Finanças Dados (Backup 2018-03-02 17h07).png;MySQLModel;Modelo de dados criado durante a construção do banco. A última data de atualização está no nome do arquivo.;Data model created during the construction of the bank. The last update date is in the file name.
+data/metadata/dataModel_MySQL/History/Participação e Finanças Dados (Backup 2018-03-15 17h55).mwb;MySQLModel;Modelo de dados criado durante a construção do banco. A última data de atualização está no nome do arquivo.;Data model created during the construction of the bank. The last update date is in the file name.
+data/metadata/dataModel_MySQL/History/Participação e Finanças Dados (Backup 2018-03-15 17h55).mwb.bak;MySQLModel;Modelo de dados criado durante a construção do banco. A última data de atualização está no nome do arquivo.;Data model created during the construction of the bank. The last update date is in the file name.
+data/metadata/dataModel_MySQL/History/Participação e Finanças Dados (Backup 2018-03-15 17h55).png;MySQLModel;Modelo de dados criado durante a construção do banco. A última data de atualização está no nome do arquivo.;Data model created during the construction of the bank. The last update date is in the file name.
+data/metadata/dataModel_MySQL/ModeloDados.png;MySQLModel;Modelo de dados do banco. Exportação para imagem png;Data model of the bank. Export to PNG image
+data/metadata/dataModel_MySQL/Participação e Finanças Dados.mwb;MySQLModel;Modelo de dados do banco.;Data model of the bank.
+data/metadata/dataModel_MySQL/Participação e Finanças Dados.mwb.01293ae3;MySQLModel;Modelo de dados do banco.;Data model of the bank.
+data/metadata/dataModel_MySQL/Participação e Finanças Dados.mwb.bak;MySQLModel;Modelo de dados do banco.;Data model of the bank.
+data/metadata/documentation;Folder;Documentação sobre os dados;Documentation of data
+data/raw;Folder;Dados brutos;Gathers all raw data
+data/raw/CepespData;Folder;Dados brutos do Cepesp;Raw data from the CEPESP
+data/raw/Finbra;Folder;Dados Brutos do Finbra;Raw data of Finbra
+data/raw/Finbra/ExcelFiles;Folder;Dados brutos do Finbra extraidos para formato Excel.;Raw data from the Finbra extracted to Excel.
+data/raw/Finbra/ExcelFiles/Finbra1997.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra1998.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra1999.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra2000.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra2001.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra2002.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra2003.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra2004.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra2005.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra2006.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra2007.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra2008.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra2009.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra2010.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra2011.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra2012.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra89-93.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/ExcelFiles/Finbra94-96.xlsx;Intermediate Data;Extração dos dados Financeiros brutos em formato Excel.;Extraction of raw financial data in Excel format.
+data/raw/Finbra/OriginalFiles;Folder;Arquivos originais do Finbra;Original Finbra files
+data/raw/Finbra/OriginalFiles/finbra_MUN_DespesasOrcamentarias(AnexoI-D) - 2013.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/finbra_MUN_DespesasOrcamentarias(AnexoI-D) - 2014.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/finbra_MUN_DespesasOrcamentarias(AnexoI-D) - 2015.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/finbra_MUN_DespesasOrcamentarias(AnexoI-D) - 2016.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/finbra_MUN_DespesasporFuncao(AnexoI-E) - 2013.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/finbra_MUN_DespesasporFuncao(AnexoI-E) - 2014.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/finbra_MUN_DespesasporFuncao(AnexoI-E) - 2015.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/finbra_MUN_DespesasporFuncao(AnexoI-E) - 2016.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/finbra_MUN_ReceitasOrcamentarias(AnexoI-C) - 2013.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/finbra_MUN_ReceitasOrcamentarias(AnexoI-C) - 2014.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/finbra_MUN_ReceitasOrcamentarias(AnexoI-C) - 2015.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/finbra_MUN_ReceitasOrcamentarias(AnexoI-C) - 2016.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/Finbra1997.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/Finbra1998.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/Finbra1999.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/Finbra2000.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/Finbra2001v0809.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/Finbra2002v0809.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/Finbra2003.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/Finbra2004v0809b.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/Finbra2005v0809.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/Finbra89-93.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/Finbra94-96.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/pge_finbra_2006.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/pge_finbra_2007.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/pge_finbra_2008.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/pge_finbra_2009.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/pge_finbra_2010.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/pge_finbra_2011.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/Finbra/OriginalFiles/pge_finbra_2012.zip;RawData;Banco de dados bruto do banco de dados Finbra (Finanças do Brasil, STN).;Raw data Finbra database (Finance of Brazil, STN).
+data/raw/PBCENSUS Spada;Folder;Arquivos originais do Censo dos Orçamentos Participativos;Original files Census of Participatory Budgets
+data/raw/PBCENSUS Spada/05112017_PB CENSUS 2016.xlsx;RawData;"Censo do Orçamento Participativo, obtido através Spada, P. 2012. ""Brazilian Participatory Budgeting Census: 1989-2012."" Available at: http://participedia.net/en/content/brazilian-participatory-budgeting-census / Access date: April 20, 2018. (licensed unde";"Census Participatory Budget, obtained by Spada, P. 2012. ""Brazilian Participatory Budgeting Census:. 1989-2012"" Available at: http://participedia.net/en/content/brazilian-participatory-budgeting-census / Access date: April 20, 2018. (licensed unde"
+data/raw/PBCENSUS Spada/PBCENSUS Spada-20180222T182352Z-001.zip;RawData;Arquivo original nos enviado por Paolo Spada.;Original file sent by Paolo Spada.
+data/raw/PBCENSUS Spada/PBCENSUS1989_2012legenda.xlsx;Metadata;"Legenda das variáveis de ""data/raw/PBCENSUS Spada/05112017_PB CENSUS 2016.xlsx""";"Variables Labels of  ""data/raw/IPEAData/PopulacaoMunic_1992-2017.xls"""
+data/raw/TSE;Folder;Dados Brutos do TSE;Raw data from the TSE
+data/raw/TSE/2000;Folder;Dados da eleição de 2000 do repositório de dados eleitorais;2000 Election data of electoral data repository
+data/raw/TSE/2000/LEIAME.pdf;Metadata;Metadados sobre as estatísticas eleitorais do TSE.;Metadata on electoral statistics TSE.
+data/raw/TSE/2000/votacao_candidato_munzona_2000.zip;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_AC.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_AL.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_AM.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_AP.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_BA.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_CE.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_ES.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_GO.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_MA.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_MG.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_MS.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_MT.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_PA.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_PB.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_PE.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_PI.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_PR.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_RJ.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_RN.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_RO.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_RR.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_RS.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_SC.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_SE.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_SP.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/2000/votacao_candidato_munzona_2000_TO.txt;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/TSE-relacao-candidatos-1996;Folder;Dados da eleição de 1996 em arquivos ah hoc (antes da criação do repositório de dados eleitorais).;1996 election data files ah hoc (before the creation of electoral data repository).
+data/raw/TSE/TSE-relacao-candidatos-1996/Candidatos_1996.xlsx;Intermediate Data;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/TSE-relacao-candidatos-1996/Resultado_da_Eleição_(Por_Municipio)_1996.csv;RawData;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/raw/TSE/TSE-relacao-candidatos-1996/TSE-relacao-candidatos-1996.zip;RawData;Dados brutos sobre as eleições, retirados do repositório de dados eleitorais do TSE.;Raw data on the elections, drawn from the election of the TSE data repository.
+data/temp;Folder;Diretório para armazenamento temporário de dados;Directory for temporary data storage
+doc;Folder;Documentação do paper;paper documentation
+doc/figures;Folder;Gráficos do artigo;Paper figures
+doc/figures/Figure1.png;Figure;Gráfico do artigo;Paper figure
+doc/figures/Figure2.png;Figure;Gráfico do artigo;Paper figure
+doc/figures/Figure3.png;Figure;Gráfico do artigo;Paper figure
+doc/figures/Figure4.png;Figure;Gráfico do artigo;Paper figure
+doc/figures/Figure5.png;Figure;Gráfico do artigo;Paper figure
+doc/figures/Figure6.png;Figure;Gráfico do artigo;Paper figure
+doc/methodologicalAppends;Folder;Anexos metodológicos;methodological appendix
+doc/paper;Folder;Texto do paper;Paper text 
+doc/paper/Artigo ABCP 2018 FINAL.docx;Text;Artigo final;Final Paper
+doc/paper/Paper OP-Financas ABCP.docx;Text;Artigo final;Final Paper
+doc/presentations;Folder;Apresentações do paper;Paper presentations 
+doc/Tables;Folder;Tabelas do paper;Paper tables 
+doc/Tables/Table 1.docx;Table;Tabela 01 do anexo. Exportação para MS-Word para facilitar a formatação.;Table 01 of appendix. In MS-Word to facilitate formatting.
+doc/Tables/Table 2.docx;Table;Tabela 02 do anexo. Exportação para MS-Word para facilitar a formatação.;Table 02 of appendix. In MS-Word to facilitate formatting.
+doc/Tables/Table1.html;Table;Tabela 01 do anexo.;Table 01 of the appendix.
+doc/Tables/Table2.html;Table;Tabela 02 do anexo.;Table 02 in the appendix.
+src;Folder;Scripts para a contrução do artigo;Gathers all the programming codes
+src/AnalysisDataOutput.R;Code;"Extrar as variáveis utilizadas no modelo a partir dos dados do banco de dados. Ou seja, extrai os dados dos arquivos de ""data/dataset/"" para produzir ""data/analysisdata/DataAnalysis.csv""";"Extracts the variables used in the model from the data in the database. That is, it extracts the data from ""data/dataset /"" folder to produce ""data/analysisdata/DataAnalysis.csv"""
+src/DatabaseOutput.R;Code;"Extrai dados de diferentes fontes (Spada 2012, TSE, STN, IBGE, IPEA, etc) para criar o banco de dados disponível em ""data/dataset/""";"Extracts data from different sources (Spada 2012, TSE, STN, IBGE, IPEA, etc.) to create the database available in ""data/dataset/"""
+src/External dependencies.txt;Text;Lista os softwares fora do ambiente R que são necessários para rodar os scripts R.;Lists the software out of the R environment that are needed to run the scripts R.
+src/generalFunctions;Folder;Funções do artigo que provavelmente serão reutilizadas em outros projetos no futuro.;Functions that probably will be reused in other projects in the future.
+src/generalFunctions/AutosequentialVar.R;Code;Função para criar uma variável que é um número sequencial (ideal para criar chaves primárias). Se a variável já existe, apenas modifica os NAs.;Function to create a variable that is a sequential number (ideal for creating primary keys). If the variable already exists, only modifies NAs.
+src/generalFunctions/ChechBDV.R;Code;Função para analisar modelos de regressão de variáveis dependentes binárias;Function to analysis binary dependent variable regression models
+src/generalFunctions/CheckPath.R;Code;"Função para verificar se o caminho de uma pasta tem ""/"" no final.";"Function to check if a folder path have ""/"" at the end."
+src/generalFunctions/DownloadFiles.R;Code;Baixe uma lista de arquivos;Download a list of files
+src/generalFunctions/exp_f.R;Code;Converta uma escala logarítmica em escala original. Ideal para rótulos de gráficos.;Convert a logarithmic scale to original scale. Ideal to graph labels.
+src/generalFunctions/GetMSAccessData.R;Code;Obter todas as informações do arquivo MS Access;Get all information from MS Access file
+src/generalFunctions/getSimData.R;Code;Obter dados simulados de zelig objetc;Get simulated data from zelig objetc
+src/generalFunctions/GraphData.R;Code;Obter dados simulações para ser usado em gráficos usando zelig;Get simulations data to be used in graphs using zelig
+src/generalFunctions/ListFieldsCSV.R;Code;Função para listar todos os campos em uma determinada lista de Arquivo CSV. Retorna um dataframe de nomes de arquivos e campos.;Function to list every field in a given CSV File List. Return a dataframe of names of files and fields
+src/generalFunctions/ListFieldsExcel.R;Code;Função para listar todos os campos em uma determinada lista de arquivos MS Excel.  Retorna um dataframe de nomes de arquivos e campos.;Function to list every field in a given MS Excel File List. Return a dataframe of names of files and fields
+src/generalFunctions/ListToExcel01.R;Code;Importar uma lista de dataframes a pasta de trabalho Excel;Import a List of dataframes to Excel workbook
+src/generalFunctions/LoadInstall.R;Code;Função para instalar um pacote (caso necessário) e então ler ele;Function to install a package (if required) and then read it
+src/generalFunctions/PartialMatchFilter.R;Code;"Função para executar um match parcial nas cidades (ex: descobre que ""Alvorada Do Norte"" e ""Alvorada D'Norte"" são os mesmos). Tem a opção de realizar essa busca Utilizando Filtros.";"Function to perform a partial match in cities (eg finds ""Alvorada do Norte"" and ""Alvorada D'Norte"" are the same). You have the option of performing this search using filters."
+src/generalFunctions/RemoveAccents.R;Code;Remove acentos;remove accents
+src/generalFunctions/UniqueRandomName.R;Code;Gera nomes aleatórios não repetidos dentro de um conjunto;Generates random names not repeated within a set
+src/generalFunctions/unzipTemp.R;Code;Descompacta um arquivo e armazenar em arquivo temporário.;Unzip file and store in temp file.
+src/generalFunctions/ZipAccessToExcel.R;Code;Importar uma lista de dataframes a pasta de trabalho Excel;Import a List of dataframes to Excel workbook
+src/Models.R;Code;Roda os modelos estatísticos do artigo. Também cria as tabelas e figuras utilizadas.;Wheel statistical models of the article. It also creates tables and figures used.
+src/SandBox.R;Code;Script para fazer testes de código;Script code to make tests
+src/specifcFuntions;Folder;Funções específicas para a extração dos dados utilizados nesse projeto.;Functions for the specif extraction of the data used in this project.
+src/specifcFuntions/Create_BDCamposFinbra.R;Code;Criar e formata a tabela BDCamposFinbra;Create and format table BDCamposFinbra
+src/specifcFuntions/CreateDeParaFinbra.R;Code;Criar a tabelas de/para para contas de extrato de arquivos financeira crua;Create From/to tables to extract accounts from raw financial Files
+src/specifcFuntions/ElectoralData1996.R;Code;Importar dados eleitorais de 1996 arquivos do TSE;Import electoral data from TSE's 1996 files
+src/specifcFuntions/ElectoralData2000.R;Code;Importar dados eleitorais de eleição de TSE 2000;Import electoral data from TSE's 2000 election
+src/specifcFuntions/FormatFinbra.R;Code;Formata dados de FINBRA;Format data extract from Finbra
+src/specifcFuntions/ImportCoalitionDataTSE.R;Code;Dados da coalizão de importação de dados eleitorais de 2000 eleições;Import coalition data from electoral data of 2000 election
+src/specifcFuntions/ImportCoalitionsCEPESPdata.R;Code;"Criar tabelas ""Coligacoes"" e ""CoalizõesPartidos"" de CEPESP API";"Create tables ""Coligacoes"" (parties coalitions) and ""CoalizõesPartidos"" (parties coalitions) from CEPESP API"
+src/specifcFuntions/ImportElectoralData.R;Code;Importação de dados eleitorais de CEPESP API;Import electoral data from CEPESP API
+src/specifcFuntions/ImportElectoralDataTSE.R;Code;Importar dados eleitorais de 2000 eleições de arquivos TSE;Import electoral data of 2000 election from TSE files
+src/specifcFuntions/ImportFinantialData.R;Code;Importar dados sobre a receita pública e despesa;Import data about public revenue and spending
+src/specifcFuntions/ImportFinbra_2013.R;Code;Script para extrair dados de arquivos raw de FINBRA, Finanças do Brasil (Finanças do Brasil), de 1989 até 2012 em R.;Script to extract data from raw files of Finbra, Finances of Brasil (Finanças do Brasil) from 1989 until 2012 into R.
+src/specifcFuntions/ImportFinbra_89_2012.R;Code;Script para extrair dados de arquivos raw de FINBRA, Finanças do Brasil (Finanças do Brasil) do novo padrão após 2013.;Script to extract data from raw files of Finbra, Finances of Brasil (Finanças do Brasil) from the new pattern after 2013.
+src/specifcFuntions/ImportIPEAData.R;Code;Extrair informações do IPEA em R.;Extract information from IPEA into R.
+src/specifcFuntions/ImportPartiesdata.R;Code;Criar tabelas Partidos.;"Create tables Partidos ""Parties""."
+src/specifcFuntions/ImportPBData.R;Code;Importar dados sobre o orçamento participativo. Dados originais de Spada (2012);Import data about participatory budgeting. Original data from Spada(2012)
+src/specifcFuntions/MuncCod6To7.R;Code;Função para transformar o código municipal IBGE de seis dígitos em um código de sete dígitos.;Function to transform the municipal code of six digits IBGE in a seven-digit code.
+src/srcData;Folder;Dados sobre os códigos de programação;Data on the programming codes
+data/dataset/RawFilesList.csv;Metadata;Lista de arquivos de todos os dados brutos. Dessa lista vieram todas as informações utilizadas neste projeto.;List of files of all raw data. From that list came all the information used in this project.
+data/dataset/FileTracing.csv;Metadata;Mostra a relação entre os arquivos deste projeto. Mostra quais arquivos foram utilizados para gerar outros arquivos, incluindo códigos de programação, funções e origem dos dados.;Shows the relationship between the files of this project. Shows which files were used to generate other files, including programming codes, functions and data source.
+data/dataset/Codebook.csv;Metadata;Descrição de todas as variáveis presentes nos arquivos de dados e metadados.;Description of all variables present in data and metadata files.
+data/metadata/dataModel_MySQL/History/Participação e Finanças Dados (Backup 2020-02-26 19h20).mwb;MySQLModel;Modelo de dados criado durante a construção do banco. A última data de atualização está no nome do arquivo.;Data model created during the construction of the bank. The last update date is in the file name.
+data/temp/Metadata.xlsm;Metadata;"Arquivo MS-Excel para auxiliar a criar os arquivos de meta dados ""Codebook.csv"", ""RawFilesList.csv"", ""FileList.csv"" e ""FileTracing"".";"MS-Excel file to help create the ""Codebook.csv"", ""RawFilesList.csv"", ""FileList.csv"" and ""FileTracing"" meta data files."

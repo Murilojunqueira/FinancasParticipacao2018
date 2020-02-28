@@ -1,5 +1,5 @@
 
-# Corret and format table BDCamposFinbra
+# Create and format table BDCamposFinbra
 
 # By Murilo Junqueira (m.junqueira@yahoo.com.br)
 

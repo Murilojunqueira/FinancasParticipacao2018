@@ -1,0 +1,74 @@
+To do:
+
+	-Revisar os comentários dos scripts.
+
+	-Lista de todas as fontes primárias.
+		-Preencher a tabela RawFilesList
+		-Preencher a tabela FileTracing
+		-Incorporar nos códigos o uso dessas tabelas de fontes primárias (alertar o uso de point and click).
+
+
+
+=====================
+
+	-Traduzir:
+		-ImportCoalitionDataTSE.R
+		-ImportCoalitionsCEPESPdata.R
+
+	-Verificar como citar banco de dados.
+	-Colocar uma nota pedindo para citar os banco de dados.
+
+	-Compactar e colocar no google drive o banco de dados básico.
+
+
+	-Colocar do README.Rmd
+		-Descrição básica dos diretórios
+		-Resumo das fontes primárias.
+		-Os scripts básicos
+			-Colocar as fontes primárias (resumidas) que eles utilizam.
+
+
+		-Fontes primárias detalhadas
+
+		*-Colocar um exemplo de como se pode "rastrear" a informação de uma variável utilizando os dados.
+			-Opção 1: usar o DataAnalisys.csv (disponível no github)
+			-Opção 2: baixar o backup do dataset
+			-opção 3: Seguir o código inteiro
+				-Atenção para quando tiver que baixar os arquivos brutos que não estão disponíveis.
+				-Observar a dependência dos arquivos na tabela FileTracing
+
+
+	-Colocar ligação correta na tabela CandidatosAno (trocar Partido_Sigla por Partido_Id)
+		-O mesmo na tabela ColigacoesPartidos
+
+
+	-Procurar inconsistência entre:
+		-DeParaUGCodIBGE.csv
+		-UEToCodIBGE.csv
+		*-As duas tem o mesmo propósito. Ver onde usei uma e onde usei a outra.
+
+
+
+
+Feito:
+
+	-Listar todos os novos scripts (ok)
+		-Pequena descrição de o que faz cada script. (ok) 
+		-Listar os arquivos de output. (ok)
+
+	-Revisar o diagrama do MySQLWorkBench e os dados para ver se está bantendo. (oK)
+
+	-Fazer um codebook das variáveis do banco final. (ok)
+	-Fazer um codebook das variáveis do banco de dados construido. (ok)
+
+
+	-Colocar sobre o arquivo "FileList.csv" e "FileList.xlsx" (ok)
+
+
+	-Conciliar FinantialRawFiles com uma solução mais geral para fontes primárias. (ok)
+	-Verificar se estou usando a função ListFieldsCSV.R ou ListFieldsCSV (não uso nenhum) (ok)
+
+	-Listar os softwares que precisam de dependência externa. (ok)
+		-Colocar essas dependências nos comentários dos scripts. (ok)
+
+

@@ -1,8 +1,6 @@
 
 # Get simulations data to be used in graphs using zelig
 
-# Function to Check Binary Dependent Variable Model
-
 # By Murilo Junqueira (m.junqueira@yahoo.com.br)
 
 # Created: 2018-05-09

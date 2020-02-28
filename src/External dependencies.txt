@@ -1,3 +1,3 @@
 External dependencies:
-Java
-Microsoft Access Database Engine
+-Java
+-Microsoft Access Database Engine

@@ -15,6 +15,24 @@
 # Importing Participatory Budget Census
 source("src/specifcFuntions/ImportPBData.R")
 
+
+OP_Data <- ImportPBData(RawData = "data/raw/PBCENSUS Spada/05112017_PB CENSUS 2016.xlsx",
+                        SheetName = "Final census")
+
+# Check dataset
+# names(OP_Data)
+# head(OP_Data)
+# View(OP_Data)
+
+# Write file  
+write.table(OP_Data, 
+            file = "data/dataset/MunicOp.csv", 
+            sep = ";", dec = ",", 
+            row.names = FALSE, append = FALSE)
+
+rm(OP_Data, ImportPBData)
+
+
 ############### 2 - Import public finance data ###############
 
 # Workflow
@@ -54,6 +72,8 @@ rm(DownloadFiles)
 
 ############### 2.3 - Function: extract data Files from zip files ###############
 
+# External dependency: Microsoft Access Database Engine
+# More information on "src/generalFunctions/GetMSAccessData.R"
 source("src/generalFunctions/ZipAccessToExcel.R")
 
 # Extract all files from AccessRawFiles to xlsx files
@@ -168,12 +188,19 @@ DadosCandidatos_df <- ImportElectoralData(yearsExtract = c(2016, 2012, 2008, 200
                     InputFolder = "data/raw/CepespData/",
                     DeParaSitEleitoral = DeParaSitEleitoral)
 
+# Due flaws in 2000 election data, a extraced data directly from TSE
+
+# Attention: file "data/raw/TSE/2000/votacao_candidato_munzona_2000.zip" should be
+# extracted in "data/raw/TSE/2000/" folder.
 
 source("src/specifcFuntions/ImportElectoralDataTSE.R")
 ElectoralData2000_df <- ImportElectoralDataTSE(InputFolders = "data/raw/TSE/2000/",
                                           UEToCodIBGE = UEToCodIBGE, 
                                           DeParaSitEleitoral = DeParaSitEleitoral)
+# Extract 1996 raw data in MS-Excel format
 
+# Attention: Extract file "data/raw/TSE/TSE-relacao-candidatos-1996/TSE-relacao-candidatos-1996.zip"
+# and then export all data to file "data/raw/TSE/TSE-relacao-candidatos-1996/Candidatos_1996.xlsx"
 
 source("src/specifcFuntions/ElectoralData1996.R")
 ElectoralData1996_df <- ElectoralData1996(InputFile1T = "data/raw/TSE/TSE-relacao-candidatos-1996/Candidatos_1996.xlsx", 
@@ -208,7 +235,7 @@ ImportCoalitionsCEPESPdata_df <- ImportCoalitionsCEPESPdata(years = c(2016, 2012
                              InputFolder = "data/raw/CepespData/", 
                              UEToCodIBGE = UEToCodIBGE)
 
-#Due flaws in 2000 election data, a extraced data directly from TSE
+# Due flaws in 2000 election data, a extraced data directly from TSE
 source("src/specifcFuntions/ImportCoalitionDataTSE.R")
 
 ImportCoalitionDataTSE_df <- ImportCoalitionDataTSE(InputFolder = "data/raw/TSE/2000/", 
@@ -283,5 +310,25 @@ fwrite(ImportIPEAData,
        sep = ";", dec = ",")
 
 rm(ImportIPEAData, ImportIPEAData_pop, ImportIPEAData_pib)
+
+
+############### 5 - Importing Inflation ###############
+
+library(ipeadatar)
+library(lubridate)
+
+RawData <- ipeadata("PRECOS_IPCAG", language = "br")
+
+Inflation <- RawData %>%
+  mutate(ano = lubridate::year(date)) %>% 
+  rename(inflacaoValor = value) %>% 
+  mutate(IndiceNome = "InflacaoIPCAaa") %>% 
+  select(ano, inflacaoValor, IndiceNome)
+
+fwrite(Inflation, 
+       file = "data/dataset/Inflacao.csv", 
+       sep = ";", dec = ",")
+
+rm(RawData, Inflation)
 
 # End

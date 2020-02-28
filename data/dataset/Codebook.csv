@@ -1,0 +1,176 @@
+FileList_FilePath;File;Variable;Var_Id;VarType;DrescriptionPT;Drescription
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;Munic_Id;1;integer;Código Municipal do IBGE;Municipal code IBGE
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;year;1;integer;ano;year
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;MunicOP_OP;0;integer;Indica se o município teve orçamento participativo naquele quadriênio ou não.;It indicates whether the municipality had participatory budget in that four-year period or not.
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;UF_Id;0;integer;Código da unidade federativa no IBGE;the federal unit code in the IBGE
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;Munic_Id6;0;integer;Código Municipal do IBGE, versão antiga, com seis dígitos.;Municipal IBGE Code, old version, with six digits.
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;Munic_Nome;0;character;Nome da Cidade;City name
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;lag.pb;0;integer;MunicOP_OP no período anterior;Lag of MunicOP_OP
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;MunicOP_OP.Acum;0;integer;Número de anos acumulados de adoção contínua do OP;Accumulated years number of continuous adoption of pb
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;population;0;integer;Número da população;Population number
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;MayorElecNumber;0;integer;Número eleitoral do prefeito;Mayor electoral number
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;MayorParty;0;character;Partido do Prefeito;Mayor party
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;MayorName;0;character;Nome do prefeito;Mayor name
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;ptwin;0;integer;Vitória do PT;Victory of the PT
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;ChangeEffect2002;0;integer;Mudança em vigor após 2002 (1 se ano> 2002);Change in effect after 2002 (1 if year > 2002)
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;VictoryPTAfter2002;0;integer;Vitória do PT antes de 2002;Victory of the PT before 2002
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;LeftParty;0;integer;Vitória de partidos de esquerda (PT, PDT, PSB, PCdoB, PSOL e Rede);Victory of left parties (PT, PDT, PSB, PCdoB, PSOL and REDE)
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;continuitypartpref;0;integer;Reeleição do Prefeito ;Mayor re-election
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;ContinuityMayor;0;integer;Continuidade do partido no poder, mas não necessariamente do prefeito;Continuity of incumbent party, but not necessarily of the mayor
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;MayorsVulnerability;0;numeric;Vulnerabilidade do prefeito (porcentagem de votos do vice-campeão sobre porcentade do campeão).;Mayor's vulnerability (runner-up vote share oner winner vote share).
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;legprefpower;0;numeric;Participação do partido do prefeito nos assentos da Câmara dos Vereadores;Mayor's party share of council seats
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;MayorControlCouncil;0;numeric;1 se o partido do prefeito tem a maioria dos assentos do conselho;1 if mayor's party have the majority of council seats
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;CoalitionPref;0;numeric;Parcela de assentos do conselho de coalizão eleitoral do prefeito.;Share of council seats of mayor's electoral coalition.
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;LeftShare;0;integer;Participação dos partidos de esquerda na Câmara dos Vereadores;Share of lefist parties in city council
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;BudgetPP;0;numeric;Orçamento anual per capita.;Anual budget per capita.
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;Investpp;0;numeric;Investimento per capita;Investiment per capita
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;InvestPer;0;numeric;Percentual de Investimentos (investimentos / orçamento total);Percentual of investiments (investiments/total Budget)
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;taxrevenues;0;numeric;Porcentagem de impostos nas receitas;Tax share of revenues
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;TransferDep;0;numeric;Dependência de transferência (verbas de transferência sobre o orçamento total);Transfer dependence (transfer grants over total budget)
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;balsheetrev;0;numeric;Os gastos totais sobre a receita total;Total spending over total revenue
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;YearDummies1996;0;integer;Dummy período 1 (1993-1996);Dummy period 1 (1993-1996)
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;YearDummies2000;0;integer;Dummy período 2 (1997-2000);Dummy period 2 (1997-2000)
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;YearDummies2004;0;integer;Dummy período 3 (2001-2004);Dummy period 3 (2001-2004)
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;YearDummies2008;0;integer;Dummy período 4 (2005-2008);Dummy period 4 (2005-2008)
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;YearDummies2012;0;integer;Dummy período 5 (2009-2012);Dummy period 5 (2009-2012)
+data/analysisdata/DataAnalysis.csv;DataAnalysis.csv;YearDummies2016;0;integer;Dummy período 6 (2013-2016);Dummy period 6 (2013-2016)
+data/dataset/BDCamposFinbra.csv;BDCamposFinbra.csv;FinbraCampo_Id;1;integer;Identificação do campo;Identification Field
+data/dataset/BDCamposFinbra.csv;BDCamposFinbra.csv;FinbraCampo_ArquivoXls;0;character;Nome do arquivo MS-Excel onde está os dados;MS-Excel file name where data is.
+data/dataset/BDCamposFinbra.csv;BDCamposFinbra.csv;FinbraCampo_Tabela;0;character;Nome da tabela (ou aba) onde estão os dados;Table name (or sheet name) where the data is
+data/dataset/BDCamposFinbra.csv;BDCamposFinbra.csv;FinbraCampo_Campo;0;character;Nome do campo.;Field name.
+data/dataset/BDCamposFinbra.csv;BDCamposFinbra.csv;FinbraCampo_Ano;0;integer;Ano;Year
+data/dataset/BDCamposFinbra.csv;BDCamposFinbra.csv;FinbraCampo_DataTab;0;integer;Indica se o campo é um campo de data (ano);Indicates whether the field is a date field (year)
+data/dataset/BDCamposFinbra.csv;BDCamposFinbra.csv;FinbraCampo_IDMunic;0;integer;Indica se o campo é um identificador de município;Indicates whether the field is a municipality identifier
+data/dataset/CandidatoAno.csv;CandidatoAno.csv;Munic_Id;1;integer;Código Municipal do IBGE;Municipal code IBGE
+data/dataset/CandidatoAno.csv;CandidatoAno.csv;CandAno_Ano;1;integer;Ano;Year
+data/dataset/CandidatoAno.csv;CandidatoAno.csv;CandAno_Cargo;1;character;"Cargo que o candidato estava disputando.  ""P"" indica cargo de prefeito, ""V"" de vereador.";"Position that the candidate was running. ""P"" indicates mayor, ""V"" as councilor."
+data/dataset/CandidatoAno.csv;CandidatoAno.csv;CandAno_Turno;1;integer;Turno da disputa (em eleições para o Poder Executivo, um mesmo candidato pode disputar mais de um turno).;Round the dispute (in elections to the executive branch, the same candidate can compete in more than one round each election).
+data/dataset/CandidatoAno.csv;CandidatoAno.csv;CandAno_Numero;1;integer;Número do Candidato;Candidate Number
+data/dataset/CandidatoAno.csv;CandidatoAno.csv;CandAno_Nome;0;character;Nome do Candidato;Candidate's name
+data/dataset/CandidatoAno.csv;CandidatoAno.csv;Partido_Sigla;0;character;Sigla do partido;Acronym of the party
+data/dataset/CandidatoAno.csv;CandidatoAno.csv;Coligacao_Id;0;integer;Identificação da coligação;Coallition identification 
+data/dataset/CandidatoAno.csv;CandidatoAno.csv;CandAno_QtVotos;0;integer;Quantidade de Votos recebida;Votes received
+data/dataset/CandidatoAno.csv;CandidatoAno.csv;CandAno_SituacaoElec;0;integer;Situação eleitoral (código).;Electoral situation (code).
+data/dataset/CandidatoAno.csv;CandidatoAno.csv;DESC_SIT_TOT_TURNO;0;character;Descrição da situação eleitoral.;Description of the electoral situation.
+data/dataset/Codebook.csv;Codebook.csv;FileList_FilePath;1;character;Caminho completo da tabela de dados;Full path of the data table
+data/dataset/Codebook.csv;Codebook.csv;File;0;character;Nome do arquivo;File name
+data/dataset/Codebook.csv;Codebook.csv;Variable;1;character;Nome da variavel (campo);Name of variable (field)
+data/dataset/Codebook.csv;Codebook.csv;Var_Id;0;integer;Indica se a variável identifica a tabela;It indicates whether a variable identifies the table
+data/dataset/Codebook.csv;Codebook.csv;VarType;0;character;Tipo de dado (modelo linguagem R);Data type (R language model)
+data/dataset/Codebook.csv;Codebook.csv;DrescriptionPT;0;character;Descrição da Variável em português;Variable description in Portuguese
+data/dataset/Codebook.csv;Codebook.csv;Drescription;0;character;Descrição da Variável em inglês;Variable description in English
+data/dataset/Coligacoes.csv;Coligacoes.csv;Coligacao_Id;1;character;Identificação da coligação;Identification Networking
+data/dataset/Coligacoes.csv;Coligacoes.csv;Munic_Id;0;integer;Código Municipal do IBGE;Municipal code IBGE
+data/dataset/Coligacoes.csv;Coligacoes.csv;Coligacao_Ano;0;integer;Ano;Year
+data/dataset/Coligacoes.csv;Coligacoes.csv;Coligacao_Turno;0;integer;Turno da disputa (em eleições para o Poder Executivo, um mesmo candidato pode disputar mais de um turno).;Round the dispute (in elections to the executive branch, the same candidate can compete in more than one round each election).
+data/dataset/Coligacoes.csv;Coligacoes.csv;Coligacao_Cargo;0;character;"Cargo de disputa da coligação. ""P"" indica cargo de prefeito, ""V"" de vereador.";"Position that coalition compete.  ""P"" indicates mayor, ""V"" as councilor."
+data/dataset/Coligacoes.csv;Coligacoes.csv;Coligacao_Nome;0;character;Nome da coligação;Name of the coalition
+data/dataset/Coligacoes.csv;Coligacoes.csv;Coligacao_IdTSE;0;character;Identificação da coligação no TSE (não está disponível para todos os anos, para a chave primária da tabela, tive que fazer outro código).;"Identification of the coalition in TSE (not available for all years; for the primary key of the table, other code was made)."
+data/dataset/Coligacoes.csv;Coligacoes.csv;Coligacao_composicao;0;character;Descrição textual dos partidos da coligação.;Descriptions of the coalition parties.
+data/dataset/ColigacoesPartidos.csv;ColigacoesPartidos.csv;Coligacao_Id;1;character;Identificação da tabela.;Row Identification
+data/dataset/ColigacoesPartidos.csv;ColigacoesPartidos.csv;Coligacao_Ano;0;integer;Ano;Year
+data/dataset/ColigacoesPartidos.csv;ColigacoesPartidos.csv;Coligacao_Cargo;0;character;"Cargo de disputa da coligação.  ""P"" indica cargo de prefeito, ""V"" de vereador.";"Position coalition compete.  ""P"" indicates mayor, ""V"" as councilor."
+data/dataset/ColigacoesPartidos.csv;ColigacoesPartidos.csv;Partido_Sigla;0;character;Sigla do partido coligado.;Acronym of the collided party.
+data/dataset/ContasPublicas.csv;ContasPublicas.csv;ContasPublica_Id;1;character;Identificação da conta pública.;Identification of the public account.
+data/dataset/ContasPublicas.csv;ContasPublicas.csv;ContasPublica_RD;0;character;"Indica se a conta é de receitas (""r"") ou despesas (""d"")";"It indicates whether the account is revenues ( ""r"") or expense ( ""d"")"
+data/dataset/ContasPublicas.csv;ContasPublicas.csv;ContasPublica_Nome;0;character;Nome da conta dentro do banco (sigla);account name within the dataset (acronym)
+data/dataset/ContasPublicas.csv;ContasPublicas.csv;ContasPublica_Descricao;0;character;Nome extendido da conta.;Extended name of the account.
+data/dataset/ContasPublicas.csv;ContasPublicas.csv;ContasPublica_ElFunc;0;character;"Indica se a conta é de elemento (""e"") ou de função (""f"")";"It indicates whether the account is a element account ( ""e"") or function account ( ""f"")"
+data/dataset/ContasPublicas.csv;ContasPublicas.csv;ContasPublica_AnoRef;0;integer;Indica o primeiro ano que essa conta foi usada.;It indicates the first year that this account was used.
+data/dataset/DeParaFinbra.csv;DeParaFinbra.csv;ContasPublica_Id;1;character;"Conta pública, de acordo com a tabela ""ContasPublicas"".";"Public account, according to the ""ContasPublicas"" table."
+data/dataset/DeParaFinbra.csv;DeParaFinbra.csv;DeParaFinbra_Ano;0;integer;Ano;Year
+data/dataset/DeParaFinbra.csv;DeParaFinbra.csv;FinbraCampo_Id;1;integer;Campo correspondente à conta pública na tabela BDCamposFinbra;Field corresponding to the public account on BDCamposFinbra table
+data/dataset/DeParaFinbra.csv;DeParaFinbra.csv;ContasPublica_Nome;0;character;Nome da conta dentro do banco de dados (sigla), de acordo com a tabela ContasPublicas;Account name within the database (acronym), according to the ContasPublicas table
+data/dataset/DeParaFinbra.csv;DeParaFinbra.csv;FinbraCampo_Campo;0;character;Nome da conta na tabela BDCamposFinbra;Account name in the table BDCamposFinbra
+data/dataset/DeParaSitEleitoral.csv;DeParaSitEleitoral.csv;SitElec_Id;1;character;Identificação da tabela.;Identification Table.
+data/dataset/DeParaSitEleitoral.csv;DeParaSitEleitoral.csv;SitElec_Ano;0;integer;Ano;Year
+data/dataset/DeParaSitEleitoral.csv;DeParaSitEleitoral.csv;SitElec_De;0;integer;Situação eleitoral (código) nos dados do ano específico.;Electoral situation (code) data in the particular year.
+data/dataset/DeParaSitEleitoral.csv;DeParaSitEleitoral.csv;SitElec_Para;0;integer;Situação eleitoral (código) padronizado.;Electoral situation (code) standard.
+data/dataset/DeParaSitEleitoral.csv;DeParaSitEleitoral.csv;SitElec_Original;0;character;Descrição textual da situação eleitoral no ano específico.;Descriptions of the electoral situation in the particular year.
+data/dataset/DeParaSitEleitoral.csv;DeParaSitEleitoral.csv;SitElec_Padrao;0;character;Descrição textual da situação eleitoral padronizada.;Descriptions of standardized electoral situation.
+data/dataset/DeParaUGCodIBGE.csv;DeParaUGCodIBGE.csv;Munic_Id;1;integer;Código Municipal do IBGE;Municipal code IBGE
+data/dataset/DeParaUGCodIBGE.csv;DeParaUGCodIBGE.csv;UG;1;integer;Código da Unidade Eleitoral;Code of Electoral Unit
+data/dataset/DeParaUGCodIBGE.csv;DeParaUGCodIBGE.csv;Munic_Nome;0;character;Nome do Município;City name
+data/dataset/DeParaUGCodIBGE.csv;DeParaUGCodIBGE.csv;UF_Sigla;0;character;Sigla da unidade federativa no município.;Acronym of the federal unit in the city.
+data/dataset/FileList.csv;FileList.csv;FileList_FilePath;1;character;Caminho completo do arquivo;File full path
+data/dataset/FileList.csv;FileList.csv;FileList_Type;0;character;"Tipo de arquivo de acordo com a seguinte legenda:
+
+Texto: arquivos de texto
+Metadados: dados modelados que ajudam os scripts computacionais a criar o banco de dados.
+Pasta: diretórios do projeto.
+Dados de análise: relatório de dados contendo uma mistura de dados modelados e indicadores (dados transformados) usados ??para executar os modelos estatísticos do projeto.
+Dados modelados: dados de um banco de dados relacional criado a partir de dados brutos.
+MySQLModel: arquivo MySQL_WorkBench mostrando a estrutura do banco de dados relacional criado para ordenar e integrar os dados brutos. Também mostra o relacionamento entre dados modelados e metadados.
+Dados intermediários: dados que foram processados ??a partir de dados brutos, mas ainda não foram totalmente integrados ao banco de dados relacional. Um arquivo bruto descompactado é um bom exemplo de dados intermediários.
+RawData: um arquivo de dados baixado de uma fonte de dados sem nenhuma transformação.
+Figura: uma figura usada neste projeto.
+Tabela: Uma tabela usada neste projeto.
+Código: um arquivo que contém um código de computador usado no projeto. Todos os arquivos de código deste projeto usam a linguagem R.";"File type according to the following caption:
+
+Text: Text files
+Metadata: Modeled data that help computational scripts to create the database.
+Folder: project directories.
+Analysis Data: Data report containing a mixt of modeled data and indicators (transformed data) used to run the project's statistical models.
+Modeled data: Data from a relational database built from raw data.
+MySQLModel: MySQL_WorkBench file showing the structure of the relational database created to order and integrate the raw data. It also shows the relationship between modeled data and metadata.
+Intermediate Data: Data that has been processed from raw data, but has not yet been fully integrated into the relational database. An unzipped raw file is a good example of intermediate data.
+RawData: A data file downloaded from a data source without any transformation.
+Figure: a figure used in this project.
+Table: A table used in this project.
+Code: a file containing a computer code used in the project. All code files for this project use the R language."
+data/dataset/FileList.csv;FileList.csv;FileList_DescriptionPT;0;character;Descrição do arquivo em português;File description in Portuguese
+data/dataset/FileList.csv;FileList.csv;FileList_Description;0;character;Descrição do arquivo em inglês;File description in English
+data/dataset/FileTracing.csv;FileTracing.csv;FilePath_From;1;character;Arquivo para onde os dados vieram;File where the data come
+data/dataset/FileTracing.csv;FileTracing.csv;FileList_To;1;character;Arquivo para onde os dados foram;File where the data went
+data/dataset/FileTracing.csv;FileTracing.csv;FileTracing_Relationship;1;character;Tipo de relação entre os arquivos (código, função, fonte de dados e extração);Type of relationship between files (code, function, data source and extraction)
+data/dataset/FileTracing.csv;FileTracing.csv;FileTracing_Comments;0;character;Comentários sobre a transformação dos dados;Comments on data transformation
+data/dataset/FinantialRawFiles.csv;FinantialRawFiles.csv;FinRawFiles_Id;1;integer;Identificação da tabela.;Identification Table.
+data/dataset/FinantialRawFiles.csv;FinantialRawFiles.csv;FinRawFiles_FileName;0;character;Nome do arquivo bruto.;Name of the raw file.
+data/dataset/FinantialRawFiles.csv;FinantialRawFiles.csv;FinRawFiles_FileXlsx;0;character;Nome do arquivo em formato MS-Excel;Filename in MS-Excel format
+data/dataset/FinantialRawFiles.csv;FinantialRawFiles.csv;FinRawFiles_DataType;0;character;"Indica se os dados de de receita elemento (""Rev""), despesa função (""SpenFunc""), despesa elemento (""SpenEl"") ou receita e despesa (""Rev&Spen"")";"Indicates whether the data is element revenue ( ""Rev""), function spending  ( ""SpenFunc"") element spending ( ""SpenEl"") or revenue and spending ( ""Rev & Spen"")"
+data/dataset/FinantialRawFiles.csv;FinantialRawFiles.csv;FinRawFiles_FormatRawFile;0;character;Tipo de formato de dados do arquivo bruto descompactado.;Type of raw uncompressed file data format.
+data/dataset/FinantialRawFiles.csv;FinantialRawFiles.csv;FinRawFiles_FileURL;0;character;Link dos dados brutos. Em alguns casos, o download não é direto e é necessário usar point and click.;Link of the raw data. In some cases, the it is not direct download and it is necessary to use some point and click.
+data/dataset/FinantialRawFiles.csv;FinantialRawFiles.csv;FinRawFiles_FileURLBackup;0;character;Link alternativo dos dados brutos, em um repositório próprio.;Alternative link the raw data in a repository.
+data/dataset/FinantialRawFiles.csv;FinantialRawFiles.csv;FinRawFiles_Source;0;character;Fonte dos dados;Data source
+data/dataset/FinantialRawFiles.csv;FinantialRawFiles.csv;FinRawFiles_InitialYear;0;integer;Ano inicial dos dados;Year Initial Data
+data/dataset/FinantialRawFiles.csv;FinantialRawFiles.csv;FinRawFiles_FinalYear;0;integer;Ano final dos dados.;Year end data.
+data/dataset/Inflacao.csv;Inflacao.csv;ano;1;integer;Ano;Year
+data/dataset/Inflacao.csv;Inflacao.csv;inflacaoValor;0;numeric;Valor da inflação anual acumulada no Brasil.;Value of the accumulated annual inflation in Brazil.
+data/dataset/Inflacao.csv;Inflacao.csv;IndiceNome;0;character;Nome do indicador de inflação.;Name of the inflation indicator.
+data/dataset/MunicFinancas.csv;MunicFinancas.csv;Munic_Id;1;integer;Código Municipal do IBGE;Municipal code IBGE
+data/dataset/MunicFinancas.csv;MunicFinancas.csv;MunicFinancas_Ano;1;integer;Ano;Year
+data/dataset/MunicFinancas.csv;MunicFinancas.csv;ContasPublica_Id;1;character;"Conta pública, de acordo com a tabela ""ContasPublicas"".";"Public account, according to the ""ContasPublicas"" table."
+data/dataset/MunicFinancas.csv;MunicFinancas.csv;MunicFinancas_ContaValor;0;numeric;Valor da conta no município-conta-ano;account value in the city-Account-year
+data/dataset/Municipios.csv;Municipios.csv;UF_Id;1;integer;Código da unidade federativa no IBGE;the federal unit code in the IBGE
+data/dataset/Municipios.csv;Municipios.csv;Munic_Id;1;integer;Código Municipal do IBGE;Municipal code IBGE
+data/dataset/Municipios.csv;Municipios.csv;Munic_Id6;0;integer;Código Municipal do IBGE, versão antiga, com seis dígitos.;Municipal IBGE Code, old version, with six digits.
+data/dataset/Municipios.csv;Municipios.csv;Munic_Nome;0;character;Nome do Município;City name
+data/dataset/MunicOp.csv;MunicOp.csv;Munic_Id;1;integer;Código Municipal do IBGE;Municipal code IBGE
+data/dataset/MunicOp.csv;MunicOp.csv;MunicOp_Ano;1;integer;Ano;Year
+data/dataset/MunicOp.csv;MunicOp.csv;MunicOP_OP;0;integer;Indica se o município teve orçamento participativo naquele quadriênio ou não.;It indicates whether the municipality had participatory budget in that four-year period or not.
+data/dataset/Partidos.csv;Partidos.csv;Partido_Id;1;character;Identificação única do partido.;Unique party identification.
+data/dataset/Partidos.csv;Partidos.csv;Partido_Sigla;0;character;Sigla do partido;Acronym of the party
+data/dataset/Partidos.csv;Partidos.csv;Partido_Numero;0;integer;Número eleitoral do partido;Party's electoral number
+data/dataset/Partidos.csv;Partidos.csv;Partido_Nome;0;character;Nome do partido;Name Party
+data/dataset/Partidos.csv;Partidos.csv;Partido_AnoInicial;0;integer;Primeiro ano de ocorrência do partido nos bancos de dados eleirais.;First year party's occurrence in the electoral databases.
+data/dataset/Partidos.csv;Partidos.csv;Partido_AnoFinal;0;integer;Último ano de ocorrência do partido nos bancos de dados eleirais.;Last year party's occurrence in the electoral databases.
+data/dataset/RawFilesList.csv;RawFilesList.csv;RawFile_ProjetctFileName;0;character;Nome do Arquivo;File Name
+data/dataset/RawFilesList.csv;RawFilesList.csv;FileList_FilePath;1;character;Caminho completo do arquivo;File full path
+data/dataset/RawFilesList.csv;RawFilesList.csv;RawFile_Source;0;character;Fonte original dos Dados;Original Source os the data
+data/dataset/RawFilesList.csv;RawFilesList.csv;RawFile_AutoDownload;0;integer;Mostra se o campo RawFile_URL desse arquivo é um download direto;Show if RawFile_URL field of this file is a direct download
+data/dataset/RawFilesList.csv;RawFilesList.csv;RawFile_GitHub;0;integer;Mostra se o arquivo está presente no repositório do GitHub;Show if the file is in GitHub repository
+data/dataset/RawFilesList.csv;RawFilesList.csv;RawFile_Size;0;integer;Tamanho do arquivo em Bytes;File Size in bytes
+data/dataset/RawFilesList.csv;RawFilesList.csv;RawFile_Date;0;Date;Data da última modificação;Last upload date
+data/dataset/RawFilesList.csv;RawFilesList.csv;RawFile_URL;0;character;link url da fonte original do arquivo;URL link of the data source
+data/dataset/RawFilesList.csv;RawFilesList.csv;RawFile_URLBackup;0;character;link url de um backup próprio dos dados;url link of a data backup
+data/dataset/RawFilesList.csv;RawFilesList.csv;RawFile_Comments;0;character;Comentários sobre os dados.;Comments about this data
+data/dataset/SocioDemoEconomia.csv;SocioDemoEconomia.csv;Munic_Id;1;integer;Código Municipal do IBGE;Municipal code IBGE
+data/dataset/SocioDemoEconomia.csv;SocioDemoEconomia.csv;SocioMunic_Ano;1;integer;Ano;Year
+data/dataset/SocioDemoEconomia.csv;SocioDemoEconomia.csv;SocioMunic_Populacao;0;integer;Estimativa da população municipal no ano indicado;Estimate of the municipal population in the year indicated
+data/dataset/SocioDemoEconomia.csv;SocioDemoEconomia.csv;SocioMunic_PIBCorrente;0;numeric;PIB municipal no ano indicado;Municipal GDP in the year indicated
+data/dataset/UEToCodIBGE.csv;UEToCodIBGE.csv;Munic_Id;1;integer;Código Municipal do IBGE;Municipal code IBGE
+data/dataset/UEToCodIBGE.csv;UEToCodIBGE.csv;SIGLA_UE;1;integer;Código da Unidade Eleitoral;Code of Electoral Unit
+data/dataset/UFs.csv;UFs.csv;UF_Id;1;integer;Código da unidade federativa no IBGE;the federal unit code in the IBGE
+data/dataset/UFs.csv;UFs.csv;UF_Nome;0;character;Nome da Unidade Federativa;Name of the Federative Unit
+data/dataset/UFs.csv;UFs.csv;UF_Sigla;0;character;Sigla da unidade federativa;Acronym of the federal unit
+data/dataset/UFs.csv;UFs.csv;UF_Regiao;0;character;Região da unidade federativa;Region of federal unit

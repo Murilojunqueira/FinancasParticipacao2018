@@ -1,7 +1,7 @@
 
 # Project: Working paper "Why has the Participatory Budgeting declined in Brazil?"
 
-# This script: Import electoral data from 1996 mdb file
+# This script: Import electoral data from TSE's 1996 files
 
 # Original source data from TSE - Tribunal Superior Eleitural (Superior Electoral Court)
 # Site TSE (not working): http://www.tse.jus.br/eleicoes/estatisticas/repositorio-de-dados-eleitorais-1/repositorio-de-dados-eleitorais
