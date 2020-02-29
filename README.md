@@ -159,12 +159,14 @@ the data sources see “data/dataset/RawFilesList.csv”.
     created by ourselves are discriminated in
     “data/dataset/RawFilesList.csv”.
 
-### 4.2. Final Dataset
+### 4.2. ER diagram
 
 Entity-relationship diagram of “data/dataset” folder.
 
 ![Entity-relationship
 diagram](data/metadata/dataModel_MySQL/ModeloDados.png)
+
+Original MYSQL Workbench file in “data/metadata/dataModel\_MySQL/”.
 
 ### 4.3. Final Dataset
 

@@ -105,7 +105,7 @@ Entity-relationship diagram of "data/dataset" folder.
 ![Entity-relationship diagram](data/metadata/dataModel_MySQL/ModeloDados.png)
 
 
-Original MYSQL Workbench file in "data/metadata/dataModel_MySQL/Participação e Finanças Dados.mwb".
+Original MYSQL Workbench file in "data/metadata/dataModel_MySQL/".
 
 
 ### 4.3. Final Dataset
