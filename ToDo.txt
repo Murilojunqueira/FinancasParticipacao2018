@@ -1,51 +1,15 @@
 To do:
 
-	-Revisar os comentários dos scripts.
-
-	-Lista de todas as fontes primárias.
-		-Preencher a tabela RawFilesList
-		-Preencher a tabela FileTracing
-		-Incorporar nos códigos o uso dessas tabelas de fontes primárias (alertar o uso de point and click).
-
-
-
-=====================
-
 	-Traduzir:
 		-ImportCoalitionDataTSE.R
 		-ImportCoalitionsCEPESPdata.R
 
 	-Verificar como citar banco de dados.
-	-Colocar uma nota pedindo para citar os banco de dados.
-
-	-Compactar e colocar no google drive o banco de dados básico.
-
-
-	-Colocar do README.Rmd
-		-Descrição básica dos diretórios
-		-Resumo das fontes primárias.
-		-Os scripts básicos
-			-Colocar as fontes primárias (resumidas) que eles utilizam.
-
-
-		-Fontes primárias detalhadas
-
-		*-Colocar um exemplo de como se pode "rastrear" a informação de uma variável utilizando os dados.
-			-Opção 1: usar o DataAnalisys.csv (disponível no github)
-			-Opção 2: baixar o backup do dataset
-			-opção 3: Seguir o código inteiro
-				-Atenção para quando tiver que baixar os arquivos brutos que não estão disponíveis.
-				-Observar a dependência dos arquivos na tabela FileTracing
-
+		-Colocar uma nota pedindo para citar os banco de dados.
 
 	-Colocar ligação correta na tabela CandidatosAno (trocar Partido_Sigla por Partido_Id)
 		-O mesmo na tabela ColigacoesPartidos
 
-
-	-Procurar inconsistência entre:
-		-DeParaUGCodIBGE.csv
-		-UEToCodIBGE.csv
-		*-As duas tem o mesmo propósito. Ver onde usei uma e onde usei a outra.
 
 
 
@@ -71,4 +35,32 @@ Feito:
 	-Listar os softwares que precisam de dependência externa. (ok)
 		-Colocar essas dependências nos comentários dos scripts. (ok)
 
+	-Lista de todas as fontes primárias. (ok)
+		-Preencher a tabela RawFilesList (oK)
+		-Preencher a tabela FileTracing (ok)
+		-Incorporar nos códigos o uso dessas tabelas de fontes primárias (alertar o uso de point and click). (oK)
 
+	-Procurar inconsistência entre: (ok)
+		-DeParaUGCodIBGE.csv (ok)
+		-UEToCodIBGE.csv (ok)
+
+
+
+	-Colocar do README.Rmd (ok)
+		-Descrição básica dos diretórios (ok)
+		-Resumo das fontes primárias. (ok)
+		-Os scripts básicos (ok)
+			-Colocar as fontes primárias (resumidas) que eles utilizam.
+
+
+		-Fontes primárias detalhadas  (ok)
+
+		*-Colocar um exemplo de como se pode "rastrear" a informação de uma variável utilizando os dados. (ok)
+			-Opção 1: usar o DataAnalisys.csv (disponível no github)  (ok)
+			-Opção 2: baixar o backup do dataset  (ok)
+			-opção 3: Seguir o código inteiro  (ok)
+				-Atenção para quando tiver que baixar os arquivos brutos que não estão disponíveis.  (ok)
+				-Observar a dependência dos arquivos na tabela FileTracing  (ok)
+
+
+	-Compactar e colocar no google drive o banco de dados básico. (ok)
