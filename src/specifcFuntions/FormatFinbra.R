@@ -1,4 +1,5 @@
-# Format data extract from Finbra
+# Format data extract from Finbra (Finanças do Brasil)
+# Brazilian municipal data from National Treasure Department (STN)
 
 
 # Dependencies:

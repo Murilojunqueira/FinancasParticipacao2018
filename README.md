@@ -259,7 +259,7 @@ The complete structure of the “doc” folder is the following:
       - presentations
       - tables
 
-The content of each folder is pretty intuitive, containing figures, text
+The content of each folder is pretty self-explanatory, containing figures, text
 of the paper, authors presentations and tables of the paper.
 
 #### 5.1.2 Scripts folder description <a name="scriptsfolder"></a>

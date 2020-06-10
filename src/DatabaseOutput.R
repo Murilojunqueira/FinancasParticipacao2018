@@ -7,15 +7,13 @@
 
 # Created at 2018-05-09
 
-################## Setup working space ##################
-
 
 ############### 1 - Importing Participatory Budget Census ###############
 
 # Importing Participatory Budget Census
 source("src/specifcFuntions/ImportPBData.R")
 
-
+# Import Data
 OP_Data <- ImportPBData(RawData = "data/raw/PBCENSUS Spada/05112017_PB CENSUS 2016.xlsx",
                         SheetName = "Final census")
 
@@ -47,6 +45,7 @@ rm(OP_Data, ImportPBData)
 
 ############### 2.1 - Import ExternalData: Raw data source (URLs) ###############
 
+# List of Finaltial raw files
 FinantialRawFiles <- fread("data/dataset/FinantialRawFiles.csv", 
                            sep = ";", dec = ",", stringsAsFactors = FALSE)
 
@@ -93,11 +92,17 @@ rm(ZipAccessToExcel, unzipTemp, GetMSAccessData, i)
 
 # Function to list all fields in MS Excel list files
 source("src/generalFunctions/ListFieldsExcel.R")
-ListFieldsExcel_df <- ListFieldsExcel(paste0("data/raw/Finbra/ExcelFiles/", AccessRawFiles$FinRawFiles_FileXlsx))
+
+ListFieldsExcel_df <- ListFieldsExcel(paste0("data/raw/Finbra/ExcelFiles/", 
+                                             AccessRawFiles$FinRawFiles_FileXlsx))
+
 rm(ListFieldsExcel)
 
 
 source("src/specifcFuntions/Create_BDCamposFinbra.R")
+
+# Criate BDCamposFinbra table, that list all tables and fields in 
+# Finbra raw data.
 Create_BDCamposFinbra(ListFieldsExcel_df = ListFieldsExcel_df, 
                       OutputDir = "data/dataset/")
 
@@ -105,7 +110,8 @@ Create_BDCamposFinbra(ListFieldsExcel_df = ListFieldsExcel_df,
 rm(ListFieldsExcel_df, Create_BDCamposFinbra)
 
 
-############### 2.5 - Import ExternalData  ###############
+############### 2.5 - Import External Data  ###############
+
 
 BDCamposFinbra <- fread("data/dataset/BDCamposFinbra.csv",
                         sep = ";", dec = ",", stringsAsFactors = FALSE,

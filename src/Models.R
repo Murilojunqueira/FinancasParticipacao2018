@@ -10,17 +10,21 @@
 
 ################## Setup Working Space and loading data ##################
 
+# devtools::install_github('IQSS/Zelig')
 
 # Carrega os pacotes necessários
-library(zeligverse)
+library(Zelig)
 library(scales)
 # library(sjPlot)
 library(stargazer)
 library(ggpubr)
-library("gridExtra")
+library(gridExtra)
+library(extrafont)
 
-
-
+# Load Cambria font
+windowsFonts(sans="Cambria")
+loadfonts(device="win", quiet = TRUE)
+loadfonts(device="postscript", quiet = TRUE)
 
 # Script with functions
 
@@ -209,7 +213,7 @@ VarLabels <- c('Participatory Budget (PB)', 'PB in t-1 (LDV)', 'PB Accumulative'
 # Create summary table
 stargazer(as.data.frame(DataAnalysis_Complete),
           # Output table 
-          out = "doc/Tables/Table1.html",
+          # out = "doc/Tables/Table1.html",
           # Remove non used variables
           omit = c("Munic_Id", "year", "UF_Id", "MayorElecNumber", "ChangeEffect2002", 'Investpp',
                    "taxrevenues", "TransferDep", "balsheetrev", "MayorControlCouncil", "LeftShare",
@@ -239,7 +243,7 @@ VarLabels <- c("Lag Dependent Variable (PBi,t-1)", "PB Accumulative", "Populatio
 # Create regression summary table
 ModelResults <- stargazer(LPM_pb_Basic, LPM_pb_Min, 
                           # Output table 
-                          out = "doc/Tables/Table2.html",
+                          # out = "doc/Tables/Table2.html",
                           # Table Parameters:
                           type = "html", 
                           header = FALSE,
@@ -291,28 +295,29 @@ Data_Frame23 <- DataAnalysis_Filter %>%
   arrange(year, order)
 
 # Check data
-View(DataFrame23)
+# View(Data_Frame23)
 
 
 # Frame 1: PB total case evolution
 Frame1 <- ggplot(data = Data_Frame1,  aes(x = year, y = Total)) + 
-  theme_classic(base_size = 14) + 
-  geom_line(aes(y = Total), colour = "grey", size = 1.5) + 
+  theme_classic(base_size = 11, base_family = "Cambria") + 
+  geom_line(aes(y = Total), colour = "grey", size = 1) + 
   ggtitle("Number of cities with PB - 1992-2016") +
   labs(x = "", y = "") +
   scale_x_continuous(breaks=c(seq(1992, 2016, by = 4)), labels=seq(1992, 2016, by = 4)) +
-  theme(plot.title = element_text(hjust = 0.5, size = 12), 
+  theme(plot.title = element_text(hjust = 0.5), 
         plot.subtitle = element_text(hjust = 0.5),
         axis.text.x = element_text(angle = 45, hjust = 1),
         legend.position = "none")
+
 
 Frame1
 
 # Frame 2: PB total case evolution by party
 Frame2 <- ggplot(data = Data_Frame23, aes(x = year, y = Freq_OP, fill = Group_OP)) + 
-  theme_classic(base_size = 14) + 
-  ggtitle("Number of cities with PB by party - 1992-2016") +
-  geom_line(aes(y = Freq_OP, colour = Group_OP), size = 1.5) + 
+  theme_classic(base_size = 11, base_family = "Cambria") + 
+  ggtitle("Number of cities with PB by party - 2000-2016") +
+  geom_line(aes(y = Freq_OP, colour = Group_OP), size = 1) + 
   scale_color_manual(values=c(PT  = "red",
                               Other_Left = 'green',
                               Center = "purple",
@@ -320,7 +325,7 @@ Frame2 <- ggplot(data = Data_Frame23, aes(x = year, y = Freq_OP, fill = Group_OP
   labs(x = "", y = "") +
   scale_x_continuous(breaks=c(seq(1992, 2016, by = 4)), labels=seq(1992, 2016, by = 4)) +
   theme(legend.position="none", 
-        plot.title = element_text(hjust = 0.5, size = 12), 
+        plot.title = element_text(hjust = 0.5), 
         plot.subtitle = element_text(hjust = 0.5),
         axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -328,19 +333,19 @@ Frame2
 
 # Frame 3: Share of party mayors in cities with PB
 Frame3 <- ggplot(data = Data_Frame23, aes(x = year, y = Per_OP, fill = Group_OP)) + 
-  theme_classic(base_size = 14) + 
-  geom_line(aes(y = Per_OP, colour = Group_OP), size = 1.5) + 
+  theme_classic(base_size = 11, base_family = "Cambria") + 
+  geom_line(aes(y = Per_OP, colour = Group_OP), size = 1) + 
   scale_color_manual(values=c(Total = "orange",
                               PT  = "red",
                               Other_Left = 'green',
                               Center = "purple",
                               Right = "blue"), name = "Mayor Party: ") +
-  ggtitle("Party mayors in cities with PB over total party mayors") +
+  ggtitle("Share of party mayors in cities with PB") +
   labs(x = "Year", y = "") +
   scale_y_continuous(labels = scales::percent) + 
   scale_x_continuous(breaks=c(seq(1992, 2016, by = 4)), labels=seq(1992, 2016, by = 4)) +
   theme(legend.position="bottom", 
-        plot.title = element_text(hjust = 0.5, size = 12), 
+        plot.title = element_text(hjust = 0.5), 
         plot.subtitle = element_text(hjust = 0.5),
         axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -348,18 +353,20 @@ Frame3
 
 
 # Combine all frames and make some annotations
-Figure1 <- grid.arrange(Frame1, Frame2, Frame3, nrow = 3) %>% 
-  annotate_figure(bottom = 
-                    text_grob("\nNote: Center parties are PMDB, PSDB and PV. Other Left-wing parties are PSB, PDT, PC do B 
-                    and PSOL. All other cases (22 parties) are labeled as right-wing parties. Only cities with 
-                    more than 50,000 people in 1996 were considered.", size = 10))
+Figure1 <- grid.arrange(Frame1, Frame2, Frame3, nrow = 3) 
+# %>% 
+#   annotate_figure(bottom = 
+#                     text_grob("\nNote: Center parties are PMDB, PSDB and PV. Other Left-wing parties are PSB, PDT, PC do B 
+#                     and PSOL. All other cases (22 parties) are labeled as right-wing parties. Only cities with 
+#                     more than 50,000 people in 1996 were considered. Given that the 1992 election data is 
+#                     missing, we cannot show the 1996 party information.", size = 10))
 
 # Show Graph
 Figure1
 
 # Print plot
 ggsave(filename = "doc/figures/Figure1.png", plot = Figure1,
-       width = 16, height = 23.404, units = "cm", device = "png")
+       width = 10, height = 16, units = "cm", device = "png")
 
 # Free memory
 rm(Order, Data_Frame1, Data_Frame23, Frame1, Frame2, Frame3, Figure1)
@@ -387,13 +394,12 @@ ci.plot(s_out, var = "population_log", ci = 95, leg = 0,
 qi_Values <- list(PT.Antes2002, PT.Depois2002)
 plotdata <- GraphData(qi_Values, Zelig_pb_Min, "population_log", ci = 95)
 levels(plotdata$Group) <- c("Before 2002", "After 2002")
-# levels(plotdata$Group) <- c("Antes de 2002", "Depois de 2002")
 
 # Figure 3
 
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = population_log, y =mean, fill = Group)) + 
-  theme_classic(base_size = 14) + 
+  theme_classic(base_size = 11, base_family = "Cambria") + 
   geom_line(aes(y =mean)) + 
   geom_line(aes(y =high), linetype="dashed", color=NA) + 
   geom_line(aes(y =low), linetype="dashed", color=NA) + 
@@ -408,8 +414,8 @@ ggplot(data=plotdata, aes(x = population_log, y =mean, fill = Group)) +
         axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Print plot
-# ggsave(filename = "doc/figures/Figure2.png", 
-#        width = 20.5, height = 15, units = "cm", device = "png")
+ggsave(filename = "doc/figures/Figure2.png",
+       width = 11.5, height = 8, units = "cm", device = "png")
 
 
 
@@ -435,13 +441,12 @@ ci.plot(s_out, var = "population_log", ci = 95, leg = 0)
 
 # Extract simulated data
 qi_Values <- list(PT, Esquerda, CentroDireita)
-
 plotdata <- GraphData(qi_Values, Zelig_pb_Min, "population_log", ci = 95)
 levels(plotdata$Group) <- c("PT   ", "Left   ", "Center-Right")
 
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = population_log, y =mean, fill = Group)) + 
-  theme_classic(base_size = 15) + 
+  theme_classic(base_size = 11, base_family = "Cambria") + 
   geom_line(aes(y =mean)) + 
   geom_line(aes(y =high), linetype="dashed", color=NA) + 
   geom_line(aes(y =low), linetype="dashed", color=NA) + 
@@ -457,8 +462,8 @@ ggplot(data=plotdata, aes(x = population_log, y =mean, fill = Group)) +
         axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Print plot
-# ggsave(filename = "doc/figures/Figure3.png",
-#        width = 20.5, height = 15, units = "cm", device = "png")
+ ggsave(filename = "doc/figures/Figure3.png",
+        width = 11.5, height = 8, units = "cm", device = "png")
 
 rm(PT, PT.Depois2002, PT.Antes2002, CentroDireita, Esquerda)
 rm(plotdata, s_out, qi_Values)
@@ -483,18 +488,18 @@ levels(plotdata$Group) <- c("Party Continuity (No PB)", "Mayor Reelection (No PB
 
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = Group, y =mean)) + 
-  theme_classic(base_size = 15) + 
+  theme_classic(base_size = 11, base_family = "Cambria") + 
   geom_errorbar(aes(ymin=low, ymax=high), width=.2,
                 position=position_dodge(.9)) +   
-  labs(x = "Administrative_Continuity", y = "Probability of PB") +
+  labs(x = "Administrative Continuity", y = "Probability of PB") +
   scale_y_continuous(labels = scales::percent) + 
   theme(legend.position="bottom", plot.title = element_text(hjust = 0.5), 
         plot.subtitle = element_text(hjust = 0.5),
         axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Print plot
-# ggsave(filename = "doc/figures/Figure4.png",
-#        width = 20.5, height = 15, units = "cm", device = "png")
+ ggsave(filename = "doc/figures/Figure4.png",
+        width = 11.5, height = 8, units = "cm", device = "png")
 
 rm(PartyOnlyContinuity_NoPB, PartyOnlyContinuity_PB, PartyPref_NoPB, PartyPref_PB)
 rm(plotdata, s_out, qi_Values)
@@ -541,13 +546,13 @@ ggplot(data=plotdata, aes(x = BudgetPP_log, y =mean, fill = Group)) +
   geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
   labs(x = "Budget per capita", y = "PB Adoption/Continuity") +
   scale_fill_manual(values=c("light blue", "orange"), name="Previous Adminsitration:") +
-  theme_classic(base_size = 14) + 
+  theme_classic(base_size = 11, base_family = "Cambria") + 
   theme(legend.position="bottom", plot.title = element_text(hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5)) 
 
 # Print plot
-# ggsave(filename = "doc/figures/Figure5.png",
-#        width = 20.5, height = 15, units = "cm", device = "png")
+ ggsave(filename = "doc/figures/Figure5.png",
+        width = 11.5, height = 8, units = "cm", device = "png")
 
 rm(ComPB, SemPB, s_out)
 rm(qi_Values, plotdata)
@@ -596,13 +601,13 @@ ggplot(data=plotdata, aes(x = InvestPer, y =mean, fill = Group)) +
   geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
   labs(x = "Investment rate", y = "PB Adoption/Continuity") +
   scale_fill_manual(values=c("light blue", "orange"), name="Previous Adminsitration:") +
-  theme_classic(base_size = 14) + 
+  theme_classic(base_size = 11, base_family = "Cambria") + 
   theme(legend.position="bottom", plot.title = element_text(hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5)) 
 
 # Print plot
-ggsave(filename = "doc/figures/Figure6.png",
-       width = 20.5, height = 15, units = "cm", device = "png")
+ ggsave(filename = "doc/figures/Figure6.png",
+        width = 11.5, height = 8, units = "cm", device = "png")
 
 
 rm(ComPB, SemPB, s_out)
