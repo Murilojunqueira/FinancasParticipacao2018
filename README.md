@@ -100,7 +100,7 @@ from sources that don’t allow direct download or use captcha. There are
 other few cases of point and click, basically to unzip or extract data
 from accdb files. All this cases are indicated in R code comments.
 
-We recommend a careful review of the files following files, that
+We recommend a careful review of the following files, that
 describe the dataset and variable generation process:
 
   - **data/dataset/Codebook.csv:** Description of all variables present
