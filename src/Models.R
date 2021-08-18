@@ -85,6 +85,7 @@ names(DataAnalysis)
 ## avoid city duplication
 DataAnalysis_Filter <- DataAnalysis %>% 
   distinct(Munic_Id, year, .keep_all = TRUE) %>% 
+  # Remove dots from variables names
   rename(lag_pb = lag.pb) %>% 
   rename(MunicOP_OP_Acum = MunicOP_OP.Acum)
 
@@ -200,6 +201,38 @@ Zelig_pb_Min <- zelig(MunicOP_OP ~
 
 summary(Zelig_pb_Min)
 
+
+################## Descriptive Statistics ##################
+
+# Introduction:
+# Number of cities that had PB at least once.
+
+CitiesWithPB <-  DataAnalysis %>% 
+  dplyr::filter(MunicOP_OP == 1) %>% 
+  distinct(Munic_Id) %>% 
+  nrow()
+  
+CitiesWithPB # 267 cities
+
+# Main Results:
+# Number of cities with more than 500k that had PB at least once.
+
+CitiesSharePB500k <-  DataAnalysis %>% 
+  mutate(BigCity = ifelse(population > 500000, 1, 0)) %>% 
+  group_by(Munic_Id) %>% 
+  mutate(HadPB = max(MunicOP_OP, na.rm = TRUE)) %>% 
+  mutate(BigCity = max(BigCity, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  distinct(Munic_Id, .keep_all = TRUE) %>% 
+  group_by(BigCity) %>% 
+  summarise(PerPB = mean(HadPB, na.rm = TRUE))
+
+CitiesSharePB500k # 88% of big cities had PB, agains 43% of entire sample
+
+DataAnalysis$population %>% summary()
+
+rm(CitiesWithPB)
+
 ################## Table 1: Variables Description ##################
 
 # Variables Names
@@ -300,11 +333,12 @@ Data_Frame23 <- DataAnalysis_Filter %>%
 
 # Frame 1: PB total case evolution
 Frame1 <- ggplot(data = Data_Frame1,  aes(x = year, y = Total)) + 
-  theme_classic(base_size = 11, base_family = "Cambria") + 
+  theme_classic(base_size = 9, base_family = "Cambria") + 
   geom_line(aes(y = Total), colour = "grey", size = 1) + 
-  ggtitle("Number of cities with PB - 1992-2016") +
+  ggtitle("A) Number of cities with PB") +
   labs(x = "", y = "") +
-  scale_x_continuous(breaks=c(seq(1992, 2016, by = 4)), labels=seq(1992, 2016, by = 4)) +
+  scale_x_continuous(breaks=c(seq(1992, 2016, by = 4)), 
+                     labels=seq(1992, 2016, by = 4)) +
   theme(plot.title = element_text(hjust = 0.5), 
         plot.subtitle = element_text(hjust = 0.5),
         axis.text.x = element_text(angle = 45, hjust = 1),
@@ -315,8 +349,8 @@ Frame1
 
 # Frame 2: PB total case evolution by party
 Frame2 <- ggplot(data = Data_Frame23, aes(x = year, y = Freq_OP, fill = Group_OP)) + 
-  theme_classic(base_size = 11, base_family = "Cambria") + 
-  ggtitle("Number of cities with PB by party - 2000-2016") +
+  theme_classic(base_size = 9, base_family = "Cambria") + 
+  ggtitle("B) Number of cities with PB by party") +
   geom_line(aes(y = Freq_OP, colour = Group_OP), size = 1) + 
   scale_color_manual(values=c(PT  = "red",
                               Other_Left = 'green',
@@ -333,14 +367,15 @@ Frame2
 
 # Frame 3: Share of party mayors in cities with PB
 Frame3 <- ggplot(data = Data_Frame23, aes(x = year, y = Per_OP, fill = Group_OP)) + 
-  theme_classic(base_size = 11, base_family = "Cambria") + 
+  theme_classic(base_size = 9, base_family = "Cambria") + 
   geom_line(aes(y = Per_OP, colour = Group_OP), size = 1) + 
+  # guides(colour=guide_legend(ncol=2,nrow=2,byrow=TRUE)) + 
   scale_color_manual(values=c(Total = "orange",
                               PT  = "red",
                               Other_Left = 'green',
                               Center = "purple",
                               Right = "blue"), name = "Mayor Party: ") +
-  ggtitle("Share of party mayors in cities with PB") +
+  ggtitle("C) Share of cities with PB by party") +
   labs(x = "Year", y = "") +
   scale_y_continuous(labels = scales::percent) + 
   scale_x_continuous(breaks=c(seq(1992, 2016, by = 4)), labels=seq(1992, 2016, by = 4)) +
@@ -349,7 +384,6 @@ Frame3 <- ggplot(data = Data_Frame23, aes(x = year, y = Per_OP, fill = Group_OP)
         plot.subtitle = element_text(hjust = 0.5),
         axis.text.x = element_text(angle = 45, hjust = 1))
 
-Frame3
 
 
 # Combine all frames and make some annotations
@@ -368,9 +402,14 @@ Figure1
 ggsave(filename = "doc/figures/Figure1.png", plot = Figure1,
        width = 10, height = 16, units = "cm", device = "png")
 
+
+# Save graph data
+fwrite(Data_Frame1, "doc/figures/Figure1a.csv", sep = ";", dec = ",")
+fwrite(Data_Frame23, "doc/figures/Figure1bc.csv", sep = ";", dec = ",")
+
+
 # Free memory
 rm(Order, Data_Frame1, Data_Frame23, Frame1, Frame2, Frame3, Figure1)
-
 
 
 ################## Figure 2: Interaction between Population and PT before and After 2002 ##################
@@ -392,10 +431,15 @@ ci.plot(s_out, var = "population_log", ci = 95, leg = 0,
 
 #Same data in in ggplot2
 qi_Values <- list(PT.Antes2002, PT.Depois2002)
-plotdata <- GraphData(qi_Values, Zelig_pb_Min, "population_log", ci = 95)
+plotdata <- GraphData(qi_Values, Zelig_pb_Min, "population_log", 
+                      ci = 95) %>% 
+  # Avoid duplication in histogram
+  mutate(Freq = ifelse(Group == 1, 0, Freq))
+# Better labels
 levels(plotdata$Group) <- c("Before 2002", "After 2002")
 
 # Figure 3
+
 
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = population_log, y =mean, fill = Group)) + 
@@ -403,6 +447,8 @@ ggplot(data=plotdata, aes(x = population_log, y =mean, fill = Group)) +
   geom_line(aes(y =mean)) + 
   geom_line(aes(y =high), linetype="dashed", color=NA) + 
   geom_line(aes(y =low), linetype="dashed", color=NA) + 
+  geom_bar(aes(y = (1.1/min(mean))*Freq/sum(Freq)), stat="identity", 
+           fill = "grey", colour = "white", alpha = 0.3) +
   labs(x = "Population (log)", y = "Probability of PB") +
   scale_y_continuous(labels = scales::percent) + 
   scale_x_continuous(breaks=c(10:16), labels=c(exp_f(10:16))) +
@@ -417,7 +463,8 @@ ggplot(data=plotdata, aes(x = population_log, y =mean, fill = Group)) +
 ggsave(filename = "doc/figures/Figure2.png",
        width = 11.5, height = 8, units = "cm", device = "png")
 
-
+# Save graph data
+fwrite(plotdata, "doc/figures/Figure2.csv", sep = ";", dec = ",")
 
 # Free memory
 rm(PT.Depois2002, PT.Antes2002)
@@ -441,7 +488,11 @@ ci.plot(s_out, var = "population_log", ci = 95, leg = 0)
 
 # Extract simulated data
 qi_Values <- list(PT, Esquerda, CentroDireita)
-plotdata <- GraphData(qi_Values, Zelig_pb_Min, "population_log", ci = 95)
+plotdata <- GraphData(qi_Values, Zelig_pb_Min, "population_log", 
+                      ci = 95) %>% 
+  # Avoid duplication in histogram
+  mutate(Freq = ifelse(Group == 1, Freq, 0))
+# Better labels
 levels(plotdata$Group) <- c("PT   ", "Left   ", "Center-Right")
 
 #plot in ggplot2
@@ -450,6 +501,8 @@ ggplot(data=plotdata, aes(x = population_log, y =mean, fill = Group)) +
   geom_line(aes(y =mean)) + 
   geom_line(aes(y =high), linetype="dashed", color=NA) + 
   geom_line(aes(y =low), linetype="dashed", color=NA) + 
+  geom_bar(aes(y = (abs(0.2/min(mean)))*Freq/sum(Freq)), stat="identity", 
+           fill = "grey", colour = "white", alpha = 0.3) +
   xlab("Population (log)") + 
   ylab("Probability of PB") + 
   scale_y_continuous(labels = scales::percent) + 
@@ -465,6 +518,9 @@ ggplot(data=plotdata, aes(x = population_log, y =mean, fill = Group)) +
  ggsave(filename = "doc/figures/Figure3.png",
         width = 11.5, height = 8, units = "cm", device = "png")
 
+# Save graph data
+fwrite(plotdata, "doc/figures/Figure3.csv", sep = ";", dec = ",")
+ 
 rm(PT, PT.Depois2002, PT.Antes2002, CentroDireita, Esquerda)
 rm(plotdata, s_out, qi_Values)
 
@@ -492,7 +548,7 @@ ggplot(data=plotdata, aes(x = Group, y =mean)) +
   geom_errorbar(aes(ymin=low, ymax=high), width=.2,
                 position=position_dodge(.9)) +   
   labs(x = "Administrative Continuity", y = "Probability of PB") +
-  scale_y_continuous(labels = scales::percent) + 
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1L)) + 
   theme(legend.position="bottom", plot.title = element_text(hjust = 0.5), 
         plot.subtitle = element_text(hjust = 0.5),
         axis.text.x = element_text(angle = 45, hjust = 1))
@@ -501,6 +557,9 @@ ggplot(data=plotdata, aes(x = Group, y =mean)) +
  ggsave(filename = "doc/figures/Figure4.png",
         width = 11.5, height = 8, units = "cm", device = "png")
 
+# Save graph data
+fwrite(plotdata, "doc/figures/Figure4.csv", sep = ";", dec = ",")
+ 
 rm(PartyOnlyContinuity_NoPB, PartyOnlyContinuity_PB, PartyPref_NoPB, PartyPref_PB)
 rm(plotdata, s_out, qi_Values)
 
@@ -530,30 +589,38 @@ ci.plot(s_out, var = "BudgetPP_log", ci = 95, leg = 0,
 
 # Extract simulated data
 qi_Values <- list(SemPB, ComPB)
-
-plotdata <- GraphData(qi_Values, Zelig_pb_Min, "BudgetPP_log", ci = 95)
-levels(plotdata$Group) <- c("No PB", "Adopts PB") 
+plotdata <- GraphData(qi_Values, Zelig_pb_Min, "BudgetPP_log", 
+                      ci = 95)  %>% 
+  # Avoid duplication in histogram
+  mutate(Freq = ifelse(Group == 1, Freq, 0))
+# Better labels
+levels(plotdata$Group) <- c("PB adoption", "PB Continuity") 
 
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = BudgetPP_log, y =mean, fill = Group)) + 
   geom_line(aes(y =mean)) + 
   geom_line(aes(y =high), linetype="dashed", color=NA) + 
   geom_line(aes(y =low), linetype="dashed", color=NA) + 
-  geom_bar(aes(y = (0.3/min(mean))*Freq/sum(Freq)), stat="identity", 
+  geom_bar(aes(y = (0.25/min(mean))*Freq/sum(Freq)), stat="identity", 
            fill = "grey", colour = "white", alpha = 0.3) +
-  scale_y_continuous(labels = scales::percent) + 
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1L)) + 
   scale_x_continuous(breaks=c(6:9), labels=c(exp_f(6:9))) +
   geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
-  labs(x = "Budget per capita", y = "PB Adoption/Continuity") +
-  scale_fill_manual(values=c("light blue", "orange"), name="Previous Adminsitration:") +
+  labs(x = "Budget per capita (log)", 
+       y = "Probability of PB") +
+  scale_fill_manual(values=c("light blue", "orange"), name=element_blank()) +
   theme_classic(base_size = 11, base_family = "Cambria") + 
-  theme(legend.position="bottom", plot.title = element_text(hjust = 0.5),
+  theme(legend.position="bottom", 
+        plot.title = element_text(hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5)) 
 
 # Print plot
  ggsave(filename = "doc/figures/Figure5.png",
         width = 11.5, height = 8, units = "cm", device = "png")
 
+ # Save graph data
+ fwrite(plotdata, "doc/figures/Figure5.csv", sep = ";", dec = ",")
+ 
 rm(ComPB, SemPB, s_out)
 rm(qi_Values, plotdata)
 
@@ -586,8 +653,12 @@ ci.plot(s_out, var = "InvestPer", ci = 95, leg = 0,
 # Extract simulated data
 qi_Values <- list(SemPB, ComPB)
 
-plotdata <- GraphData(qi_Values, Zelig_pb_Min, "InvestPer", ci = 95)
-levels(plotdata$Group) <- c("No PB", "Adopts PB") 
+plotdata <- GraphData(qi_Values, Zelig_pb_Min, "InvestPer", 
+                      ci = 95)  %>% 
+  # Avoid duplication in histogram
+  mutate(Freq = ifelse(Group == 1, Freq, 0))
+# Better labels
+levels(plotdata$Group) <- c("PB adoption", "PB Continuity")
 
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = InvestPer, y =mean, fill = Group)) + 
@@ -596,22 +667,30 @@ ggplot(data=plotdata, aes(x = InvestPer, y =mean, fill = Group)) +
   geom_line(aes(y =low), linetype="dashed", color=NA) + 
   geom_bar(aes(y = (0.3/min(mean))*Freq/sum(Freq)), stat="identity", 
            fill = "grey", colour = "white", alpha = 0.3) +
-  scale_y_continuous(labels = scales::percent) + 
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1L)) + 
   scale_x_continuous(labels = scales::percent) + 
   geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
-  labs(x = "Investment rate", y = "PB Adoption/Continuity") +
-  scale_fill_manual(values=c("light blue", "orange"), name="Previous Adminsitration:") +
+  labs(x = "Investment rate", 
+       y = "Probability of PB") +
+  scale_fill_manual(values=c("light blue", "orange"), name=element_blank()) +
   theme_classic(base_size = 11, base_family = "Cambria") + 
-  theme(legend.position="bottom", plot.title = element_text(hjust = 0.5),
+  theme(legend.position="bottom", 
+        plot.title = element_text(hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5)) 
 
 # Print plot
  ggsave(filename = "doc/figures/Figure6.png",
         width = 11.5, height = 8, units = "cm", device = "png")
 
-
+ # Save graph data
+ fwrite(plotdata, "doc/figures/Figure6.csv", sep = ";", dec = ",")
+ 
 rm(ComPB, SemPB, s_out)
 rm(qi_Values, plotdata)
 
+# Clear memory
+rm(DataAnalysis, DataAnalysis_Complete, DataAnalysis_Filter)
+rm(LPM_pb_Basic, LPM_pb_Min, Zelig_pb_Min)
+rm(checkModel, exp_f, getSimData, GraphData, ModelResults)
 
 # End
