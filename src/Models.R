@@ -374,7 +374,7 @@ Frame3 <- ggplot(data = Data_Frame23, aes(x = year, y = Per_OP, fill = Group_OP)
                               PT  = "red",
                               Other_Left = 'green',
                               Center = "purple",
-                              Right = "blue"), name = "Mayor Party: ") +
+                              Right = "blue"), name = "Mayor's Party: ") +
   ggtitle("C) Share of cities with PB by party") +
   labs(x = "Year", y = "") +
   scale_y_continuous(labels = scales::percent) + 
@@ -436,20 +436,20 @@ plotdata <- GraphData(qi_Values, Zelig_pb_Min, "population_log",
   # Avoid duplication in histogram
   mutate(Freq = ifelse(Group == 1, 0, Freq))
 # Better labels
-levels(plotdata$Group) <- c("Before 2002", "After 2002")
+levels(plotdata$Group) <- c("2002 and Before", "2003 and After")
 
 # Figure 3
 
 
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = population_log, y =mean, fill = Group)) + 
-  theme_classic(base_size = 11, base_family = "Cambria") + 
+  theme_classic(base_size = 10, base_family = "Cambria") + 
   geom_line(aes(y =mean)) + 
   geom_line(aes(y =high), linetype="dashed", color=NA) + 
   geom_line(aes(y =low), linetype="dashed", color=NA) + 
   geom_bar(aes(y = (1.1/min(mean))*Freq/sum(Freq)), stat="identity", 
            fill = "grey", colour = "white", alpha = 0.3) +
-  labs(x = "Population (log)", y = "Probability of PB") +
+  labs(x = "Population (log)", y = "Probability of PB Adoption") +
   scale_y_continuous(labels = scales::percent) + 
   scale_x_continuous(breaks=c(10:16), labels=c(exp_f(10:16))) +
   geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
@@ -497,14 +497,14 @@ levels(plotdata$Group) <- c("PT   ", "Left   ", "Center-Right")
 
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = population_log, y =mean, fill = Group)) + 
-  theme_classic(base_size = 11, base_family = "Cambria") + 
+  theme_classic(base_size = 10, base_family = "Cambria") + 
   geom_line(aes(y =mean)) + 
   geom_line(aes(y =high), linetype="dashed", color=NA) + 
   geom_line(aes(y =low), linetype="dashed", color=NA) + 
   geom_bar(aes(y = (abs(0.2/min(mean)))*Freq/sum(Freq)), stat="identity", 
            fill = "grey", colour = "white", alpha = 0.3) +
   xlab("Population (log)") + 
-  ylab("Probability of PB") + 
+  ylab("Probability of PB Adoption") + 
   scale_y_continuous(labels = scales::percent) + 
   scale_x_continuous(breaks=c(10:16), labels=c(exp_f(10:16))) +
   geom_ribbon(aes(ymin=low, ymax=high), alpha=0.4) + 
@@ -544,10 +544,10 @@ levels(plotdata$Group) <- c("Party Continuity (No PB)", "Mayor Reelection (No PB
 
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = Group, y =mean)) + 
-  theme_classic(base_size = 11, base_family = "Cambria") + 
+  theme_classic(base_size = 10, base_family = "Cambria") + 
   geom_errorbar(aes(ymin=low, ymax=high), width=.2,
                 position=position_dodge(.9)) +   
-  labs(x = "Administrative Continuity", y = "Probability of PB") +
+  labs(x = "Political continuity", y = "Probability of PB Adoption") +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1L)) + 
   theme(legend.position="bottom", plot.title = element_text(hjust = 0.5), 
         plot.subtitle = element_text(hjust = 0.5),
@@ -594,7 +594,7 @@ plotdata <- GraphData(qi_Values, Zelig_pb_Min, "BudgetPP_log",
   # Avoid duplication in histogram
   mutate(Freq = ifelse(Group == 1, Freq, 0))
 # Better labels
-levels(plotdata$Group) <- c("PB adoption", "PB Continuity") 
+levels(plotdata$Group) <- c("PB first-time adoption", "PB Continuity") 
 
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = BudgetPP_log, y =mean, fill = Group)) + 
@@ -607,9 +607,9 @@ ggplot(data=plotdata, aes(x = BudgetPP_log, y =mean, fill = Group)) +
   scale_x_continuous(breaks=c(6:9), labels=c(exp_f(6:9))) +
   geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
   labs(x = "Budget per capita (log)", 
-       y = "Probability of PB") +
+       y = "Probablity of PB adoption") +
   scale_fill_manual(values=c("light blue", "orange"), name=element_blank()) +
-  theme_classic(base_size = 11, base_family = "Cambria") + 
+  theme_classic(base_size = 10, base_family = "Cambria") + 
   theme(legend.position="bottom", 
         plot.title = element_text(hjust = 0.5),
         plot.subtitle = element_text(hjust = 0.5)) 
@@ -658,7 +658,7 @@ plotdata <- GraphData(qi_Values, Zelig_pb_Min, "InvestPer",
   # Avoid duplication in histogram
   mutate(Freq = ifelse(Group == 1, Freq, 0))
 # Better labels
-levels(plotdata$Group) <- c("PB adoption", "PB Continuity")
+levels(plotdata$Group) <- c("PB first-time adoption", "PB Continuity")
 
 #plot in ggplot2
 ggplot(data=plotdata, aes(x = InvestPer, y =mean, fill = Group)) + 
@@ -671,7 +671,7 @@ ggplot(data=plotdata, aes(x = InvestPer, y =mean, fill = Group)) +
   scale_x_continuous(labels = scales::percent) + 
   geom_ribbon(aes(ymin=low, ymax=high), alpha=0.5) + 
   labs(x = "Investment rate", 
-       y = "Probability of PB") +
+       y = "Probablity of PB adoption") +
   scale_fill_manual(values=c("light blue", "orange"), name=element_blank()) +
   theme_classic(base_size = 11, base_family = "Cambria") + 
   theme(legend.position="bottom", 
